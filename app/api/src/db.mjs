@@ -1,0 +1,55 @@
+import fs from 'node:fs';
+import path from 'node:path';
+import Database from 'better-sqlite3';
+
+const dataDir = process.env.DATA_DIR || path.resolve(process.cwd(), '..', '..', 'data');
+fs.mkdirSync(dataDir, { recursive: true });
+
+const dbPath = process.env.DB_PATH || path.join(dataDir, 'schools.db');
+export const db = new Database(dbPath);
+
+db.pragma('journal_mode = WAL');
+
+db.exec(`
+CREATE TABLE IF NOT EXISTS schools (
+  urn TEXT PRIMARY KEY,
+  name TEXT NOT NULL,
+  phase TEXT NOT NULL DEFAULT '',
+  la_code TEXT NOT NULL DEFAULT '',
+  la_name TEXT NOT NULL DEFAULT '',
+  street TEXT NOT NULL DEFAULT '',
+  town TEXT NOT NULL DEFAULT '',
+  county TEXT NOT NULL DEFAULT '',
+  postcode TEXT NOT NULL DEFAULT '',
+  website TEXT NOT NULL DEFAULT '',
+  telephone TEXT NOT NULL DEFAULT '',
+  emails_json TEXT NOT NULL DEFAULT '[]',
+
+  has_pupil_premium INTEGER NOT NULL DEFAULT 0,
+  has_send INTEGER NOT NULL DEFAULT 0,
+  has_governors INTEGER NOT NULL DEFAULT 0,
+  ofsted_mention TEXT NOT NULL DEFAULT '',
+
+  region TEXT NOT NULL DEFAULT '',
+  scrape_date TEXT NOT NULL DEFAULT '',
+
+  lat REAL,
+  lng REAL
+);
+
+CREATE TABLE IF NOT EXISTS postcodes (
+  postcode TEXT PRIMARY KEY,
+  lat REAL,
+  lng REAL,
+  updatedAt TEXT NOT NULL
+);
+
+CREATE INDEX IF NOT EXISTS idx_schools_postcode ON schools(postcode);
+CREATE INDEX IF NOT EXISTS idx_schools_region ON schools(region);
+CREATE INDEX IF NOT EXISTS idx_schools_phase ON schools(phase);
+CREATE INDEX IF NOT EXISTS idx_schools_flags ON schools(has_pupil_premium, has_send, has_governors);
+`);
+
+export function safeJson(s, fallback) {
+  try { return JSON.parse(s); } catch { return fallback; }
+}

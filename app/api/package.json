@@ -1,0 +1,16 @@
+{
+  "name": "bi-workshops-api",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "node src/server.mjs",
+    "import:schools": "node scripts/import_schools.mjs",
+    "geocode:postcodes": "node scripts/geocode_postcodes.mjs"
+  },
+  "dependencies": {
+    "better-sqlite3": "^11.8.1",
+    "cors": "^2.8.5",
+    "express": "^4.19.2",
+    "zod": "^3.23.8"
+  }
+}
