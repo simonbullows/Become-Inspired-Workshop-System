@@ -80,7 +80,7 @@ app.get('/api/stats', (req, res) => {
   const byRegion = db.prepare('SELECT region, COUNT(*) as count FROM schools GROUP BY region ORDER BY count DESC').all();
   const byPhase = db.prepare('SELECT phase, COUNT(*) as count FROM schools GROUP BY phase ORDER BY count DESC').all();
   const totals = db.prepare('SELECT COUNT(*) as schools FROM schools').get();
-  const enriched = db.prepare('SELECT SUM(CASE WHEN emails_json != "[]" THEN 1 ELSE 0 END) as withEmails FROM schools').get();
+  const enriched = db.prepare("SELECT SUM(CASE WHEN emails_json != '[]' THEN 1 ELSE 0 END) as withEmails FROM schools").get();
   res.json({ byRegion, byPhase, totals, enriched });
 });
 
