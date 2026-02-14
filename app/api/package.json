@@ -8,9 +8,9 @@
     "geocode:postcodes": "node scripts/geocode_postcodes.mjs"
   },
   "dependencies": {
-    "better-sqlite3": "^11.8.1",
-    "cors": "^2.8.5",
-    "express": "^4.19.2",
-    "zod": "^3.23.8"
+    "better-sqlite3": "^11.10.0",
+    "cors": "^2.8.6",
+    "express": "^4.22.1",
+    "zod": "^3.25.76"
   }
 }

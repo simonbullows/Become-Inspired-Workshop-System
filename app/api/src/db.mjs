@@ -44,6 +44,31 @@ CREATE TABLE IF NOT EXISTS postcodes (
   updatedAt TEXT NOT NULL
 );
 
+-- Segments: saved filters / lists
+CREATE TABLE IF NOT EXISTS segments (
+  id TEXT PRIMARY KEY,
+  name TEXT NOT NULL,
+  description TEXT NOT NULL DEFAULT '',
+  filters_json TEXT NOT NULL DEFAULT '{}',
+  createdAt TEXT NOT NULL,
+  updatedAt TEXT NOT NULL
+);
+CREATE INDEX IF NOT EXISTS idx_segments_updatedAt ON segments(updatedAt);
+
+-- Campaign drafts (no sending yet)
+CREATE TABLE IF NOT EXISTS campaigns (
+  id TEXT PRIMARY KEY,
+  name TEXT NOT NULL,
+  channel TEXT NOT NULL DEFAULT 'email',
+  status TEXT NOT NULL DEFAULT 'draft',
+  segmentId TEXT NOT NULL DEFAULT '',
+  subject TEXT NOT NULL DEFAULT '',
+  body TEXT NOT NULL DEFAULT '',
+  createdAt TEXT NOT NULL,
+  updatedAt TEXT NOT NULL
+);
+CREATE INDEX IF NOT EXISTS idx_campaigns_updatedAt ON campaigns(updatedAt);
+
 CREATE INDEX IF NOT EXISTS idx_schools_postcode ON schools(postcode);
 CREATE INDEX IF NOT EXISTS idx_schools_region ON schools(region);
 CREATE INDEX IF NOT EXISTS idx_schools_phase ON schools(phase);
