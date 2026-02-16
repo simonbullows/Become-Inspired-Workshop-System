@@ -43,6 +43,21 @@ const DEFAULT_ACTION_RECORD: SchoolActionRecord = {
 
 const QUICK_ACTIONS_STORAGE_KEY = 'bi-workshop-quick-actions-v1';
 
+type ProjectKey = 'schools' | 'hotels';
+
+const PROJECTS: Record<ProjectKey, { name: string; subtitle: string; searchPlaceholder: string }> = {
+  schools: {
+    name: 'Schools Outreach',
+    subtitle: 'Education lead mapping & outreach',
+    searchPlaceholder: 'Search school name, URN, postcode, town',
+  },
+  hotels: {
+    name: 'Hotels Outreach',
+    subtitle: 'Hospitality digital services prospecting',
+    searchPlaceholder: 'Search hotel, group, town, postcode',
+  },
+};
+
 function formatTelephone(raw: string | null | undefined) {
   let s = String(raw || '').trim();
   if (!s) return '—';
@@ -91,6 +106,7 @@ const App: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const [quickActionsByUrn, setQuickActionsByUrn] = useState<SchoolActionState>({});
   const [newSegment, setNewSegment] = useState('');
+  const [activeProject, setActiveProject] = useState<ProjectKey>('schools');
 
   useEffect(() => {
     fetchJson('/api/stats').then(setStats).catch(()=>{});
@@ -288,6 +304,8 @@ const App: React.FC = () => {
     ? (quickActionsByUrn[selected.urn] || DEFAULT_ACTION_RECORD)
     : DEFAULT_ACTION_RECORD;
 
+  const projectMeta = PROJECTS[activeProject];
+
   const allKnownSegments = useMemo(() => {
     const s = new Set<string>();
     Object.values(quickActionsByUrn).forEach((v) => (v.segments || []).forEach(seg => s.add(seg)));
@@ -347,8 +365,8 @@ const App: React.FC = () => {
         <aside className="h-full border-r border-white/10 bg-slate-950/60 backdrop-blur p-4 overflow-auto">
           <div className="flex items-center justify-between">
             <div>
-              <h1 className="text-lg font-black tracking-tight">Become Inspired</h1>
-              <p className="text-xs text-slate-400">Workshop System • internal MVP</p>
+              <h1 className="text-lg font-black tracking-tight">The Kosmos System</h1>
+              <p className="text-xs text-slate-400">{projectMeta.subtitle}</p>
               <p className="mt-1 text-[10px] text-slate-500">Build: {BUILD_STAMP}</p>
             </div>
             <span className="text-[10px] px-2 py-1 rounded-full bg-white/5 border border-white/10 text-slate-300">
@@ -359,10 +377,31 @@ const App: React.FC = () => {
           {err ? <div className="mt-3 text-xs text-red-300">{err}</div> : null}
 
           <div className="mt-4 grid gap-2">
+            <label className="grid gap-1 text-[11px] text-slate-400">
+              <span className="font-bold tracking-wide text-slate-300">Project</span>
+              <select
+                value={activeProject}
+                onChange={(e) => setActiveProject(e.target.value as ProjectKey)}
+                className="px-3 py-2 rounded-xl bg-white/5 border border-white/10"
+              >
+                {(Object.keys(PROJECTS) as ProjectKey[]).map((k) => (
+                  <option key={k} value={k}>{PROJECTS[k].name}</option>
+                ))}
+              </select>
+            </label>
+
+            {activeProject !== 'schools' ? (
+              <div className="text-[11px] text-amber-300 rounded-xl border border-amber-300/30 bg-amber-500/10 px-3 py-2">
+                Hotels project mode is scaffolded. Data source wiring is next.
+              </div>
+            ) : null}
+          </div>
+
+          <div className="mt-4 grid gap-2">
             <input
               value={q}
               onChange={e => setQ(e.target.value)}
-              placeholder="Search name, URN, postcode, town"
+              placeholder={projectMeta.searchPlaceholder}
               className="w-full px-3 py-2 rounded-xl bg-white/5 border border-white/10 focus:outline-none focus:ring-2 focus:ring-cyan-400/40"
             />
 
