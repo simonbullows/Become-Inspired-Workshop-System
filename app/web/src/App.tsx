@@ -58,6 +58,76 @@ const PROJECTS: Record<ProjectKey, { name: string; subtitle: string; searchPlace
   },
 };
 
+function normalizeSchoolName(name: string) {
+  return (name || '')
+    .toLowerCase()
+    .replace(/&/g, ' and ')
+    .replace(/[’']/g, '')
+    .replace(/[^a-z0-9\s]/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+const WORKED_WITH_SCHOOLS = new Set<string>([
+  'Nethergate Academy',
+  'Biggin Hill Primary',
+  'Woodland Primary',
+  'Crumpsall Lane Primary',
+  'Priory Woods',
+  'St Leo’s and Southmead Primary',
+  'St Clements Primary',
+  'Priestley Smith',
+  'St Luke’s Primary',
+  'Seely Primary',
+  'TBAC @ The Learning Centre',
+  'Skegness Academy',
+  'Harbinger Primary',
+  'Greenfields Primary',
+  'Whitnash Primary',
+  'South Nottinghamshire Academy and Sixth Form',
+  'Woodlands Primary',
+  'Welcombe Hills Primary',
+  'Southwark Primary',
+  'Highbury fields, Islington',
+  'Eden Girls Academy',
+  'Fernwood school',
+  'Little Heath Primary',
+  'King Edward VI School',
+  'Abbott School',
+  'Redhill Academy',
+  'Challney Boys School',
+  'Dogsthorpe Primary',
+  'Wells Academy',
+  'Ingoldmells Primary',
+  'Seathorne Primary',
+  'Warren Primary',
+  'Ormsby academy',
+  'Southwold Primary',
+  'Bilborough College',
+  'Hogarth Academy',
+  'Ark Victoria Academy',
+  'Norman Parnell Primary',
+  'Manorfield Primary',
+  'Meade Hill School',
+  'Blessed Sacrament Primary',
+  'Sneinton Primary',
+  'Nottingham Academy',
+  'Notts Girls Academy',
+  'George Greens Primary',
+  'Sandwell College',
+  'Oaklands Primary',
+  'Col Frank Seely Academy',
+  'Seven Kings School',
+  'Beech Hill Primary',
+  'Copenhagen Primary',
+  'Mansfield Primary',
+  'Roscoe Primary',
+  'New Park Primary',
+  'Breckon Hill Primary',
+  'Halewood Academy',
+  'Ellis Guildford School',
+].map(normalizeSchoolName));
+
 function formatTelephone(raw: string | null | undefined) {
   let s = String(raw || '').trim();
   if (!s) return '—';
@@ -255,12 +325,13 @@ const App: React.FC = () => {
     for (const s of items) {
       if (typeof s.lat !== 'number' || typeof s.lng !== 'number') continue;
       const isSel = selected?.urn === s.urn;
+      const isWorkedWith = activeProject === 'schools' && WORKED_WITH_SCHOOLS.has(normalizeSchoolName(s.name));
       const m = L.circleMarker([s.lat, s.lng], {
         radius: isSel ? 7 : 4,
-        color: isSel ? '#22c55e' : '#2563eb',
-        weight: isSel ? 2 : 1,
-        fillColor: isSel ? '#86efac' : '#60a5fa',
-        fillOpacity: 0.85,
+        color: isSel ? '#22c55e' : (isWorkedWith ? '#f59e0b' : '#2563eb'),
+        weight: isSel ? 2 : (isWorkedWith ? 2 : 1),
+        fillColor: isSel ? '#86efac' : (isWorkedWith ? '#fbbf24' : '#60a5fa'),
+        fillOpacity: 0.9,
       });
       m.on('click', () => { selectSchool(s); });
       m.addTo(layer);
@@ -271,7 +342,7 @@ const App: React.FC = () => {
   useEffect(() => {
     renderMarkers(pins);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [pins, selected?.urn]);
+  }, [pins, selected?.urn, activeProject]);
 
   async function loadFullSchool(urn: string) {
     const j = await fetchJson('/api/schools/' + encodeURIComponent(urn));
@@ -448,6 +519,9 @@ const App: React.FC = () => {
               Showing {schools.length} schools (max 1000 per query) • Pins: {geocodedPins}/{pins.length} geocoded (sampled)
               {stats?.enriched?.withEmails != null ? ` • ${stats.enriched.withEmails} schools have emails` : ''}
             </div>
+            {activeProject === 'schools' ? (
+              <div className="text-[10px] text-slate-300">Map colours: <span className="text-blue-300">blue</span> = lead, <span className="text-amber-300">amber</span> = worked with before, <span className="text-emerald-300">green</span> = selected</div>
+            ) : null}
             <div className="text-[10px] text-slate-500 flex items-center gap-2">
               <span>{loading ? 'Loading…' : (lastRefreshAt ? `Last refresh: ${new Date(lastRefreshAt).toLocaleTimeString()}` : 'Not refreshed yet')}</span>
               <button
