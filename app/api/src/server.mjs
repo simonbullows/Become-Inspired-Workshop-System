@@ -56,11 +56,21 @@ app.get('/api/schools', (req, res) => {
      LIMIT ? OFFSET ?`
   ).all(...args, params.limit, params.offset);
 
+  const totals = db.prepare(`SELECT COUNT(*) as schools FROM schools ${clause}`).get(...args);
+  const withEmails = db.prepare(`SELECT SUM(CASE WHEN emails_json != '[]' THEN 1 ELSE 0 END) as withEmails FROM schools ${clause}`).get(...args);
+  const geocoded = db.prepare(`SELECT SUM(CASE WHEN lat IS NOT NULL AND lng IS NOT NULL THEN 1 ELSE 0 END) as geocoded FROM schools ${clause}`).get(...args);
+
   res.json({
     schools: rows.map(r => ({
       ...r,
       emails: safeJson(r.emails_json, []),
-    }))
+    })),
+    meta: {
+      schools: Number(totals?.schools || 0),
+      withEmails: Number(withEmails?.withEmails || 0),
+      withoutEmails: Number(totals?.schools || 0) - Number(withEmails?.withEmails || 0),
+      geocoded: Number(geocoded?.geocoded || 0),
+    }
   });
 });
 

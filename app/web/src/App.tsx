@@ -177,6 +177,7 @@ const App: React.FC = () => {
   const [quickActionsByUrn, setQuickActionsByUrn] = useState<SchoolActionState>({});
   const [newSegment, setNewSegment] = useState('');
   const [activeProject, setActiveProject] = useState<ProjectKey>('schools');
+  const [filteredMeta, setFilteredMeta] = useState<{ schools: number; withEmails: number; withoutEmails: number; geocoded: number } | null>(null);
 
   useEffect(() => {
     fetchJson('/api/stats').then(setStats).catch(()=>{});
@@ -254,6 +255,7 @@ const App: React.FC = () => {
 
       const listJ = await fetchJson('/api/schools?' + listParams.toString());
       setSchools(listJ.schools || []);
+      setFilteredMeta(listJ.meta || null);
 
       // Pins are fetched based on current map viewport (so no more "missing patches")
       await refreshPins();
@@ -525,11 +527,13 @@ const App: React.FC = () => {
 
           <div className="mt-3 text-[11px] text-slate-400 grid gap-1">
             <div>
-              Showing {schools.length} schools (max 1000 per query) • Pins: {geocodedPins}/{pins.length} geocoded (sampled)
-              {stats?.enriched?.withEmails != null ? ` • ${stats.enriched.withEmails} schools have emails` : ''}
+              Filtered total: {filteredMeta?.schools ?? '…'} schools • with email: {filteredMeta?.withEmails ?? '…'} • without email: {filteredMeta?.withoutEmails ?? '…'}
+            </div>
+            <div>
+              Showing {schools.length} schools in list (max 1000) • Pins loaded: {geocodedPins}/{pins.length} geocoded (viewport sample)
             </div>
             {activeProject === 'schools' ? (
-              <div className="text-[10px] text-slate-300">Map colours: <span className="text-blue-300">blue</span> = lead, <span className="text-amber-300">amber</span> = worked with before, <span className="text-emerald-300">green</span> = selected</div>
+              <div className="text-[10px] text-slate-300">Map colours: <span className="text-blue-300">blue</span> = has contact email, <span className="text-red-300">red</span> = no contact email, <span className="text-amber-300">amber</span> = worked with before, <span className="text-emerald-300">green</span> = selected</div>
             ) : null}
             <div className="text-[10px] text-slate-500 flex items-center gap-2">
               <span>{loading ? 'Loading…' : (lastRefreshAt ? `Last refresh: ${new Date(lastRefreshAt).toLocaleTimeString()}` : 'Not refreshed yet')}</span>
