@@ -202,13 +202,21 @@ const App: React.FC = () => {
     }
   }, [quickActionsByUrn]);
 
-  function currentPinParams() {
+  type FilterOverrides = Partial<{ q: string; region: string; phase: string; hasSend: boolean; hasPupilPremium: boolean }>;
+
+  function currentPinParams(overrides: FilterOverrides = {}) {
+    const effectiveQ = overrides.q ?? q;
+    const effectiveRegion = overrides.region ?? region;
+    const effectivePhase = overrides.phase ?? phase;
+    const effectiveHasSend = overrides.hasSend ?? hasSend;
+    const effectiveHasPupilPremium = overrides.hasPupilPremium ?? hasPupilPremium;
+
     const p = new URLSearchParams();
-    if (q) p.set('q', q);
-    if (region) p.set('region', region);
-    if (phase) p.set('phase', phase);
-    if (hasSend) p.set('hasSend', 'true');
-    if (hasPupilPremium) p.set('hasPupilPremium', 'true');
+    if (effectiveQ) p.set('q', effectiveQ);
+    if (effectiveRegion) p.set('region', effectiveRegion);
+    if (effectivePhase) p.set('phase', effectivePhase);
+    if (effectiveHasSend) p.set('hasSend', 'true');
+    if (effectiveHasPupilPremium) p.set('hasPupilPremium', 'true');
 
     // Viewport-based pins
     const map = mapRef.current;
@@ -232,24 +240,30 @@ const App: React.FC = () => {
     return p;
   }
 
-  async function refreshPins() {
-    const pinParams = currentPinParams();
+  async function refreshPins(overrides: FilterOverrides = {}) {
+    const pinParams = currentPinParams(overrides);
     const pinJ = await fetchJson('/api/schools?' + pinParams.toString());
     setPins(pinJ.schools || []);
   }
 
-  async function refresh() {
+  async function refresh(overrides: FilterOverrides = {}) {
     setErr('');
     setLoading(true);
 
     try {
       // Sidebar list (ordered by name)
+      const effectiveQ = overrides.q ?? q;
+      const effectiveRegion = overrides.region ?? region;
+      const effectivePhase = overrides.phase ?? phase;
+      const effectiveHasSend = overrides.hasSend ?? hasSend;
+      const effectiveHasPupilPremium = overrides.hasPupilPremium ?? hasPupilPremium;
+
       const listParams = new URLSearchParams();
-      if (q) listParams.set('q', q);
-      if (region) listParams.set('region', region);
-      if (phase) listParams.set('phase', phase);
-      if (hasSend) listParams.set('hasSend', 'true');
-      if (hasPupilPremium) listParams.set('hasPupilPremium', 'true');
+      if (effectiveQ) listParams.set('q', effectiveQ);
+      if (effectiveRegion) listParams.set('region', effectiveRegion);
+      if (effectivePhase) listParams.set('phase', effectivePhase);
+      if (effectiveHasSend) listParams.set('hasSend', 'true');
+      if (effectiveHasPupilPremium) listParams.set('hasPupilPremium', 'true');
       listParams.set('limit', '1000');
       listParams.set('order', 'name');
 
@@ -258,7 +272,7 @@ const App: React.FC = () => {
       setFilteredMeta(listJ.meta || null);
 
       // Pins are fetched based on current map viewport (so no more "missing patches")
-      await refreshPins();
+      await refreshPins(overrides);
 
       setLastRefreshAt(Date.now());
     } finally {
@@ -488,11 +502,11 @@ const App: React.FC = () => {
             />
 
             <div className="grid grid-cols-2 gap-2">
-              <select value={region} onChange={e => setRegion(e.target.value)} className="px-3 py-2 rounded-xl bg-white/5 border border-white/10">
+              <select value={region} onChange={e => { const v = e.target.value; setRegion(v); refresh({ region: v }).catch(err => setErr(String(err?.message || err))); }} className="px-3 py-2 rounded-xl bg-white/5 border border-white/10">
                 <option value="">All regions</option>
                 {regions.map((r: string) => <option key={r} value={r}>{r}</option>)}
               </select>
-              <select value={phase} onChange={e => setPhase(e.target.value)} className="px-3 py-2 rounded-xl bg-white/5 border border-white/10">
+              <select value={phase} onChange={e => { const v = e.target.value; setPhase(v); refresh({ phase: v }).catch(err => setErr(String(err?.message || err))); }} className="px-3 py-2 rounded-xl bg-white/5 border border-white/10">
                 <option value="">All phases</option>
                 {phases.map((p: string) => <option key={p} value={p}>{p}</option>)}
               </select>
@@ -500,11 +514,11 @@ const App: React.FC = () => {
 
             <div className="flex items-center gap-3 text-xs text-slate-200">
               <label className="flex items-center gap-2">
-                <input type="checkbox" checked={hasSend} onChange={e => setHasSend(e.target.checked)} />
+                <input type="checkbox" checked={hasSend} onChange={e => { const v = e.target.checked; setHasSend(v); refresh({ hasSend: v }).catch(err => setErr(String(err?.message || err))); }} />
                 SEND
               </label>
               <label className="flex items-center gap-2">
-                <input type="checkbox" checked={hasPupilPremium} onChange={e => setHasPupilPremium(e.target.checked)} />
+                <input type="checkbox" checked={hasPupilPremium} onChange={e => { const v = e.target.checked; setHasPupilPremium(v); refresh({ hasPupilPremium: v }).catch(err => setErr(String(err?.message || err))); }} />
                 Pupil Premium
               </label>
             </div>
@@ -517,7 +531,7 @@ const App: React.FC = () => {
                 Apply filters
               </button>
               <button
-                onClick={() => { setQ(''); setRegion(''); setPhase(''); setHasSend(false); setHasPupilPremium(false); }}
+                onClick={() => { setQ(''); setRegion(''); setPhase(''); setHasSend(false); setHasPupilPremium(false); refresh({ q: '', region: '', phase: '', hasSend: false, hasPupilPremium: false }).catch(err => setErr(String(err?.message || err))); }}
                 className="px-3 py-2 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10"
               >
                 Reset
