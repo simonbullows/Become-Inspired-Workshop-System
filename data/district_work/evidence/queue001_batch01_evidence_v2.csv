@@ -1,0 +1,26 @@
+urn,school_name,website_url,page_url_scraped,emails_found,checked_at_utc,method,status,notes
+119814,Archbishop Temple Church of England High School,http://www.archbishoptemple.com,https://www.archbishoptemple.com/,,2026-02-20T20:04:15.590950Z,direct,manual_review,No email visible
+150407,Barnacre Road Primary School,,,,2026-02-20T20:04:17.091213Z,none,no_email,NO WEBSITE
+119861,Bleasdale School,http://www.bleasdaleschool.lancs.sch.uk,http://www.bleasdaleschool.lancs.sch.uk,,2026-02-20T20:04:17.310947Z,direct,manual_review,HTTP 202
+119230,Brockholes Wood Community Primary School and Nursery,http://www.brockholeswood.lancs.sch.uk,https://www.brockholeswood.lancs.sch.uk/,,2026-02-20T20:04:21.923516Z,direct,manual_review,Verified 10 email(s)
+133546,Burnley Springfield Community Primary School,www.springfieldcps.lancs.sch.uk,https://springfieldcps.lancs.sch.uk/,,2026-02-20T20:04:25.434830Z,direct,manual_review,No email visible
+119484,Burnley St Peter's Church of England Primary School,www.st-peters-burnley.lancs.sch.uk,https://www.st-peters-burnley.lancs.sch.uk/,head@st-peters-burnley.lancs.sch.uk,2026-02-20T20:04:27.378018Z,direct,yes,Verified 1 email(s)
+119376,Burscough Bridge St John's Church of England Primary School,www.stjohnsburscough.co.uk,https://www.stjohnsburscough.co.uk/,,2026-02-20T20:04:29.170097Z,direct,manual_review,No email visible
+119557,Carleton St Hilda's Church of England Primary School,http://www.sthildas-carleton.lancs.sch.uk,https://sthildas-carleton.lancs.sch.uk/,"bursar@sthildas-carleton.lancs.sch.uk,head@sthildas-carleton.lancs.sch.uk",2026-02-20T20:04:30.910752Z,direct,yes,Verified 2 email(s)
+119522,Carnforth Christ Church Church of England Primary School,www.christchurch-carnforth.lancs.sch.uk,https://www.christchurch-carnforth.lancs.sch.uk/,,2026-02-20T20:04:32.556319Z,direct,manual_review,No email visible
+119524,Caton St Paul's Church of England Primary School,https://catonstpauls.com,https://catonstpauls.com/,,2026-02-20T20:04:38.915108Z,direct,manual_review,No email visible
+133398,Chadwick High School,,,,2026-02-20T20:04:40.415280Z,none,no_email,NO WEBSITE
+119877,Chorley Astley Park School,http://www.astleypark.lancs.sch.uk,https://www.astleypark.lancs.sch.uk/,bst@astleypark.lancs.sch.uk,2026-02-20T20:04:40.822810Z,direct,yes,Verified 2 email(s)
+119467,Chorley St James' Church of England Primary School,http://www.st-james-chorley.lancs.sch.uk,http://www.st-james-chorley.lancs.sch.uk,,2026-02-20T20:04:42.558678Z,direct,manual_review,Error: HTTPSConnectionPool(host='www.
+119463,Christ Church Charnock Richard CofE Primary School,www.charnockrichard.lancs.sch.uk,https://charnockrichard.lancs.sch.uk/,,2026-02-20T20:04:44.280427Z,direct,manual_review,No email visible
+150615,Christ The King Catholic High School,http://www.ctkhigh.co.uk,http://www.ctkhigh.co.uk,,2026-02-20T20:04:45.792152Z,direct,manual_review,Error: HTTPConnectionPool(host='www.c
+149124,Christ The King Roman Catholic Primary School,http://www.ctkprimary.co.uk,http://www.ctkprimary.co.uk,,2026-02-20T20:04:47.392126Z,direct,manual_review,Error: HTTPConnectionPool(host='www.c
+119331,Clayton Brook Primary School,http://www.claytonbrook.lancs.sch.uk,https://www.claytonbrook.lancs.sch.uk/,,2026-02-20T20:04:49.308967Z,direct,manual_review,Verified 1 email(s)
+137641,Clayton-le-Moors All Saints' Church of England Primary School,http://www.all-saints-clm.lancs.sch.uk,http://www.all-saints-clm.lancs.sch.uk,,2026-02-20T20:04:50.883847Z,direct,manual_review,Error: HTTPConnectionPool(host='www.a
+119186,Clayton-le-Moors Mount Pleasant Primary School,http://www.mountpleasant.lancs.sch.uk,https://www.mountpleasant.lancs.sch.uk/,head@mountpleasant.lancs.sch.uk,2026-02-20T20:04:52.801068Z,direct,yes,Verified 1 email(s)
+119318,Clayton-le-Woods Manor Road Primary School,http://www.manorroad.lancs.sch.uk,http://www.manorroad.lancs.sch.uk,,2026-02-20T20:04:54.391657Z,direct,manual_review,Error: HTTPConnectionPool(host='www.m
+119291,Clifton Primary School,http://www.clifton-pri.lancs.sch.uk,https://www.clifton-pri.lancs.sch.uk/,office@clifton-pri.lancs.sch.uk,2026-02-20T20:04:56.294986Z,direct,yes,Verified 1 email(s)
+119321,Clitheroe Brookside Primary School,http://www.brookside.lancs.sch.uk,https://brookside.lancs.sch.uk/,,2026-02-20T20:05:02.645401Z,direct,manual_review,No email visible
+119161,Clitheroe Pendle Primary School,http://www.pendle.lancs.sch.uk,https://www.pendle.lancs.sch.uk/,bursar@pendle.lancs.sch.uk,2026-02-20T20:05:04.541227Z,direct,yes,Verified 1 email(s)
+136390,Clitheroe Royal Grammar School,http://www.crgs.org.uk,https://crgs.org.uk/,,2026-02-20T20:05:06.275553Z,direct,manual_review,No email visible
+142054,Coal Clough Academy,http://www.coalclough.co.uk,http://www.coalclough.co.uk,,2026-02-20T20:05:07.847132Z,direct,manual_review,Error: HTTPConnectionPool(host='www.c
