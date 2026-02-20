@@ -485,6 +485,24 @@ const App: React.FC = () => {
     await loadSchoolCrm(selected.urn);
   }
 
+  async function deleteCrmContact(id: string) {
+    if (!selected) return;
+    await fetchJson('/api/schools/' + encodeURIComponent(selected.urn) + '/contacts/' + encodeURIComponent(id), { method: 'DELETE' } as any);
+    await loadSchoolCrm(selected.urn);
+  }
+
+  async function deleteCrmActivity(id: string) {
+    if (!selected) return;
+    await fetchJson('/api/schools/' + encodeURIComponent(selected.urn) + '/activities/' + encodeURIComponent(id), { method: 'DELETE' } as any);
+    await loadSchoolCrm(selected.urn);
+  }
+
+  async function deleteCrmTask(id: string) {
+    if (!selected) return;
+    await fetchJson('/api/schools/' + encodeURIComponent(selected.urn) + '/tasks/' + encodeURIComponent(id), { method: 'DELETE' } as any);
+    await loadSchoolCrm(selected.urn);
+  }
+
   async function selectSchool(s: School) {
     setSelectedLoading(true);
     try {
@@ -780,9 +798,14 @@ const App: React.FC = () => {
                 <div className="p-4 grid md:grid-cols-2 gap-4">
                   <div className="grid gap-3 text-sm">
                     <div className="flex flex-wrap gap-2 text-xs">
-                      {(['overview', 'contacts', 'timeline', 'tasks'] as const).map(tab => (
-                        <button key={tab} onClick={() => setCrmTab(tab)} className={(crmTab === tab ? 'bg-black text-white ' : 'bg-white ') + 'px-2 py-1 rounded-lg border border-black/15'}>{tab}</button>
-                      ))}
+                      {(['overview', 'contacts', 'timeline', 'tasks'] as const).map(tab => {
+                        const counts = tab === 'contacts' ? crmContacts.length : tab === 'timeline' ? crmActivities.length : tab === 'tasks' ? crmTasks.length : null;
+                        return (
+                          <button key={tab} onClick={() => setCrmTab(tab)} className={(crmTab === tab ? 'bg-black text-white ' : 'bg-white ') + 'px-2 py-1 rounded-lg border border-black/15'}>
+                            {tab}{counts !== null ? ` (${counts})` : ''}
+                          </button>
+                        );
+                      })}
                     </div>
 
                     {crmTab === 'overview' ? (
@@ -824,7 +847,7 @@ const App: React.FC = () => {
                           <input value={newContact.phone} onChange={e => setNewContact(v => ({ ...v, phone: e.target.value }))} placeholder="Phone" className="px-2 py-1 rounded border border-black/15" />
                         </div>
                         <button onClick={() => addCrmContact().catch(()=>{})} className="px-3 py-1 rounded bg-black text-white text-xs w-fit">Add contact</button>
-                        {crmContacts.length ? crmContacts.map(c => <div key={c.id} className="rounded-lg border border-black/10 p-2"><div className="font-semibold">{c.name} <span className="text-black/50">({c.role || 'role n/a'})</span></div><div className="text-xs">{c.email || '—'} {c.phone ? `• ${c.phone}` : ''}</div></div>) : <div className="text-black/60 text-xs">No contacts yet.</div>}
+                        {crmContacts.length ? crmContacts.map(c => <div key={c.id} className="rounded-lg border border-black/10 p-2"><div className="flex items-center justify-between gap-2"><div className="font-semibold">{c.name} <span className="text-black/50">({c.role || 'role n/a'})</span></div><button onClick={() => deleteCrmContact(c.id).catch(()=>{})} className="text-[11px] px-2 py-1 rounded border border-black/15">Delete</button></div><div className="text-xs">{c.email || '—'} {c.phone ? `• ${c.phone}` : ''}</div></div>) : <div className="text-black/60 text-xs">No contacts yet.</div>}
                       </div>
                     ) : null}
 
@@ -838,7 +861,7 @@ const App: React.FC = () => {
                           <textarea value={newActivity.body} onChange={e => setNewActivity(v => ({ ...v, body: e.target.value }))} placeholder="Details" className="px-2 py-1 rounded border border-black/15 min-h-16" />
                           <button onClick={() => addCrmActivity().catch(()=>{})} className="px-3 py-1 rounded bg-black text-white text-xs w-fit">Add activity</button>
                         </div>
-                        {crmActivities.length ? crmActivities.map(a => <div key={a.id} className="rounded-lg border border-black/10 p-2"><div className="text-xs text-black/50">{a.type} • {a.happenedAt}</div><div className="font-semibold">{a.summary}</div>{a.body ? <div className="text-xs">{a.body}</div> : null}</div>) : <div className="text-black/60 text-xs">No activity yet.</div>}
+                        {crmActivities.length ? crmActivities.map(a => <div key={a.id} className="rounded-lg border border-black/10 p-2"><div className="flex items-center justify-between gap-2"><div className="text-xs text-black/50">{a.type} • {a.happenedAt}</div><button onClick={() => deleteCrmActivity(a.id).catch(()=>{})} className="text-[11px] px-2 py-1 rounded border border-black/15">Delete</button></div><div className="font-semibold">{a.summary}</div>{a.body ? <div className="text-xs">{a.body}</div> : null}</div>) : <div className="text-black/60 text-xs">No activity yet.</div>}
                       </div>
                     ) : null}
 
@@ -850,7 +873,7 @@ const App: React.FC = () => {
                           <input type="datetime-local" value={newTask.dueAt} onChange={e => setNewTask(v => ({ ...v, dueAt: e.target.value }))} className="px-2 py-1 rounded border border-black/15" />
                         </div>
                         <button onClick={() => addCrmTask().catch(()=>{})} className="px-3 py-1 rounded bg-black text-white text-xs w-fit">Add task</button>
-                        {crmTasks.length ? crmTasks.map(t => <div key={t.id} className="rounded-lg border border-black/10 p-2"><div className="font-semibold">{t.title}</div><div className="text-xs text-black/60">{t.status} {t.owner ? `• ${t.owner}` : ''} {t.dueAt ? `• due ${t.dueAt}` : ''}</div><button onClick={() => toggleTaskDone(t).catch(()=>{})} className="mt-1 px-2 py-1 rounded border border-black/15 text-xs">Mark {t.status === 'done' ? 'open' : 'done'}</button></div>) : <div className="text-black/60 text-xs">No tasks yet.</div>}
+                        {crmTasks.length ? crmTasks.map(t => <div key={t.id} className="rounded-lg border border-black/10 p-2"><div className="font-semibold">{t.title}</div><div className="text-xs text-black/60">{t.status} {t.owner ? `• ${t.owner}` : ''} {t.dueAt ? `• due ${t.dueAt}` : ''}</div><div className="mt-1 flex gap-2"><button onClick={() => toggleTaskDone(t).catch(()=>{})} className="px-2 py-1 rounded border border-black/15 text-xs">Mark {t.status === 'done' ? 'open' : 'done'}</button><button onClick={() => deleteCrmTask(t.id).catch(()=>{})} className="px-2 py-1 rounded border border-black/15 text-xs">Delete</button></div></div>) : <div className="text-black/60 text-xs">No tasks yet.</div>}
                       </div>
                     ) : null}
 

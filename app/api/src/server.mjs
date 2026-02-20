@@ -327,6 +327,12 @@ app.post('/api/schools/:urn/activities', (req, res) => {
   res.status(201).json({ id });
 });
 
+app.delete('/api/schools/:urn/activities/:id', (req, res) => {
+  const id = String(req.params.id || '');
+  db.prepare('DELETE FROM school_activities WHERE id = ?').run(id);
+  res.json({ ok: true });
+});
+
 app.post('/api/schools/:urn/tasks', (req, res) => {
   const urn = String(req.params.urn || '');
   const parsed = TaskCreate.safeParse(req.body);
@@ -357,6 +363,12 @@ app.patch('/api/schools/:urn/tasks/:id', (req, res) => {
   db.prepare('UPDATE school_tasks SET title=?, status=?, owner=?, dueAt=?, notes=?, updatedAt=? WHERE id=?')
     .run(next.title, next.status, next.owner, next.dueAt, next.notes, next.updatedAt, id);
 
+  res.json({ ok: true });
+});
+
+app.delete('/api/schools/:urn/tasks/:id', (req, res) => {
+  const id = String(req.params.id || '');
+  db.prepare('DELETE FROM school_tasks WHERE id = ?').run(id);
   res.json({ ok: true });
 });
 
