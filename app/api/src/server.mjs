@@ -82,6 +82,7 @@ app.get('/api/schools/:urn', (req, res) => {
     school: {
       ...row,
       emails: safeJson(row.emails_json, []),
+      source_row: safeJson(row.source_row_json, {}),
     }
   });
 });

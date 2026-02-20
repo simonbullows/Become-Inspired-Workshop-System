@@ -17,6 +17,7 @@ type School = {
   has_pupil_premium: number;
   has_send: number;
   ofsted_mention: string;
+  source_row?: Record<string, string>;
   lat: number | null;
   lng: number | null;
 };
@@ -150,6 +151,10 @@ function formatTelephone(raw: string | null | undefined) {
   if (d.length === 11) return d.replace(/(\d{5})(\d{3})(\d{3})/, '$1 $2 $3');
   if (d.length === 10) return d.replace(/(\d{4})(\d{3})(\d{3})/, '$1 $2 $3');
   return d;
+}
+
+function sourceValue(s: School | null, key: string) {
+  return (s?.source_row && s.source_row[key]) ? String(s.source_row[key]).trim() : '';
 }
 
 async function fetchJson(url: string) {
@@ -700,6 +705,17 @@ const App: React.FC = () => {
                 <div className="p-4 grid md:grid-cols-2 gap-4">
                   <div className="grid gap-2 text-sm">
                     <div><span className="text-black/50">Phase:</span> {selected.phase || '—'}</div>
+                    <div>
+                      <span className="text-black/50">Headteacher:</span>{' '}
+                      {[
+                        sourceValue(selected, 'HeadTitle (name)'),
+                        sourceValue(selected, 'HeadFirstName'),
+                        sourceValue(selected, 'HeadLastName'),
+                      ].filter(Boolean).join(' ') || '—'}
+                    </div>
+                    {sourceValue(selected, 'HeadPreferredJobTitle') ? (
+                      <div><span className="text-black/50">Head role:</span> {sourceValue(selected, 'HeadPreferredJobTitle')}</div>
+                    ) : null}
                     <div><span className="text-black/50">Phone:</span> {formatTelephone(selected.telephone)}</div>
                     <div>
                       <span className="text-black/50">Website:</span> {selected.website
@@ -710,6 +726,19 @@ const App: React.FC = () => {
                     <div><span className="text-black/50">Flags:</span> {selected.has_send ? 'SEND' : 'No SEND'} • {selected.has_pupil_premium ? 'Pupil Premium' : 'No Pupil Premium'}</div>
                     {selected.ofsted_mention ? (
                       <div><span className="text-black/50">Ofsted mention:</span> {selected.ofsted_mention}</div>
+                    ) : null}
+
+                    {!!selected.source_row && Object.keys(selected.source_row).length > 0 ? (
+                      <div className="mt-2 rounded-xl border border-black/10 bg-black/[0.03] p-2">
+                        <div className="text-xs font-bold text-black/70 mb-1">Master sheet fields</div>
+                        <div className="max-h-52 overflow-auto text-xs grid gap-1 pr-1">
+                          {Object.entries(selected.source_row)
+                            .filter(([, v]) => String(v || '').trim().length > 0)
+                            .map(([k, v]) => (
+                              <div key={k}><span className="text-black/50">{k}:</span> {String(v)}</div>
+                            ))}
+                        </div>
+                      </div>
                     ) : null}
                   </div>
 

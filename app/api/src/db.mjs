@@ -32,6 +32,7 @@ CREATE TABLE IF NOT EXISTS schools (
 
   region TEXT NOT NULL DEFAULT '',
   scrape_date TEXT NOT NULL DEFAULT '',
+  source_row_json TEXT NOT NULL DEFAULT '{}',
 
   lat REAL,
   lng REAL
@@ -74,6 +75,12 @@ CREATE INDEX IF NOT EXISTS idx_schools_region ON schools(region);
 CREATE INDEX IF NOT EXISTS idx_schools_phase ON schools(phase);
 CREATE INDEX IF NOT EXISTS idx_schools_flags ON schools(has_pupil_premium, has_send, has_governors);
 `);
+
+// Lightweight migration: add source_row_json for legacy DBs.
+const schoolCols = db.prepare("PRAGMA table_info(schools)").all().map(c => c.name);
+if (!schoolCols.includes('source_row_json')) {
+  db.exec("ALTER TABLE schools ADD COLUMN source_row_json TEXT NOT NULL DEFAULT '{}'");
+}
 
 export function safeJson(s, fallback) {
   try { return JSON.parse(s); } catch { return fallback; }
