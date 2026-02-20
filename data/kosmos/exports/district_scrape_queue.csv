@@ -1,154 +1,154 @@
 sequence_no,queue_id,district_code,district_name,district_label,district_file,queue_status,total_schools,emails_collected,remaining_to_scrape,coverage_pct,last_claimed_at,last_completed_at,notes,updated_at
-1,queue-888,888,Lancashire,888 - Lancashire,districts/888_lancashire.csv,pending,627,118,509,18.8,,,,2026-02-20T13:24:58.242Z
-2,queue-886,886,Kent,886 - Kent,districts/886_kent.csv,pending,595,96,499,16.1,,,,2026-02-20T13:24:58.242Z
-3,queue-881,881,Essex,881 - Essex,districts/881_essex.csv,pending,558,84,474,15.1,,,,2026-02-20T13:24:58.242Z
-4,queue-850,850,Hampshire,850 - Hampshire,districts/850_hampshire.csv,pending,531,123,408,23.2,,,,2026-02-20T13:24:58.242Z
-5,queue-330,330,Birmingham,330 - Birmingham,districts/330_birmingham.csv,pending,444,55,389,12.4,,,,2026-02-20T13:24:58.242Z
-6,queue-926,926,Norfolk,926 - Norfolk,districts/926_norfolk.csv,pending,423,43,380,10.2,,,,2026-02-20T13:24:58.242Z
-7,queue-919,919,Hertfordshire,919 - Hertfordshire,districts/919_hertfordshire.csv,pending,531,160,371,30.1,,,,2026-02-20T13:24:58.242Z
-8,queue-860,860,Staffordshire,860 - Staffordshire,districts/860_staffordshire.csv,pending,409,47,362,11.5,,,,2026-02-20T13:24:58.242Z
-9,queue-936,936,Surrey,936 - Surrey,districts/936_surrey.csv,pending,400,52,348,13.0,,,,2026-02-20T13:24:58.242Z
-10,queue-830,830,Derbyshire,830 - Derbyshire,districts/830_derbyshire.csv,pending,419,77,342,18.4,,,,2026-02-20T13:24:58.242Z
-11,queue-925,925,Lincolnshire,925 - Lincolnshire,districts/925_lincolnshire.csv,pending,361,32,329,8.9,,,,2026-02-20T13:24:58.242Z
-12,queue-878,878,Devon,878 - Devon,districts/878_devon.csv,pending,371,47,324,12.7,,,,2026-02-20T13:24:58.242Z
-13,queue-935,935,Suffolk,935 - Suffolk,districts/935_suffolk.csv,pending,323,22,301,6.8,,,,2026-02-20T13:24:58.242Z
-14,queue-891,891,Nottinghamshire,891 - Nottinghamshire,districts/891_nottinghamshire.csv,pending,341,44,297,12.9,,,,2026-02-20T13:24:58.242Z
-15,queue-815,815,North Yorkshire,815 - North Yorkshire,districts/815_north-yorkshire.csv,pending,355,60,295,16.9,,,,2026-02-20T13:24:58.242Z
-16,queue-931,931,Oxfordshire,931 - Oxfordshire,districts/931_oxfordshire.csv,pending,307,19,288,6.2,,,,2026-02-20T13:24:58.242Z
-17,queue-383,383,Leeds,383 - Leeds,districts/383_leeds.csv,pending,280,12,268,4.3,,,,2026-02-20T13:24:58.242Z
-18,queue-908,908,Cornwall,908 - Cornwall,districts/908_cornwall.csv,pending,280,16,264,5.7,,,,2026-02-20T13:24:58.242Z
-19,queue-855,855,Leicestershire,855 - Leicestershire,districts/855_leicestershire.csv,pending,287,30,257,10.5,,,,2026-02-20T13:24:58.242Z
-20,queue-873,873,Cambridgeshire,873 - Cambridgeshire,districts/873_cambridgeshire.csv,pending,270,27,243,10.0,,,,2026-02-20T13:24:58.242Z
-21,queue-916,916,Gloucestershire,916 - Gloucestershire,districts/916_gloucestershire.csv,pending,300,58,242,19.3,,,,2026-02-20T13:24:58.242Z
-22,queue-933,933,Somerset,933 - Somerset,districts/933_somerset.csv,pending,269,31,238,11.5,,,,2026-02-20T13:24:58.242Z
-23,queue-938,938,West Sussex,938 - West Sussex,districts/938_west-sussex.csv,pending,285,70,215,24.6,,,,2026-02-20T13:24:58.242Z
-24,queue-937,937,Warwickshire,937 - Warwickshire,districts/937_warwickshire.csv,pending,252,43,209,17.1,,,,2026-02-20T13:24:58.242Z
-25,queue-825,825,Buckinghamshire,825 - Buckinghamshire,districts/825_buckinghamshire.csv,pending,235,32,203,13.6,,,,2026-02-20T13:24:58.242Z
-26,queue-885,885,Worcestershire,885 - Worcestershire,districts/885_worcestershire.csv,pending,244,43,201,17.6,,,,2026-02-20T13:24:58.242Z
-27,queue-840,840,County Durham,840 - County Durham,districts/840_county-durham.csv,pending,262,62,200,23.7,,,,2026-02-20T13:24:58.242Z
-28,queue-380,380,Bradford,380 - Bradford,districts/380_bradford.csv,pending,211,28,183,13.3,,,,2026-02-20T13:24:58.242Z
-29,queue-941,941,West Northamptonshire,941 - West Northamptonshire,districts/941_west-northamptonshire.csv,pending,186,4,182,2.2,,,,2026-02-20T13:24:58.242Z
-30,queue-865,865,Wiltshire,865 - Wiltshire,districts/865_wiltshire.csv,pending,235,54,181,23.0,,,,2026-02-20T13:24:58.242Z
-31,queue-845,845,East Sussex,845 - East Sussex,districts/845_east-sussex.csv,pending,187,27,160,14.4,,,,2026-02-20T13:24:58.242Z
-32,queue-382,382,Kirklees,382 - Kirklees,districts/382_kirklees.csv,pending,181,21,160,11.6,,,,2026-02-20T13:24:58.242Z
-33,queue-373,373,Sheffield,373 - Sheffield,districts/373_sheffield.csv,pending,180,25,155,13.9,,,,2026-02-20T13:24:58.242Z
-34,queue-838,838,Dorset,838 - Dorset,districts/838_dorset.csv,pending,158,5,153,3.2,,,,2026-02-20T13:24:58.242Z
-35,queue-811,811,East Riding of Yorkshire,811 - East Riding of Yorkshire,districts/811_east-riding-of-yorkshire.csv,pending,149,2,147,1.3,,,,2026-02-20T13:24:58.242Z
-36,queue-893,893,Shropshire,893 - Shropshire,districts/893_shropshire.csv,pending,151,7,144,4.6,,,,2026-02-20T13:24:58.242Z
-37,queue-801,801,"Bristol, City of","801 - Bristol, City of",districts/801_bristol-city-of.csv,pending,155,12,143,7.7,,,,2026-02-20T13:24:58.242Z
-38,queue-942,942,Cumberland,942 - Cumberland,districts/942_cumberland.csv,pending,172,31,141,18.0,,,,2026-02-20T13:24:58.242Z
-39,queue-929,929,Northumberland,929 - Northumberland,districts/929_northumberland.csv,pending,168,28,140,16.7,,,,2026-02-20T13:24:58.242Z
-40,queue-940,940,North Northamptonshire,940 - North Northamptonshire,districts/940_north-northamptonshire.csv,pending,144,5,139,3.5,,,,2026-02-20T13:24:58.242Z
-41,queue-341,341,Liverpool,341 - Liverpool,districts/341_liverpool.csv,pending,170,33,137,19.4,,,,2026-02-20T13:24:58.242Z
-42,queue-895,895,Cheshire East,895 - Cheshire East,districts/895_cheshire-east.csv,pending,155,24,131,15.5,,,,2026-02-20T13:24:58.242Z
-43,queue-384,384,Wakefield,384 - Wakefield,districts/384_wakefield.csv,pending,143,15,128,10.5,,,,2026-02-20T13:24:58.242Z
-44,queue-352,352,Manchester,352 - Manchester,districts/352_manchester.csv,pending,188,62,126,33.0,,,,2026-02-20T13:24:58.242Z
-45,queue-372,372,Rotherham,372 - Rotherham,districts/372_rotherham.csv,pending,124,1,123,0.8,,,,2026-02-20T13:24:58.242Z
-46,queue-371,371,Doncaster,371 - Doncaster,districts/371_doncaster.csv,pending,128,7,121,5.5,,,,2026-02-20T13:24:58.242Z
-47,queue-896,896,Cheshire West and Chester,896 - Cheshire West and Chester,districts/896_cheshire-west-and-chester.csv,pending,161,43,118,26.7,,,,2026-02-20T13:24:58.242Z
-48,queue-344,344,Wirral,344 - Wirral,districts/344_wirral.csv,pending,125,9,116,7.2,,,,2026-02-20T13:24:58.242Z
-49,queue-350,350,Bolton,350 - Bolton,districts/350_bolton.csv,pending,128,14,114,10.9,,,,2026-02-20T13:24:58.242Z
-50,queue-331,331,Coventry,331 - Coventry,districts/331_coventry.csv,pending,118,5,113,4.2,,,,2026-02-20T13:24:58.242Z
-51,queue-823,823,Central Bedfordshire,823 - Central Bedfordshire,districts/823_central-bedfordshire.csv,pending,130,18,112,13.8,,,,2026-02-20T13:24:58.242Z
-52,queue-803,803,South Gloucestershire,803 - South Gloucestershire,districts/803_south-gloucestershire.csv,pending,116,5,111,4.3,,,,2026-02-20T13:24:58.242Z
-53,queue-359,359,Wigan,359 - Wigan,districts/359_wigan.csv,pending,127,16,111,12.6,,,,2026-02-20T13:24:58.242Z
-54,queue-333,333,Sandwell,333 - Sandwell,districts/333_sandwell.csv,pending,124,16,108,12.9,,,,2026-02-20T13:24:58.242Z
-55,queue-943,943,Westmorland and Furness,943 - Westmorland and Furness,districts/943_westmorland-and-furness.csv,pending,147,39,108,26.5,,,,2026-02-20T13:24:58.242Z
-56,queue-356,356,Stockport,356 - Stockport,districts/356_stockport.csv,pending,115,8,107,7.0,,,,2026-02-20T13:24:58.242Z
-57,queue-336,336,Wolverhampton,336 - Wolverhampton,districts/336_wolverhampton.csv,pending,111,5,106,4.5,,,,2026-02-20T13:24:58.242Z
-58,queue-353,353,Oldham,353 - Oldham,districts/353_oldham.csv,pending,108,4,104,3.7,,,,2026-02-20T13:24:58.242Z
-59,queue-335,335,Walsall,335 - Walsall,districts/335_walsall.csv,pending,122,21,101,17.2,,,,2026-02-20T13:24:58.242Z
-60,queue-826,826,Milton Keynes,826 - Milton Keynes,districts/826_milton-keynes.csv,pending,115,15,100,13.0,,,,2026-02-20T13:24:58.242Z
-61,queue-394,394,Sunderland,394 - Sunderland,districts/394_sunderland.csv,pending,116,16,100,13.8,,,,2026-02-20T13:24:58.242Z
-62,queue-892,892,Nottingham,892 - Nottingham,districts/892_nottingham.csv,pending,106,7,99,6.6,,,,2026-02-20T13:24:58.242Z
-63,queue-839,839,"Bournemouth, Christchurch and Poole","839 - Bournemouth, Christchurch and Poole",districts/839_bournemouth-christchurch-and-poole.csv,pending,98,0,98,0.0,,,,2026-02-20T13:24:58.242Z
-64,queue-831,831,Derby,831 - Derby,districts/831_derby.csv,pending,106,8,98,7.5,,,,2026-02-20T13:24:58.242Z
-65,queue-305,305,Bromley,305 - Bromley,districts/305_bromley.csv,pending,100,4,96,4.0,,,,2026-02-20T13:24:58.242Z
-66,queue-810,810,"Kingston upon Hull, City of","810 - Kingston upon Hull, City of",districts/810_kingston-upon-hull-city-of.csv,pending,98,2,96,2.0,,,,2026-02-20T13:24:58.242Z
-67,queue-391,391,Newcastle upon Tyne,391 - Newcastle upon Tyne,districts/391_newcastle-upon-tyne.csv,pending,99,4,95,4.0,,,,2026-02-20T13:24:58.242Z
-68,queue-343,343,Sefton,343 - Sefton,districts/343_sefton.csv,pending,102,7,95,6.9,,,,2026-02-20T13:24:58.242Z
-69,queue-306,306,Croydon,306 - Croydon,districts/306_croydon.csv,pending,126,32,94,25.4,,,,2026-02-20T13:24:58.242Z
-70,queue-856,856,Leicester,856 - Leicester,districts/856_leicester.csv,pending,115,21,94,18.3,,,,2026-02-20T13:24:58.242Z
-71,queue-887,887,Medway,887 - Medway,districts/887_medway.csv,pending,103,9,94,8.7,,,,2026-02-20T13:24:58.242Z
-72,queue-879,879,Plymouth,879 - Plymouth,districts/879_plymouth.csv,pending,98,4,94,4.1,,,,2026-02-20T13:24:58.242Z
-73,queue-357,357,Tameside,357 - Tameside,districts/357_tameside.csv,pending,99,7,92,7.1,,,,2026-02-20T13:24:58.242Z
-74,queue-316,316,Newham,316 - Newham,districts/316_newham.csv,pending,104,14,90,13.5,,,,2026-02-20T13:24:58.242Z
-75,queue-355,355,Salford,355 - Salford,districts/355_salford.csv,pending,100,10,90,10.0,,,,2026-02-20T13:24:58.242Z
-76,queue-370,370,Barnsley,370 - Barnsley,districts/370_barnsley.csv,pending,91,4,87,4.4,,,,2026-02-20T13:24:58.242Z
-77,queue-861,861,Stoke-on-Trent,861 - Stoke-on-Trent,districts/861_stoke-on-trent.csv,pending,94,7,87,7.4,,,,2026-02-20T13:24:58.242Z
-78,queue-332,332,Dudley,332 - Dudley,districts/332_dudley.csv,pending,108,22,86,20.4,,,,2026-02-20T13:24:58.242Z
-79,queue-877,877,Warrington,877 - Warrington,districts/877_warrington.csv,pending,88,3,85,3.4,,,,2026-02-20T13:24:58.242Z
-80,queue-866,866,Swindon,866 - Swindon,districts/866_swindon.csv,pending,88,4,84,4.5,,,,2026-02-20T13:24:58.242Z
-81,queue-354,354,Rochdale,354 - Rochdale,districts/354_rochdale.csv,pending,90,7,83,7.8,,,,2026-02-20T13:24:58.242Z
-82,queue-334,334,Solihull,334 - Solihull,districts/334_solihull.csv,pending,84,2,82,2.4,,,,2026-02-20T13:24:58.242Z
-83,queue-800,800,Bath and North East Somerset,800 - Bath and North East Somerset,districts/800_bath-and-north-east-somerset.csv,pending,81,0,81,0.0,,,,2026-02-20T13:24:58.242Z
-84,queue-351,351,Bury,351 - Bury,districts/351_bury.csv,pending,84,4,80,4.8,,,,2026-02-20T13:24:58.242Z
-85,queue-390,390,Gateshead,390 - Gateshead,districts/390_gateshead.csv,pending,83,3,80,3.6,,,,2026-02-20T13:24:58.242Z
-86,queue-802,802,North Somerset,802 - North Somerset,districts/802_north-somerset.csv,pending,80,0,80,0.0,,,,2026-02-20T13:24:58.242Z
-87,queue-302,302,Barnet,302 - Barnet,districts/302_barnet.csv,pending,133,56,77,42.1,,,,2026-02-20T13:24:58.242Z
-88,queue-392,392,North Tyneside,392 - North Tyneside,districts/392_north-tyneside.csv,pending,78,2,76,2.6,,,,2026-02-20T13:24:58.242Z
-89,queue-813,813,North Lincolnshire,813 - North Lincolnshire,districts/813_north-lincolnshire.csv,pending,80,6,74,7.5,,,,2026-02-20T13:24:58.242Z
-90,queue-808,808,Stockton-on-Tees,808 - Stockton-on-Tees,districts/808_stockton-on-tees.csv,pending,78,4,74,5.1,,,,2026-02-20T13:24:58.242Z
-91,queue-312,312,Hillingdon,312 - Hillingdon,districts/312_hillingdon.csv,pending,98,25,73,25.5,,,,2026-02-20T13:24:58.242Z
-92,queue-889,889,Blackburn with Darwen,889 - Blackburn with Darwen,districts/889_blackburn-with-darwen.csv,pending,77,5,72,6.5,,,,2026-02-20T13:24:58.242Z
-93,queue-894,894,Telford and Wrekin,894 - Telford and Wrekin,districts/894_telford-and-wrekin.csv,pending,75,3,72,4.0,,,,2026-02-20T13:24:58.242Z
-94,queue-317,317,Redbridge,317 - Redbridge,districts/317_redbridge.csv,pending,79,8,71,10.1,,,,2026-02-20T13:24:58.242Z
-95,queue-884,884,"Herefordshire, County of","884 - Herefordshire, County of",districts/884_herefordshire-county-of.csv,pending,100,31,69,31.0,,,,2026-02-20T13:24:58.242Z
-96,queue-874,874,Peterborough,874 - Peterborough,districts/874_peterborough.csv,pending,82,13,69,15.9,,,,2026-02-20T13:24:58.242Z
-97,queue-303,303,Bexley,303 - Bexley,districts/303_bexley.csv,pending,84,16,68,19.0,,,,2026-02-20T13:24:58.242Z
-98,queue-311,311,Havering,311 - Havering,districts/311_havering.csv,pending,83,15,68,18.1,,,,2026-02-20T13:24:58.242Z
-99,queue-210,210,Southwark,210 - Southwark,districts/210_southwark.csv,pending,103,36,67,35.0,,,,2026-02-20T13:24:58.242Z
-100,queue-822,822,Bedford,822 - Bedford,districts/822_bedford.csv,pending,77,11,66,14.3,,,,2026-02-20T13:24:58.242Z
-101,queue-308,308,Enfield,308 - Enfield,districts/308_enfield.csv,pending,97,32,65,33.0,,,,2026-02-20T13:24:58.242Z
-102,queue-342,342,St. Helens,342 - St. Helens,districts/342_st-helens.csv,pending,69,4,65,5.8,,,,2026-02-20T13:24:58.242Z
-103,queue-381,381,Calderdale,381 - Calderdale,districts/381_calderdale.csv,pending,100,36,64,36.0,,,,2026-02-20T13:24:58.242Z
-104,queue-209,209,Lewisham,209 - Lewisham,districts/209_lewisham.csv,pending,86,22,64,25.6,,,,2026-02-20T13:24:58.242Z
-105,queue-358,358,Trafford,358 - Trafford,districts/358_trafford.csv,pending,90,26,64,28.9,,,,2026-02-20T13:24:58.242Z
-106,queue-320,320,Waltham Forest,320 - Waltham Forest,districts/320_waltham-forest.csv,pending,79,15,64,19.0,,,,2026-02-20T13:24:58.242Z
-107,queue-872,872,Wokingham,872 - Wokingham,districts/872_wokingham.csv,pending,71,9,62,12.7,,,,2026-02-20T13:24:58.242Z
-108,queue-340,340,Knowsley,340 - Knowsley,districts/340_knowsley.csv,pending,61,0,61,0.0,,,,2026-02-20T13:24:58.242Z
-109,queue-208,208,Lambeth,208 - Lambeth,districts/208_lambeth.csv,pending,91,31,60,34.1,,,,2026-02-20T13:24:58.242Z
-110,queue-852,852,Southampton,852 - Southampton,districts/852_southampton.csv,pending,77,17,60,22.1,,,,2026-02-20T13:24:58.242Z
-111,queue-846,846,Brighton and Hove,846 - Brighton and Hove,districts/846_brighton-and-hove.csv,pending,64,5,59,7.8,,,,2026-02-20T13:24:58.242Z
-112,queue-313,313,Hounslow,313 - Hounslow,districts/313_hounslow.csv,pending,77,18,59,23.4,,,,2026-02-20T13:24:58.242Z
-113,queue-812,812,North East Lincolnshire,812 - North East Lincolnshire,districts/812_north-east-lincolnshire.csv,pending,63,4,59,6.3,,,,2026-02-20T13:24:58.242Z
-114,queue-869,869,West Berkshire,869 - West Berkshire,districts/869_west-berkshire.csv,pending,82,23,59,28.0,,,,2026-02-20T13:24:58.242Z
-115,queue-816,816,York,816 - York,districts/816_york.csv,pending,63,4,59,6.3,,,,2026-02-20T13:24:58.242Z
-116,queue-851,851,Portsmouth,851 - Portsmouth,districts/851_portsmouth.csv,pending,61,3,58,4.9,,,,2026-02-20T13:24:58.242Z
-117,queue-876,876,Halton,876 - Halton,districts/876_halton.csv,pending,66,9,57,13.6,,,,2026-02-20T13:24:58.242Z
-118,queue-309,309,Haringey,309 - Haringey,districts/309_haringey.csv,pending,86,29,57,33.7,,,,2026-02-20T13:24:58.242Z
-119,queue-807,807,Redcar and Cleveland,807 - Redcar and Cleveland,districts/807_redcar-and-cleveland.csv,pending,60,3,57,5.0,,,,2026-02-20T13:24:58.242Z
-120,queue-821,821,Luton,821 - Luton,districts/821_luton.csv,pending,70,14,56,20.0,,,,2026-02-20T13:24:58.242Z
-121,queue-883,883,Thurrock,883 - Thurrock,districts/883_thurrock.csv,pending,56,1,55,1.8,,,,2026-02-20T13:24:58.242Z
-122,queue-307,307,Ealing,307 - Ealing,districts/307_ealing.csv,pending,94,40,54,42.6,,,,2026-02-20T13:24:58.242Z
-123,queue-868,868,Windsor and Maidenhead,868 - Windsor and Maidenhead,districts/868_windsor-and-maidenhead.csv,pending,66,12,54,18.2,,,,2026-02-20T13:24:58.242Z
-124,queue-806,806,Middlesbrough,806 - Middlesbrough,districts/806_middlesbrough.csv,pending,57,4,53,7.0,,,,2026-02-20T13:24:58.242Z
-125,queue-304,304,Brent,304 - Brent,districts/304_brent.csv,pending,89,38,51,42.7,,,,2026-02-20T13:24:58.242Z
-126,queue-870,870,Reading,870 - Reading,districts/870_reading.csv,pending,61,10,51,16.4,,,,2026-02-20T13:24:58.242Z
-127,queue-211,211,Tower Hamlets,211 - Tower Hamlets,districts/211_tower-hamlets.csv,pending,95,44,51,46.3,,,,2026-02-20T13:24:58.242Z
-128,queue-318,318,Richmond upon Thames,318 - Richmond upon Thames,districts/318_richmond-upon-thames.csv,pending,60,10,50,16.7,,,,2026-02-20T13:24:58.242Z
-129,queue-206,206,Islington,206 - Islington,districts/206_islington.csv,pending,66,17,49,25.8,,,,2026-02-20T13:24:58.242Z
-130,queue-882,882,Southend-on-Sea,882 - Southend-on-Sea,districts/882_southend-on-sea.csv,pending,52,4,48,7.7,,,,2026-02-20T13:24:58.242Z
-131,queue-319,319,Sutton,319 - Sutton,districts/319_sutton.csv,pending,64,16,48,25.0,,,,2026-02-20T13:24:58.242Z
-132,queue-212,212,Wandsworth,212 - Wandsworth,districts/212_wandsworth.csv,pending,84,36,48,42.9,,,,2026-02-20T13:24:58.242Z
-133,queue-310,310,Harrow,310 - Harrow,districts/310_harrow.csv,pending,60,13,47,21.7,,,,2026-02-20T13:24:58.242Z
-134,queue-203,203,Greenwich,203 - Greenwich,districts/203_greenwich.csv,pending,89,43,46,48.3,,,,2026-02-20T13:24:58.242Z
-135,queue-921,921,Isle of Wight,921 - Isle of Wight,districts/921_isle-of-wight.csv,pending,47,2,45,4.3,,,,2026-02-20T13:24:58.242Z
-136,queue-301,301,Barking and Dagenham,301 - Barking and Dagenham,districts/301_barking-and-dagenham.csv,pending,61,17,44,27.9,,,,2026-02-20T13:24:58.242Z
-137,queue-890,890,Blackpool,890 - Blackpool,districts/890_blackpool.csv,pending,44,1,43,2.3,,,,2026-02-20T13:24:58.242Z
-138,queue-871,871,Slough,871 - Slough,districts/871_slough.csv,pending,51,8,43,15.7,,,,2026-02-20T13:24:58.242Z
-139,queue-393,393,South Tyneside,393 - South Tyneside,districts/393_south-tyneside.csv,pending,62,19,43,30.6,,,,2026-02-20T13:24:58.242Z
-140,queue-841,841,Darlington,841 - Darlington,districts/841_darlington.csv,pending,43,1,42,2.3,,,,2026-02-20T13:24:58.242Z
-141,queue-204,204,Hackney,204 - Hackney,districts/204_hackney.csv,pending,77,35,42,45.5,,,,2026-02-20T13:24:58.242Z
-142,queue-880,880,Torbay,880 - Torbay,districts/880_torbay.csv,pending,43,1,42,2.3,,,,2026-02-20T13:24:58.242Z
-143,queue-205,205,Hammersmith and Fulham,205 - Hammersmith and Fulham,districts/205_hammersmith-and-fulham.csv,pending,58,18,40,31.0,,,,2026-02-20T13:24:58.242Z
-144,queue-213,213,Westminster,213 - Westminster,districts/213_westminster.csv,pending,56,17,39,30.4,,,,2026-02-20T13:24:58.242Z
-145,queue-805,805,Hartlepool,805 - Hartlepool,districts/805_hartlepool.csv,pending,39,4,35,10.3,,,,2026-02-20T13:24:58.242Z
-146,queue-867,867,Bracknell Forest,867 - Bracknell Forest,districts/867_bracknell-forest.csv,pending,37,5,32,13.5,,,,2026-02-20T13:24:58.242Z
-147,queue-315,315,Merton,315 - Merton,districts/315_merton.csv,pending,56,26,30,46.4,,,,2026-02-20T13:24:58.242Z
-148,queue-207,207,Kensington and Chelsea,207 - Kensington and Chelsea,districts/207_kensington-and-chelsea.csv,pending,40,12,28,30.0,,,,2026-02-20T13:24:58.242Z
-149,queue-314,314,Kingston upon Thames,314 - Kingston upon Thames,districts/314_kingston-upon-thames.csv,pending,52,24,28,46.2,,,,2026-02-20T13:24:58.242Z
-150,queue-202,202,Camden,202 - Camden,districts/202_camden.csv,pending,57,36,21,63.2,,,,2026-02-20T13:24:58.242Z
-151,queue-857,857,Rutland,857 - Rutland,districts/857_rutland.csv,pending,21,1,20,4.8,,,,2026-02-20T13:24:58.242Z
-152,queue-201,201,City of London,201 - City of London,districts/201_city-of-london.csv,pending,1,0,1,0.0,,,,2026-02-20T13:24:58.242Z
-153,queue-420,420,Isles Of Scilly,420 - Isles Of Scilly,districts/420_isles-of-scilly.csv,pending,1,0,1,0.0,,,,2026-02-20T13:24:58.242Z
+1,queue-888,888,Lancashire,888 - Lancashire,districts/888_lancashire.csv,pending,627,122,505,19.5,,,,2026-02-20T13:41:35.751Z
+2,queue-886,886,Kent,886 - Kent,districts/886_kent.csv,pending,595,96,499,16.1,,,,2026-02-20T13:41:35.751Z
+3,queue-881,881,Essex,881 - Essex,districts/881_essex.csv,pending,558,84,474,15.1,,,,2026-02-20T13:41:35.751Z
+4,queue-850,850,Hampshire,850 - Hampshire,districts/850_hampshire.csv,pending,531,123,408,23.2,,,,2026-02-20T13:41:35.751Z
+5,queue-330,330,Birmingham,330 - Birmingham,districts/330_birmingham.csv,pending,444,55,389,12.4,,,,2026-02-20T13:41:35.751Z
+6,queue-926,926,Norfolk,926 - Norfolk,districts/926_norfolk.csv,pending,423,43,380,10.2,,,,2026-02-20T13:41:35.751Z
+7,queue-919,919,Hertfordshire,919 - Hertfordshire,districts/919_hertfordshire.csv,pending,531,160,371,30.1,,,,2026-02-20T13:41:35.751Z
+8,queue-860,860,Staffordshire,860 - Staffordshire,districts/860_staffordshire.csv,pending,409,47,362,11.5,,,,2026-02-20T13:41:35.751Z
+9,queue-936,936,Surrey,936 - Surrey,districts/936_surrey.csv,pending,400,52,348,13.0,,,,2026-02-20T13:41:35.751Z
+10,queue-830,830,Derbyshire,830 - Derbyshire,districts/830_derbyshire.csv,pending,419,77,342,18.4,,,,2026-02-20T13:41:35.751Z
+11,queue-925,925,Lincolnshire,925 - Lincolnshire,districts/925_lincolnshire.csv,pending,361,32,329,8.9,,,,2026-02-20T13:41:35.751Z
+12,queue-878,878,Devon,878 - Devon,districts/878_devon.csv,pending,371,47,324,12.7,,,,2026-02-20T13:41:35.751Z
+13,queue-935,935,Suffolk,935 - Suffolk,districts/935_suffolk.csv,pending,323,22,301,6.8,,,,2026-02-20T13:41:35.751Z
+14,queue-891,891,Nottinghamshire,891 - Nottinghamshire,districts/891_nottinghamshire.csv,pending,341,44,297,12.9,,,,2026-02-20T13:41:35.751Z
+15,queue-815,815,North Yorkshire,815 - North Yorkshire,districts/815_north-yorkshire.csv,pending,355,60,295,16.9,,,,2026-02-20T13:41:35.751Z
+16,queue-931,931,Oxfordshire,931 - Oxfordshire,districts/931_oxfordshire.csv,pending,307,19,288,6.2,,,,2026-02-20T13:41:35.751Z
+17,queue-383,383,Leeds,383 - Leeds,districts/383_leeds.csv,pending,280,12,268,4.3,,,,2026-02-20T13:41:35.751Z
+18,queue-908,908,Cornwall,908 - Cornwall,districts/908_cornwall.csv,pending,280,16,264,5.7,,,,2026-02-20T13:41:35.751Z
+19,queue-855,855,Leicestershire,855 - Leicestershire,districts/855_leicestershire.csv,pending,287,30,257,10.5,,,,2026-02-20T13:41:35.751Z
+20,queue-873,873,Cambridgeshire,873 - Cambridgeshire,districts/873_cambridgeshire.csv,pending,270,27,243,10.0,,,,2026-02-20T13:41:35.751Z
+21,queue-916,916,Gloucestershire,916 - Gloucestershire,districts/916_gloucestershire.csv,pending,300,58,242,19.3,,,,2026-02-20T13:41:35.751Z
+22,queue-933,933,Somerset,933 - Somerset,districts/933_somerset.csv,pending,269,31,238,11.5,,,,2026-02-20T13:41:35.751Z
+23,queue-938,938,West Sussex,938 - West Sussex,districts/938_west-sussex.csv,pending,285,70,215,24.6,,,,2026-02-20T13:41:35.751Z
+24,queue-937,937,Warwickshire,937 - Warwickshire,districts/937_warwickshire.csv,pending,252,43,209,17.1,,,,2026-02-20T13:41:35.751Z
+25,queue-825,825,Buckinghamshire,825 - Buckinghamshire,districts/825_buckinghamshire.csv,pending,235,32,203,13.6,,,,2026-02-20T13:41:35.751Z
+26,queue-885,885,Worcestershire,885 - Worcestershire,districts/885_worcestershire.csv,pending,244,43,201,17.6,,,,2026-02-20T13:41:35.751Z
+27,queue-840,840,County Durham,840 - County Durham,districts/840_county-durham.csv,pending,262,62,200,23.7,,,,2026-02-20T13:41:35.751Z
+28,queue-380,380,Bradford,380 - Bradford,districts/380_bradford.csv,pending,211,28,183,13.3,,,,2026-02-20T13:41:35.751Z
+29,queue-941,941,West Northamptonshire,941 - West Northamptonshire,districts/941_west-northamptonshire.csv,pending,186,4,182,2.2,,,,2026-02-20T13:41:35.751Z
+30,queue-865,865,Wiltshire,865 - Wiltshire,districts/865_wiltshire.csv,pending,235,54,181,23.0,,,,2026-02-20T13:41:35.751Z
+31,queue-845,845,East Sussex,845 - East Sussex,districts/845_east-sussex.csv,pending,187,27,160,14.4,,,,2026-02-20T13:41:35.751Z
+32,queue-382,382,Kirklees,382 - Kirklees,districts/382_kirklees.csv,pending,181,21,160,11.6,,,,2026-02-20T13:41:35.751Z
+33,queue-373,373,Sheffield,373 - Sheffield,districts/373_sheffield.csv,pending,180,25,155,13.9,,,,2026-02-20T13:41:35.751Z
+34,queue-838,838,Dorset,838 - Dorset,districts/838_dorset.csv,pending,158,5,153,3.2,,,,2026-02-20T13:41:35.751Z
+35,queue-811,811,East Riding of Yorkshire,811 - East Riding of Yorkshire,districts/811_east-riding-of-yorkshire.csv,pending,149,2,147,1.3,,,,2026-02-20T13:41:35.751Z
+36,queue-893,893,Shropshire,893 - Shropshire,districts/893_shropshire.csv,pending,151,7,144,4.6,,,,2026-02-20T13:41:35.751Z
+37,queue-801,801,"Bristol, City of","801 - Bristol, City of",districts/801_bristol-city-of.csv,pending,155,12,143,7.7,,,,2026-02-20T13:41:35.751Z
+38,queue-942,942,Cumberland,942 - Cumberland,districts/942_cumberland.csv,pending,172,31,141,18.0,,,,2026-02-20T13:41:35.751Z
+39,queue-929,929,Northumberland,929 - Northumberland,districts/929_northumberland.csv,pending,168,28,140,16.7,,,,2026-02-20T13:41:35.751Z
+40,queue-940,940,North Northamptonshire,940 - North Northamptonshire,districts/940_north-northamptonshire.csv,pending,144,5,139,3.5,,,,2026-02-20T13:41:35.751Z
+41,queue-341,341,Liverpool,341 - Liverpool,districts/341_liverpool.csv,pending,170,33,137,19.4,,,,2026-02-20T13:41:35.751Z
+42,queue-895,895,Cheshire East,895 - Cheshire East,districts/895_cheshire-east.csv,pending,155,24,131,15.5,,,,2026-02-20T13:41:35.751Z
+43,queue-384,384,Wakefield,384 - Wakefield,districts/384_wakefield.csv,pending,143,15,128,10.5,,,,2026-02-20T13:41:35.751Z
+44,queue-352,352,Manchester,352 - Manchester,districts/352_manchester.csv,pending,188,62,126,33.0,,,,2026-02-20T13:41:35.751Z
+45,queue-372,372,Rotherham,372 - Rotherham,districts/372_rotherham.csv,pending,124,1,123,0.8,,,,2026-02-20T13:41:35.751Z
+46,queue-371,371,Doncaster,371 - Doncaster,districts/371_doncaster.csv,pending,128,7,121,5.5,,,,2026-02-20T13:41:35.751Z
+47,queue-896,896,Cheshire West and Chester,896 - Cheshire West and Chester,districts/896_cheshire-west-and-chester.csv,pending,161,43,118,26.7,,,,2026-02-20T13:41:35.751Z
+48,queue-344,344,Wirral,344 - Wirral,districts/344_wirral.csv,pending,125,9,116,7.2,,,,2026-02-20T13:41:35.751Z
+49,queue-350,350,Bolton,350 - Bolton,districts/350_bolton.csv,pending,128,14,114,10.9,,,,2026-02-20T13:41:35.751Z
+50,queue-331,331,Coventry,331 - Coventry,districts/331_coventry.csv,pending,118,5,113,4.2,,,,2026-02-20T13:41:35.751Z
+51,queue-823,823,Central Bedfordshire,823 - Central Bedfordshire,districts/823_central-bedfordshire.csv,pending,130,18,112,13.8,,,,2026-02-20T13:41:35.751Z
+52,queue-803,803,South Gloucestershire,803 - South Gloucestershire,districts/803_south-gloucestershire.csv,pending,116,5,111,4.3,,,,2026-02-20T13:41:35.751Z
+53,queue-359,359,Wigan,359 - Wigan,districts/359_wigan.csv,pending,127,16,111,12.6,,,,2026-02-20T13:41:35.751Z
+54,queue-333,333,Sandwell,333 - Sandwell,districts/333_sandwell.csv,pending,124,16,108,12.9,,,,2026-02-20T13:41:35.751Z
+55,queue-943,943,Westmorland and Furness,943 - Westmorland and Furness,districts/943_westmorland-and-furness.csv,pending,147,39,108,26.5,,,,2026-02-20T13:41:35.751Z
+56,queue-356,356,Stockport,356 - Stockport,districts/356_stockport.csv,pending,115,8,107,7.0,,,,2026-02-20T13:41:35.751Z
+57,queue-336,336,Wolverhampton,336 - Wolverhampton,districts/336_wolverhampton.csv,pending,111,5,106,4.5,,,,2026-02-20T13:41:35.751Z
+58,queue-353,353,Oldham,353 - Oldham,districts/353_oldham.csv,pending,108,4,104,3.7,,,,2026-02-20T13:41:35.751Z
+59,queue-335,335,Walsall,335 - Walsall,districts/335_walsall.csv,pending,122,21,101,17.2,,,,2026-02-20T13:41:35.751Z
+60,queue-826,826,Milton Keynes,826 - Milton Keynes,districts/826_milton-keynes.csv,pending,115,15,100,13.0,,,,2026-02-20T13:41:35.751Z
+61,queue-394,394,Sunderland,394 - Sunderland,districts/394_sunderland.csv,pending,116,16,100,13.8,,,,2026-02-20T13:41:35.751Z
+62,queue-892,892,Nottingham,892 - Nottingham,districts/892_nottingham.csv,pending,106,7,99,6.6,,,,2026-02-20T13:41:35.751Z
+63,queue-839,839,"Bournemouth, Christchurch and Poole","839 - Bournemouth, Christchurch and Poole",districts/839_bournemouth-christchurch-and-poole.csv,pending,98,0,98,0.0,,,,2026-02-20T13:41:35.751Z
+64,queue-831,831,Derby,831 - Derby,districts/831_derby.csv,pending,106,8,98,7.5,,,,2026-02-20T13:41:35.751Z
+65,queue-305,305,Bromley,305 - Bromley,districts/305_bromley.csv,pending,100,4,96,4.0,,,,2026-02-20T13:41:35.751Z
+66,queue-810,810,"Kingston upon Hull, City of","810 - Kingston upon Hull, City of",districts/810_kingston-upon-hull-city-of.csv,pending,98,2,96,2.0,,,,2026-02-20T13:41:35.751Z
+67,queue-391,391,Newcastle upon Tyne,391 - Newcastle upon Tyne,districts/391_newcastle-upon-tyne.csv,pending,99,4,95,4.0,,,,2026-02-20T13:41:35.751Z
+68,queue-343,343,Sefton,343 - Sefton,districts/343_sefton.csv,pending,102,7,95,6.9,,,,2026-02-20T13:41:35.751Z
+69,queue-306,306,Croydon,306 - Croydon,districts/306_croydon.csv,pending,126,32,94,25.4,,,,2026-02-20T13:41:35.751Z
+70,queue-856,856,Leicester,856 - Leicester,districts/856_leicester.csv,pending,115,21,94,18.3,,,,2026-02-20T13:41:35.751Z
+71,queue-887,887,Medway,887 - Medway,districts/887_medway.csv,pending,103,9,94,8.7,,,,2026-02-20T13:41:35.751Z
+72,queue-879,879,Plymouth,879 - Plymouth,districts/879_plymouth.csv,pending,98,4,94,4.1,,,,2026-02-20T13:41:35.751Z
+73,queue-357,357,Tameside,357 - Tameside,districts/357_tameside.csv,pending,99,7,92,7.1,,,,2026-02-20T13:41:35.751Z
+74,queue-316,316,Newham,316 - Newham,districts/316_newham.csv,pending,104,14,90,13.5,,,,2026-02-20T13:41:35.751Z
+75,queue-355,355,Salford,355 - Salford,districts/355_salford.csv,pending,100,10,90,10.0,,,,2026-02-20T13:41:35.751Z
+76,queue-370,370,Barnsley,370 - Barnsley,districts/370_barnsley.csv,pending,91,4,87,4.4,,,,2026-02-20T13:41:35.751Z
+77,queue-861,861,Stoke-on-Trent,861 - Stoke-on-Trent,districts/861_stoke-on-trent.csv,pending,94,7,87,7.4,,,,2026-02-20T13:41:35.751Z
+78,queue-332,332,Dudley,332 - Dudley,districts/332_dudley.csv,pending,108,22,86,20.4,,,,2026-02-20T13:41:35.751Z
+79,queue-877,877,Warrington,877 - Warrington,districts/877_warrington.csv,pending,88,3,85,3.4,,,,2026-02-20T13:41:35.751Z
+80,queue-866,866,Swindon,866 - Swindon,districts/866_swindon.csv,pending,88,4,84,4.5,,,,2026-02-20T13:41:35.751Z
+81,queue-354,354,Rochdale,354 - Rochdale,districts/354_rochdale.csv,pending,90,7,83,7.8,,,,2026-02-20T13:41:35.751Z
+82,queue-334,334,Solihull,334 - Solihull,districts/334_solihull.csv,pending,84,2,82,2.4,,,,2026-02-20T13:41:35.751Z
+83,queue-800,800,Bath and North East Somerset,800 - Bath and North East Somerset,districts/800_bath-and-north-east-somerset.csv,pending,81,0,81,0.0,,,,2026-02-20T13:41:35.751Z
+84,queue-351,351,Bury,351 - Bury,districts/351_bury.csv,pending,84,4,80,4.8,,,,2026-02-20T13:41:35.751Z
+85,queue-390,390,Gateshead,390 - Gateshead,districts/390_gateshead.csv,pending,83,3,80,3.6,,,,2026-02-20T13:41:35.751Z
+86,queue-802,802,North Somerset,802 - North Somerset,districts/802_north-somerset.csv,pending,80,0,80,0.0,,,,2026-02-20T13:41:35.751Z
+87,queue-302,302,Barnet,302 - Barnet,districts/302_barnet.csv,pending,133,56,77,42.1,,,,2026-02-20T13:41:35.751Z
+88,queue-392,392,North Tyneside,392 - North Tyneside,districts/392_north-tyneside.csv,pending,78,2,76,2.6,,,,2026-02-20T13:41:35.751Z
+89,queue-813,813,North Lincolnshire,813 - North Lincolnshire,districts/813_north-lincolnshire.csv,pending,80,6,74,7.5,,,,2026-02-20T13:41:35.751Z
+90,queue-808,808,Stockton-on-Tees,808 - Stockton-on-Tees,districts/808_stockton-on-tees.csv,pending,78,4,74,5.1,,,,2026-02-20T13:41:35.751Z
+91,queue-312,312,Hillingdon,312 - Hillingdon,districts/312_hillingdon.csv,pending,98,25,73,25.5,,,,2026-02-20T13:41:35.751Z
+92,queue-889,889,Blackburn with Darwen,889 - Blackburn with Darwen,districts/889_blackburn-with-darwen.csv,pending,77,5,72,6.5,,,,2026-02-20T13:41:35.751Z
+93,queue-894,894,Telford and Wrekin,894 - Telford and Wrekin,districts/894_telford-and-wrekin.csv,pending,75,3,72,4.0,,,,2026-02-20T13:41:35.751Z
+94,queue-317,317,Redbridge,317 - Redbridge,districts/317_redbridge.csv,pending,79,8,71,10.1,,,,2026-02-20T13:41:35.751Z
+95,queue-884,884,"Herefordshire, County of","884 - Herefordshire, County of",districts/884_herefordshire-county-of.csv,pending,100,31,69,31.0,,,,2026-02-20T13:41:35.751Z
+96,queue-874,874,Peterborough,874 - Peterborough,districts/874_peterborough.csv,pending,82,13,69,15.9,,,,2026-02-20T13:41:35.751Z
+97,queue-303,303,Bexley,303 - Bexley,districts/303_bexley.csv,pending,84,16,68,19.0,,,,2026-02-20T13:41:35.751Z
+98,queue-311,311,Havering,311 - Havering,districts/311_havering.csv,pending,83,15,68,18.1,,,,2026-02-20T13:41:35.751Z
+99,queue-210,210,Southwark,210 - Southwark,districts/210_southwark.csv,pending,103,36,67,35.0,,,,2026-02-20T13:41:35.751Z
+100,queue-822,822,Bedford,822 - Bedford,districts/822_bedford.csv,pending,77,11,66,14.3,,,,2026-02-20T13:41:35.751Z
+101,queue-308,308,Enfield,308 - Enfield,districts/308_enfield.csv,pending,97,32,65,33.0,,,,2026-02-20T13:41:35.751Z
+102,queue-342,342,St. Helens,342 - St. Helens,districts/342_st-helens.csv,pending,69,4,65,5.8,,,,2026-02-20T13:41:35.751Z
+103,queue-381,381,Calderdale,381 - Calderdale,districts/381_calderdale.csv,pending,100,36,64,36.0,,,,2026-02-20T13:41:35.751Z
+104,queue-209,209,Lewisham,209 - Lewisham,districts/209_lewisham.csv,pending,86,22,64,25.6,,,,2026-02-20T13:41:35.751Z
+105,queue-358,358,Trafford,358 - Trafford,districts/358_trafford.csv,pending,90,26,64,28.9,,,,2026-02-20T13:41:35.751Z
+106,queue-320,320,Waltham Forest,320 - Waltham Forest,districts/320_waltham-forest.csv,pending,79,15,64,19.0,,,,2026-02-20T13:41:35.751Z
+107,queue-872,872,Wokingham,872 - Wokingham,districts/872_wokingham.csv,pending,71,9,62,12.7,,,,2026-02-20T13:41:35.751Z
+108,queue-340,340,Knowsley,340 - Knowsley,districts/340_knowsley.csv,pending,61,0,61,0.0,,,,2026-02-20T13:41:35.751Z
+109,queue-208,208,Lambeth,208 - Lambeth,districts/208_lambeth.csv,pending,91,31,60,34.1,,,,2026-02-20T13:41:35.751Z
+110,queue-852,852,Southampton,852 - Southampton,districts/852_southampton.csv,pending,77,17,60,22.1,,,,2026-02-20T13:41:35.751Z
+111,queue-846,846,Brighton and Hove,846 - Brighton and Hove,districts/846_brighton-and-hove.csv,pending,64,5,59,7.8,,,,2026-02-20T13:41:35.751Z
+112,queue-313,313,Hounslow,313 - Hounslow,districts/313_hounslow.csv,pending,77,18,59,23.4,,,,2026-02-20T13:41:35.751Z
+113,queue-812,812,North East Lincolnshire,812 - North East Lincolnshire,districts/812_north-east-lincolnshire.csv,pending,63,4,59,6.3,,,,2026-02-20T13:41:35.751Z
+114,queue-869,869,West Berkshire,869 - West Berkshire,districts/869_west-berkshire.csv,pending,82,23,59,28.0,,,,2026-02-20T13:41:35.751Z
+115,queue-816,816,York,816 - York,districts/816_york.csv,pending,63,4,59,6.3,,,,2026-02-20T13:41:35.751Z
+116,queue-851,851,Portsmouth,851 - Portsmouth,districts/851_portsmouth.csv,pending,61,3,58,4.9,,,,2026-02-20T13:41:35.751Z
+117,queue-876,876,Halton,876 - Halton,districts/876_halton.csv,pending,66,9,57,13.6,,,,2026-02-20T13:41:35.751Z
+118,queue-309,309,Haringey,309 - Haringey,districts/309_haringey.csv,pending,86,29,57,33.7,,,,2026-02-20T13:41:35.751Z
+119,queue-807,807,Redcar and Cleveland,807 - Redcar and Cleveland,districts/807_redcar-and-cleveland.csv,pending,60,3,57,5.0,,,,2026-02-20T13:41:35.751Z
+120,queue-821,821,Luton,821 - Luton,districts/821_luton.csv,pending,70,14,56,20.0,,,,2026-02-20T13:41:35.751Z
+121,queue-883,883,Thurrock,883 - Thurrock,districts/883_thurrock.csv,pending,56,1,55,1.8,,,,2026-02-20T13:41:35.751Z
+122,queue-307,307,Ealing,307 - Ealing,districts/307_ealing.csv,pending,94,40,54,42.6,,,,2026-02-20T13:41:35.751Z
+123,queue-868,868,Windsor and Maidenhead,868 - Windsor and Maidenhead,districts/868_windsor-and-maidenhead.csv,pending,66,12,54,18.2,,,,2026-02-20T13:41:35.751Z
+124,queue-806,806,Middlesbrough,806 - Middlesbrough,districts/806_middlesbrough.csv,pending,57,4,53,7.0,,,,2026-02-20T13:41:35.751Z
+125,queue-304,304,Brent,304 - Brent,districts/304_brent.csv,pending,89,38,51,42.7,,,,2026-02-20T13:41:35.751Z
+126,queue-870,870,Reading,870 - Reading,districts/870_reading.csv,pending,61,10,51,16.4,,,,2026-02-20T13:41:35.751Z
+127,queue-211,211,Tower Hamlets,211 - Tower Hamlets,districts/211_tower-hamlets.csv,pending,95,44,51,46.3,,,,2026-02-20T13:41:35.751Z
+128,queue-318,318,Richmond upon Thames,318 - Richmond upon Thames,districts/318_richmond-upon-thames.csv,pending,60,10,50,16.7,,,,2026-02-20T13:41:35.751Z
+129,queue-206,206,Islington,206 - Islington,districts/206_islington.csv,pending,66,17,49,25.8,,,,2026-02-20T13:41:35.751Z
+130,queue-882,882,Southend-on-Sea,882 - Southend-on-Sea,districts/882_southend-on-sea.csv,pending,52,4,48,7.7,,,,2026-02-20T13:41:35.751Z
+131,queue-319,319,Sutton,319 - Sutton,districts/319_sutton.csv,pending,64,16,48,25.0,,,,2026-02-20T13:41:35.751Z
+132,queue-212,212,Wandsworth,212 - Wandsworth,districts/212_wandsworth.csv,pending,84,36,48,42.9,,,,2026-02-20T13:41:35.751Z
+133,queue-310,310,Harrow,310 - Harrow,districts/310_harrow.csv,pending,60,13,47,21.7,,,,2026-02-20T13:41:35.751Z
+134,queue-203,203,Greenwich,203 - Greenwich,districts/203_greenwich.csv,pending,89,43,46,48.3,,,,2026-02-20T13:41:35.751Z
+135,queue-921,921,Isle of Wight,921 - Isle of Wight,districts/921_isle-of-wight.csv,pending,47,2,45,4.3,,,,2026-02-20T13:41:35.751Z
+136,queue-301,301,Barking and Dagenham,301 - Barking and Dagenham,districts/301_barking-and-dagenham.csv,pending,61,17,44,27.9,,,,2026-02-20T13:41:35.751Z
+137,queue-890,890,Blackpool,890 - Blackpool,districts/890_blackpool.csv,pending,44,1,43,2.3,,,,2026-02-20T13:41:35.751Z
+138,queue-871,871,Slough,871 - Slough,districts/871_slough.csv,pending,51,8,43,15.7,,,,2026-02-20T13:41:35.751Z
+139,queue-393,393,South Tyneside,393 - South Tyneside,districts/393_south-tyneside.csv,pending,62,19,43,30.6,,,,2026-02-20T13:41:35.751Z
+140,queue-841,841,Darlington,841 - Darlington,districts/841_darlington.csv,pending,43,1,42,2.3,,,,2026-02-20T13:41:35.751Z
+141,queue-204,204,Hackney,204 - Hackney,districts/204_hackney.csv,pending,77,35,42,45.5,,,,2026-02-20T13:41:35.751Z
+142,queue-880,880,Torbay,880 - Torbay,districts/880_torbay.csv,pending,43,1,42,2.3,,,,2026-02-20T13:41:35.751Z
+143,queue-205,205,Hammersmith and Fulham,205 - Hammersmith and Fulham,districts/205_hammersmith-and-fulham.csv,pending,58,18,40,31.0,,,,2026-02-20T13:41:35.751Z
+144,queue-213,213,Westminster,213 - Westminster,districts/213_westminster.csv,pending,56,17,39,30.4,,,,2026-02-20T13:41:35.751Z
+145,queue-805,805,Hartlepool,805 - Hartlepool,districts/805_hartlepool.csv,pending,39,4,35,10.3,,,,2026-02-20T13:41:35.751Z
+146,queue-867,867,Bracknell Forest,867 - Bracknell Forest,districts/867_bracknell-forest.csv,pending,37,5,32,13.5,,,,2026-02-20T13:41:35.751Z
+147,queue-315,315,Merton,315 - Merton,districts/315_merton.csv,pending,56,26,30,46.4,,,,2026-02-20T13:41:35.751Z
+148,queue-207,207,Kensington and Chelsea,207 - Kensington and Chelsea,districts/207_kensington-and-chelsea.csv,pending,40,12,28,30.0,,,,2026-02-20T13:41:35.751Z
+149,queue-314,314,Kingston upon Thames,314 - Kingston upon Thames,districts/314_kingston-upon-thames.csv,pending,52,24,28,46.2,,,,2026-02-20T13:41:35.751Z
+150,queue-202,202,Camden,202 - Camden,districts/202_camden.csv,pending,57,36,21,63.2,,,,2026-02-20T13:41:35.751Z
+151,queue-857,857,Rutland,857 - Rutland,districts/857_rutland.csv,pending,21,1,20,4.8,,,,2026-02-20T13:41:35.751Z
+152,queue-201,201,City of London,201 - City of London,districts/201_city-of-london.csv,pending,1,0,1,0.0,,,,2026-02-20T13:41:35.751Z
+153,queue-420,420,Isles Of Scilly,420 - Isles Of Scilly,districts/420_isles-of-scilly.csv,pending,1,0,1,0.0,,,,2026-02-20T13:41:35.751Z
