@@ -291,14 +291,19 @@ const App: React.FC = () => {
       // Pins are fetched based on current map viewport (so no more "missing patches")
       await refreshPins(overrides);
 
-      // If a search query is present, zoom map to visible filtered pins.
-      const effectiveQForZoom = overrides.q ?? q;
-      if ((effectiveQForZoom || '').trim()) {
-        const geocoded = (listJ.schools || []).filter((s: School) => typeof s.lat === 'number' && typeof s.lng === 'number');
-        if (geocoded.length && mapRef.current) {
-          const pts = geocoded.map((s: School) => [s.lat as number, s.lng as number]) as [number, number][];
+      // If a search query is present, zoom map to filtered pins.
+      // Prefer exact town matches first (better city search behaviour), then fall back to all filtered matches.
+      const effectiveQForZoom = (overrides.q ?? q ?? '').trim();
+      if (effectiveQForZoom) {
+        const allGeocoded = (listJ.schools || []).filter((s: School) => typeof s.lat === 'number' && typeof s.lng === 'number');
+        const qLower = effectiveQForZoom.toLowerCase();
+        const exactTown = allGeocoded.filter((s: School) => String(s.town || '').trim().toLowerCase() === qLower);
+        const zoomSet = exactTown.length >= 2 ? exactTown : allGeocoded;
+
+        if (zoomSet.length && mapRef.current) {
+          const pts = zoomSet.map((s: School) => [s.lat as number, s.lng as number]) as [number, number][];
           const bounds = L.latLngBounds(pts);
-          mapRef.current.fitBounds(bounds, { padding: [28, 28], maxZoom: 12 });
+          mapRef.current.fitBounds(bounds, { padding: [24, 24], maxZoom: 14 });
           await refreshPins(overrides);
         }
       }
