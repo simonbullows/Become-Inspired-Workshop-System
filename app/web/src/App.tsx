@@ -193,6 +193,9 @@ const App: React.FC = () => {
   const [crmContacts, setCrmContacts] = useState<CrmContact[]>([]);
   const [crmActivities, setCrmActivities] = useState<CrmActivity[]>([]);
   const [crmTasks, setCrmTasks] = useState<CrmTask[]>([]);
+  const [newContact, setNewContact] = useState({ name: '', role: '', email: '', phone: '' });
+  const [newActivity, setNewActivity] = useState({ type: 'note', summary: '', body: '' });
+  const [newTask, setNewTask] = useState({ title: '', owner: '', dueAt: '' });
 
   useEffect(() => {
     fetchJson('/api/stats').then(setStats).catch(()=>{});
@@ -445,6 +448,41 @@ const App: React.FC = () => {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(next),
     } as any);
+  }
+
+  async function addCrmContact() {
+    if (!selected || !newContact.name.trim()) return;
+    await fetchJson('/api/schools/' + encodeURIComponent(selected.urn) + '/contacts', {
+      method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(newContact),
+    } as any);
+    setNewContact({ name: '', role: '', email: '', phone: '' });
+    await loadSchoolCrm(selected.urn);
+  }
+
+  async function addCrmActivity() {
+    if (!selected || !newActivity.summary.trim()) return;
+    await fetchJson('/api/schools/' + encodeURIComponent(selected.urn) + '/activities', {
+      method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(newActivity),
+    } as any);
+    setNewActivity({ type: 'note', summary: '', body: '' });
+    await loadSchoolCrm(selected.urn);
+  }
+
+  async function addCrmTask() {
+    if (!selected || !newTask.title.trim()) return;
+    await fetchJson('/api/schools/' + encodeURIComponent(selected.urn) + '/tasks', {
+      method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(newTask),
+    } as any);
+    setNewTask({ title: '', owner: '', dueAt: '' });
+    await loadSchoolCrm(selected.urn);
+  }
+
+  async function toggleTaskDone(t: CrmTask) {
+    if (!selected) return;
+    await fetchJson('/api/schools/' + encodeURIComponent(selected.urn) + '/tasks/' + encodeURIComponent(t.id), {
+      method: 'PATCH', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ status: t.status === 'done' ? 'open' : 'done' }),
+    } as any);
+    await loadSchoolCrm(selected.urn);
   }
 
   async function selectSchool(s: School) {
@@ -760,7 +798,11 @@ const App: React.FC = () => {
                         </div>
                         <div><span className="text-black/50">Phone:</span> {formatTelephone(selected.telephone)}</div>
                         <div><span className="text-black/50">Emails:</span> {(selected.emails || []).join(', ') || '—'}</div>
-                        <div><span className="text-black/50">Pipeline stage:</span> {crmPipeline.stage}</div>
+                        <div><span className="text-black/50">Pipeline stage:</span>
+                          <select value={crmPipeline.stage} onChange={e => savePipeline({ stage: e.target.value }).catch(()=>{})} className="ml-2 px-2 py-1 rounded border border-black/15">
+                            <option value="new">new</option><option value="researched">researched</option><option value="contacted">contacted</option><option value="replied">replied</option><option value="qualified">qualified</option><option value="proposal">proposal</option><option value="booked">booked</option><option value="lost">lost</option>
+                          </select>
+                        </div>
                         <div><span className="text-black/50">Owner:</span> <input value={crmPipeline.owner || ''} onChange={e => savePipeline({ owner: e.target.value }).catch(()=>{})} className="ml-2 px-2 py-1 rounded border border-black/15" /></div>
                         <div><span className="text-black/50">Priority:</span>
                           <select value={crmPipeline.priority} onChange={e => savePipeline({ priority: e.target.value as any }).catch(()=>{})} className="ml-2 px-2 py-1 rounded border border-black/15">
@@ -775,19 +817,40 @@ const App: React.FC = () => {
 
                     {crmTab === 'contacts' ? (
                       <div className="grid gap-2">
+                        <div className="grid grid-cols-2 gap-2">
+                          <input value={newContact.name} onChange={e => setNewContact(v => ({ ...v, name: e.target.value }))} placeholder="Contact name" className="px-2 py-1 rounded border border-black/15" />
+                          <input value={newContact.role} onChange={e => setNewContact(v => ({ ...v, role: e.target.value }))} placeholder="Role" className="px-2 py-1 rounded border border-black/15" />
+                          <input value={newContact.email} onChange={e => setNewContact(v => ({ ...v, email: e.target.value }))} placeholder="Email" className="px-2 py-1 rounded border border-black/15" />
+                          <input value={newContact.phone} onChange={e => setNewContact(v => ({ ...v, phone: e.target.value }))} placeholder="Phone" className="px-2 py-1 rounded border border-black/15" />
+                        </div>
+                        <button onClick={() => addCrmContact().catch(()=>{})} className="px-3 py-1 rounded bg-black text-white text-xs w-fit">Add contact</button>
                         {crmContacts.length ? crmContacts.map(c => <div key={c.id} className="rounded-lg border border-black/10 p-2"><div className="font-semibold">{c.name} <span className="text-black/50">({c.role || 'role n/a'})</span></div><div className="text-xs">{c.email || '—'} {c.phone ? `• ${c.phone}` : ''}</div></div>) : <div className="text-black/60 text-xs">No contacts yet.</div>}
                       </div>
                     ) : null}
 
                     {crmTab === 'timeline' ? (
                       <div className="grid gap-2 max-h-80 overflow-auto">
+                        <div className="grid gap-2">
+                          <select value={newActivity.type} onChange={e => setNewActivity(v => ({ ...v, type: e.target.value }))} className="px-2 py-1 rounded border border-black/15 w-40">
+                            <option value="note">note</option><option value="call">call</option><option value="email">email</option><option value="meeting">meeting</option><option value="task">task</option>
+                          </select>
+                          <input value={newActivity.summary} onChange={e => setNewActivity(v => ({ ...v, summary: e.target.value }))} placeholder="Summary" className="px-2 py-1 rounded border border-black/15" />
+                          <textarea value={newActivity.body} onChange={e => setNewActivity(v => ({ ...v, body: e.target.value }))} placeholder="Details" className="px-2 py-1 rounded border border-black/15 min-h-16" />
+                          <button onClick={() => addCrmActivity().catch(()=>{})} className="px-3 py-1 rounded bg-black text-white text-xs w-fit">Add activity</button>
+                        </div>
                         {crmActivities.length ? crmActivities.map(a => <div key={a.id} className="rounded-lg border border-black/10 p-2"><div className="text-xs text-black/50">{a.type} • {a.happenedAt}</div><div className="font-semibold">{a.summary}</div>{a.body ? <div className="text-xs">{a.body}</div> : null}</div>) : <div className="text-black/60 text-xs">No activity yet.</div>}
                       </div>
                     ) : null}
 
                     {crmTab === 'tasks' ? (
                       <div className="grid gap-2 max-h-80 overflow-auto">
-                        {crmTasks.length ? crmTasks.map(t => <div key={t.id} className="rounded-lg border border-black/10 p-2"><div className="font-semibold">{t.title}</div><div className="text-xs text-black/60">{t.status} {t.owner ? `• ${t.owner}` : ''} {t.dueAt ? `• due ${t.dueAt}` : ''}</div></div>) : <div className="text-black/60 text-xs">No tasks yet.</div>}
+                        <div className="grid grid-cols-2 gap-2">
+                          <input value={newTask.title} onChange={e => setNewTask(v => ({ ...v, title: e.target.value }))} placeholder="Task title" className="px-2 py-1 rounded border border-black/15 col-span-2" />
+                          <input value={newTask.owner} onChange={e => setNewTask(v => ({ ...v, owner: e.target.value }))} placeholder="Owner" className="px-2 py-1 rounded border border-black/15" />
+                          <input type="datetime-local" value={newTask.dueAt} onChange={e => setNewTask(v => ({ ...v, dueAt: e.target.value }))} className="px-2 py-1 rounded border border-black/15" />
+                        </div>
+                        <button onClick={() => addCrmTask().catch(()=>{})} className="px-3 py-1 rounded bg-black text-white text-xs w-fit">Add task</button>
+                        {crmTasks.length ? crmTasks.map(t => <div key={t.id} className="rounded-lg border border-black/10 p-2"><div className="font-semibold">{t.title}</div><div className="text-xs text-black/60">{t.status} {t.owner ? `• ${t.owner}` : ''} {t.dueAt ? `• due ${t.dueAt}` : ''}</div><button onClick={() => toggleTaskDone(t).catch(()=>{})} className="mt-1 px-2 py-1 rounded border border-black/15 text-xs">Mark {t.status === 'done' ? 'open' : 'done'}</button></div>) : <div className="text-black/60 text-xs">No tasks yet.</div>}
                       </div>
                     ) : null}
 
