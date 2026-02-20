@@ -512,7 +512,9 @@ const App: React.FC = () => {
               onKeyDown={e => {
                 if (e.key === 'Enter') {
                   e.preventDefault();
-                  refresh().catch(err => setErr(String(err?.message || err)));
+                  const nextQ = (e.currentTarget as HTMLInputElement).value;
+                  setQ(nextQ);
+                  refresh({ q: nextQ }).catch(err => setErr(String(err?.message || err)));
                 }
               }}
               placeholder={projectMeta.searchPlaceholder}
