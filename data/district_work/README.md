@@ -3,8 +3,9 @@
 ## Daily workflow (one district at a time)
 
 > Jeeves must read, in this order, before starting:
-> 1. `data/district_work/JEEVES_PROJECT_BRIEF.md`
-> 2. `data/district_work/JEEVES_INSTRUCTIONS.md`
+> 1. `data/district_work/JEEVES_DATA_LANE_INSTRUCTIONS.md` (branch + boundaries)
+> 2. `data/district_work/JEEVES_PROJECT_BRIEF.md`
+> 3. `data/district_work/JEEVES_INSTRUCTIONS.md`
 
 1. Rebuild index from live district CSVs:
    - `node scripts/manage_district_queue.mjs rebuild`
