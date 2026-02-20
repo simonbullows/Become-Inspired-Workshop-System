@@ -17,6 +17,7 @@ type School = {
   has_pupil_premium: number;
   has_send: number;
   ofsted_mention: string;
+  source_row?: Record<string, string>;
   lat: number | null;
   lng: number | null;
 };
@@ -152,6 +153,10 @@ function formatTelephone(raw: string | null | undefined) {
   return d;
 }
 
+function sourceValue(s: School | null, key: string) {
+  return (s?.source_row && s.source_row[key]) ? String(s.source_row[key]).trim() : '';
+}
+
 async function fetchJson(url: string) {
   const r = await fetch(url);
   const j = await r.json();
@@ -202,13 +207,30 @@ const App: React.FC = () => {
     }
   }, [quickActionsByUrn]);
 
-  function currentPinParams() {
+  type FilterOverrides = Partial<{ q: string; region: string; phase: string; hasSend: boolean; hasPupilPremium: boolean }>;
+
+  const appliedFiltersRef = useRef<{ q: string; region: string; phase: string; hasSend: boolean; hasPupilPremium: boolean }>({
+    q: '',
+    region: '',
+    phase: '',
+    hasSend: false,
+    hasPupilPremium: false,
+  });
+
+  function currentPinParams(overrides: FilterOverrides = {}) {
+    const base = appliedFiltersRef.current;
+    const effectiveQ = overrides.q ?? base.q;
+    const effectiveRegion = overrides.region ?? base.region;
+    const effectivePhase = overrides.phase ?? base.phase;
+    const effectiveHasSend = overrides.hasSend ?? base.hasSend;
+    const effectiveHasPupilPremium = overrides.hasPupilPremium ?? base.hasPupilPremium;
+
     const p = new URLSearchParams();
-    if (q) p.set('q', q);
-    if (region) p.set('region', region);
-    if (phase) p.set('phase', phase);
-    if (hasSend) p.set('hasSend', 'true');
-    if (hasPupilPremium) p.set('hasPupilPremium', 'true');
+    if (effectiveQ) p.set('q', effectiveQ);
+    if (effectiveRegion) p.set('region', effectiveRegion);
+    if (effectivePhase) p.set('phase', effectivePhase);
+    if (effectiveHasSend) p.set('hasSend', 'true');
+    if (effectiveHasPupilPremium) p.set('hasPupilPremium', 'true');
 
     // Viewport-based pins
     const map = mapRef.current;
@@ -232,24 +254,38 @@ const App: React.FC = () => {
     return p;
   }
 
-  async function refreshPins() {
-    const pinParams = currentPinParams();
+  async function refreshPins(overrides: FilterOverrides = {}) {
+    const pinParams = currentPinParams(overrides);
     const pinJ = await fetchJson('/api/schools?' + pinParams.toString());
     setPins(pinJ.schools || []);
   }
 
-  async function refresh() {
+  async function refresh(overrides: FilterOverrides = {}) {
     setErr('');
     setLoading(true);
 
     try {
       // Sidebar list (ordered by name)
+      const effectiveQ = overrides.q ?? q;
+      const effectiveRegion = overrides.region ?? region;
+      const effectivePhase = overrides.phase ?? phase;
+      const effectiveHasSend = overrides.hasSend ?? hasSend;
+      const effectiveHasPupilPremium = overrides.hasPupilPremium ?? hasPupilPremium;
+
+      appliedFiltersRef.current = {
+        q: effectiveQ,
+        region: effectiveRegion,
+        phase: effectivePhase,
+        hasSend: effectiveHasSend,
+        hasPupilPremium: effectiveHasPupilPremium,
+      };
+
       const listParams = new URLSearchParams();
-      if (q) listParams.set('q', q);
-      if (region) listParams.set('region', region);
-      if (phase) listParams.set('phase', phase);
-      if (hasSend) listParams.set('hasSend', 'true');
-      if (hasPupilPremium) listParams.set('hasPupilPremium', 'true');
+      if (effectiveQ) listParams.set('q', effectiveQ);
+      if (effectiveRegion) listParams.set('region', effectiveRegion);
+      if (effectivePhase) listParams.set('phase', effectivePhase);
+      if (effectiveHasSend) listParams.set('hasSend', 'true');
+      if (effectiveHasPupilPremium) listParams.set('hasPupilPremium', 'true');
       listParams.set('limit', '1000');
       listParams.set('order', 'name');
 
@@ -258,7 +294,24 @@ const App: React.FC = () => {
       setFilteredMeta(listJ.meta || null);
 
       // Pins are fetched based on current map viewport (so no more "missing patches")
-      await refreshPins();
+      await refreshPins(overrides);
+
+      // If a search query is present, zoom map to filtered pins.
+      // Prefer exact town matches first (better city search behaviour), then fall back to all filtered matches.
+      const effectiveQForZoom = (overrides.q ?? q ?? '').trim();
+      if (effectiveQForZoom) {
+        const allGeocoded = (listJ.schools || []).filter((s: School) => typeof s.lat === 'number' && typeof s.lng === 'number');
+        const qLower = effectiveQForZoom.toLowerCase();
+        const exactTown = allGeocoded.filter((s: School) => String(s.town || '').trim().toLowerCase() === qLower);
+        const zoomSet = exactTown.length >= 2 ? exactTown : allGeocoded;
+
+        if (zoomSet.length && mapRef.current) {
+          const pts = zoomSet.map((s: School) => [s.lat as number, s.lng as number]) as [number, number][];
+          const bounds = L.latLngBounds(pts);
+          mapRef.current.fitBounds(bounds, { padding: [24, 24], maxZoom: 14 });
+          await refreshPins(overrides);
+        }
+      }
 
       setLastRefreshAt(Date.now());
     } finally {
@@ -483,16 +536,24 @@ const App: React.FC = () => {
             <input
               value={q}
               onChange={e => setQ(e.target.value)}
+              onKeyDown={e => {
+                if (e.key === 'Enter') {
+                  e.preventDefault();
+                  const nextQ = (e.currentTarget as HTMLInputElement).value;
+                  setQ(nextQ);
+                  refresh({ q: nextQ }).catch(err => setErr(String(err?.message || err)));
+                }
+              }}
               placeholder={projectMeta.searchPlaceholder}
               className="w-full px-3 py-2 rounded-xl bg-white/5 border border-white/10 focus:outline-none focus:ring-2 focus:ring-cyan-400/40"
             />
 
             <div className="grid grid-cols-2 gap-2">
-              <select value={region} onChange={e => setRegion(e.target.value)} className="px-3 py-2 rounded-xl bg-white/5 border border-white/10">
+              <select value={region} onChange={e => { const v = e.target.value; setRegion(v); refresh({ region: v }).catch(err => setErr(String(err?.message || err))); }} className="px-3 py-2 rounded-xl bg-white/5 border border-white/10">
                 <option value="">All regions</option>
                 {regions.map((r: string) => <option key={r} value={r}>{r}</option>)}
               </select>
-              <select value={phase} onChange={e => setPhase(e.target.value)} className="px-3 py-2 rounded-xl bg-white/5 border border-white/10">
+              <select value={phase} onChange={e => { const v = e.target.value; setPhase(v); refresh({ phase: v }).catch(err => setErr(String(err?.message || err))); }} className="px-3 py-2 rounded-xl bg-white/5 border border-white/10">
                 <option value="">All phases</option>
                 {phases.map((p: string) => <option key={p} value={p}>{p}</option>)}
               </select>
@@ -500,11 +561,11 @@ const App: React.FC = () => {
 
             <div className="flex items-center gap-3 text-xs text-slate-200">
               <label className="flex items-center gap-2">
-                <input type="checkbox" checked={hasSend} onChange={e => setHasSend(e.target.checked)} />
+                <input type="checkbox" checked={hasSend} onChange={e => { const v = e.target.checked; setHasSend(v); refresh({ hasSend: v }).catch(err => setErr(String(err?.message || err))); }} />
                 SEND
               </label>
               <label className="flex items-center gap-2">
-                <input type="checkbox" checked={hasPupilPremium} onChange={e => setHasPupilPremium(e.target.checked)} />
+                <input type="checkbox" checked={hasPupilPremium} onChange={e => { const v = e.target.checked; setHasPupilPremium(v); refresh({ hasPupilPremium: v }).catch(err => setErr(String(err?.message || err))); }} />
                 Pupil Premium
               </label>
             </div>
@@ -517,7 +578,7 @@ const App: React.FC = () => {
                 Apply filters
               </button>
               <button
-                onClick={() => { setQ(''); setRegion(''); setPhase(''); setHasSend(false); setHasPupilPremium(false); }}
+                onClick={() => { setQ(''); setRegion(''); setPhase(''); setHasSend(false); setHasPupilPremium(false); refresh({ q: '', region: '', phase: '', hasSend: false, hasPupilPremium: false }).catch(err => setErr(String(err?.message || err))); }}
                 className="px-3 py-2 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10"
               >
                 Reset
@@ -644,6 +705,17 @@ const App: React.FC = () => {
                 <div className="p-4 grid md:grid-cols-2 gap-4">
                   <div className="grid gap-2 text-sm">
                     <div><span className="text-black/50">Phase:</span> {selected.phase || '—'}</div>
+                    <div>
+                      <span className="text-black/50">Headteacher:</span>{' '}
+                      {[
+                        sourceValue(selected, 'HeadTitle (name)'),
+                        sourceValue(selected, 'HeadFirstName'),
+                        sourceValue(selected, 'HeadLastName'),
+                      ].filter(Boolean).join(' ') || '—'}
+                    </div>
+                    {sourceValue(selected, 'HeadPreferredJobTitle') ? (
+                      <div><span className="text-black/50">Head role:</span> {sourceValue(selected, 'HeadPreferredJobTitle')}</div>
+                    ) : null}
                     <div><span className="text-black/50">Phone:</span> {formatTelephone(selected.telephone)}</div>
                     <div>
                       <span className="text-black/50">Website:</span> {selected.website
@@ -654,6 +726,19 @@ const App: React.FC = () => {
                     <div><span className="text-black/50">Flags:</span> {selected.has_send ? 'SEND' : 'No SEND'} • {selected.has_pupil_premium ? 'Pupil Premium' : 'No Pupil Premium'}</div>
                     {selected.ofsted_mention ? (
                       <div><span className="text-black/50">Ofsted mention:</span> {selected.ofsted_mention}</div>
+                    ) : null}
+
+                    {!!selected.source_row && Object.keys(selected.source_row).length > 0 ? (
+                      <div className="mt-2 rounded-xl border border-black/10 bg-black/[0.03] p-2">
+                        <div className="text-xs font-bold text-black/70 mb-1">Master sheet fields</div>
+                        <div className="max-h-52 overflow-auto text-xs grid gap-1 pr-1">
+                          {Object.entries(selected.source_row)
+                            .filter(([, v]) => String(v || '').trim().length > 0)
+                            .map(([k, v]) => (
+                              <div key={k}><span className="text-black/50">{k}:</span> {String(v)}</div>
+                            ))}
+                        </div>
+                      </div>
                     ) : null}
                   </div>
 
