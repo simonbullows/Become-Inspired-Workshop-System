@@ -274,6 +274,18 @@ const App: React.FC = () => {
       // Pins are fetched based on current map viewport (so no more "missing patches")
       await refreshPins(overrides);
 
+      // If a search query is present, zoom map to visible filtered pins.
+      const effectiveQForZoom = overrides.q ?? q;
+      if ((effectiveQForZoom || '').trim()) {
+        const geocoded = (listJ.schools || []).filter((s: School) => typeof s.lat === 'number' && typeof s.lng === 'number');
+        if (geocoded.length && mapRef.current) {
+          const pts = geocoded.map((s: School) => [s.lat as number, s.lng as number]) as [number, number][];
+          const bounds = L.latLngBounds(pts);
+          mapRef.current.fitBounds(bounds, { padding: [28, 28], maxZoom: 12 });
+          await refreshPins(overrides);
+        }
+      }
+
       setLastRefreshAt(Date.now());
     } finally {
       setLoading(false);
