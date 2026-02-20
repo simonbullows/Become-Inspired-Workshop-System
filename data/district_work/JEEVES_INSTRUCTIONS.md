@@ -1,5 +1,12 @@
 # JEEVES: DISTRICT SCRAPING INSTRUCTIONS (READ FIRST)
 
+## Project objective (do not forget)
+
+Collect **all contact details from every school website listed in our database**.
+At minimum, capture valid contact emails and mark progress correctly.
+
+If your context was reset, read this file and `JEEVES_PROJECT_BRIEF.md` first.
+
 You must work the district queue **one by one in strict sequence**.
 
 ## Non-negotiable rule
