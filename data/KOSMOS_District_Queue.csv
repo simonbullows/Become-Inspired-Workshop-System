@@ -1,0 +1,154 @@
+LA_Code,District,Total_Schools,Emails_Collected,Remaining_To_Scrape,Coverage_Pct
+888,Lancashire,627,96,531,15.3
+886,Kent,595,83,512,13.9
+881,Essex,558,84,474,15.1
+850,Hampshire,531,123,408,23.2
+330,Birmingham,444,55,389,12.4
+926,Norfolk,423,43,380,10.2
+919,Hertfordshire,531,160,371,30.1
+860,Staffordshire,409,47,362,11.5
+936,Surrey,400,52,348,13.0
+830,Derbyshire,419,77,342,18.4
+925,Lincolnshire,361,32,329,8.9
+878,Devon,371,47,324,12.7
+935,Suffolk,323,22,301,6.8
+891,Nottinghamshire,341,44,297,12.9
+815,North Yorkshire,355,60,295,16.9
+931,Oxfordshire,307,19,288,6.2
+383,Leeds,280,12,268,4.3
+908,Cornwall,280,16,264,5.7
+855,Leicestershire,287,30,257,10.5
+873,Cambridgeshire,270,27,243,10.0
+916,Gloucestershire,300,58,242,19.3
+933,Somerset,269,31,238,11.5
+938,West Sussex,285,70,215,24.6
+937,Warwickshire,252,43,209,17.1
+825,Buckinghamshire,235,32,203,13.6
+885,Worcestershire,244,43,201,17.6
+840,County Durham,262,62,200,23.7
+380,Bradford,211,28,183,13.3
+941,West Northamptonshire,186,4,182,2.2
+865,Wiltshire,235,54,181,23.0
+845,East Sussex,187,27,160,14.4
+382,Kirklees,181,21,160,11.6
+373,Sheffield,180,25,155,13.9
+838,Dorset,158,5,153,3.2
+811,East Riding of Yorkshire,149,2,147,1.3
+893,Shropshire,151,7,144,4.6
+801,"Bristol, City of",155,12,143,7.7
+942,Cumberland,172,31,141,18.0
+929,Northumberland,168,28,140,16.7
+940,North Northamptonshire,144,5,139,3.5
+341,Liverpool,170,33,137,19.4
+895,Cheshire East,155,24,131,15.5
+384,Wakefield,143,15,128,10.5
+352,Manchester,188,62,126,33.0
+372,Rotherham,124,1,123,0.8
+371,Doncaster,128,7,121,5.5
+896,Cheshire West and Chester,161,43,118,26.7
+344,Wirral,125,9,116,7.2
+350,Bolton,128,14,114,10.9
+331,Coventry,118,5,113,4.2
+823,Central Bedfordshire,130,18,112,13.8
+803,South Gloucestershire,116,5,111,4.3
+359,Wigan,127,16,111,12.6
+333,Sandwell,124,16,108,12.9
+943,Westmorland and Furness,147,39,108,26.5
+356,Stockport,115,8,107,7.0
+336,Wolverhampton,111,5,106,4.5
+353,Oldham,108,4,104,3.7
+335,Walsall,122,21,101,17.2
+826,Milton Keynes,115,15,100,13.0
+394,Sunderland,116,16,100,13.8
+892,Nottingham,106,7,99,6.6
+839,"Bournemouth, Christchurch and Poole",98,0,98,0.0
+831,Derby,106,8,98,7.5
+305,Bromley,100,4,96,4.0
+810,"Kingston upon Hull, City of",98,2,96,2.0
+391,Newcastle upon Tyne,99,4,95,4.0
+343,Sefton,102,7,95,6.9
+306,Croydon,126,32,94,25.4
+856,Leicester,115,21,94,18.3
+887,Medway,103,9,94,8.7
+879,Plymouth,98,4,94,4.1
+357,Tameside,99,7,92,7.1
+316,Newham,104,14,90,13.5
+355,Salford,100,10,90,10.0
+370,Barnsley,91,4,87,4.4
+861,Stoke-on-Trent,94,7,87,7.4
+332,Dudley,108,22,86,20.4
+877,Warrington,88,3,85,3.4
+866,Swindon,88,4,84,4.5
+354,Rochdale,90,7,83,7.8
+334,Solihull,84,2,82,2.4
+800,Bath and North East Somerset,81,0,81,0.0
+351,Bury,84,4,80,4.8
+390,Gateshead,83,3,80,3.6
+802,North Somerset,80,0,80,0.0
+302,Barnet,133,56,77,42.1
+392,North Tyneside,78,2,76,2.6
+813,North Lincolnshire,80,6,74,7.5
+808,Stockton-on-Tees,78,4,74,5.1
+312,Hillingdon,98,25,73,25.5
+889,Blackburn with Darwen,77,5,72,6.5
+894,Telford and Wrekin,75,3,72,4.0
+317,Redbridge,79,8,71,10.1
+884,"Herefordshire, County of",100,31,69,31.0
+874,Peterborough,82,13,69,15.9
+303,Bexley,84,16,68,19.0
+311,Havering,83,15,68,18.1
+210,Southwark,103,36,67,35.0
+822,Bedford,77,11,66,14.3
+308,Enfield,97,32,65,33.0
+342,St. Helens,69,4,65,5.8
+381,Calderdale,100,36,64,36.0
+209,Lewisham,86,22,64,25.6
+358,Trafford,90,26,64,28.9
+320,Waltham Forest,79,15,64,19.0
+872,Wokingham,71,9,62,12.7
+340,Knowsley,61,0,61,0.0
+208,Lambeth,91,31,60,34.1
+852,Southampton,77,17,60,22.1
+846,Brighton and Hove,64,5,59,7.8
+313,Hounslow,77,18,59,23.4
+812,North East Lincolnshire,63,4,59,6.3
+869,West Berkshire,82,23,59,28.0
+816,York,63,4,59,6.3
+851,Portsmouth,61,3,58,4.9
+876,Halton,66,9,57,13.6
+309,Haringey,86,29,57,33.7
+807,Redcar and Cleveland,60,3,57,5.0
+821,Luton,70,14,56,20.0
+883,Thurrock,56,1,55,1.8
+307,Ealing,94,40,54,42.6
+868,Windsor and Maidenhead,66,12,54,18.2
+806,Middlesbrough,57,4,53,7.0
+304,Brent,89,38,51,42.7
+870,Reading,61,10,51,16.4
+211,Tower Hamlets,95,44,51,46.3
+318,Richmond upon Thames,60,10,50,16.7
+206,Islington,66,17,49,25.8
+882,Southend-on-Sea,52,4,48,7.7
+319,Sutton,64,16,48,25.0
+212,Wandsworth,84,36,48,42.9
+310,Harrow,60,13,47,21.7
+203,Greenwich,89,43,46,48.3
+921,Isle of Wight,47,2,45,4.3
+301,Barking and Dagenham,61,17,44,27.9
+890,Blackpool,44,1,43,2.3
+871,Slough,51,8,43,15.7
+393,South Tyneside,62,19,43,30.6
+841,Darlington,43,1,42,2.3
+204,Hackney,77,35,42,45.5
+880,Torbay,43,1,42,2.3
+205,Hammersmith and Fulham,58,18,40,31.0
+213,Westminster,56,17,39,30.4
+805,Hartlepool,39,4,35,10.3
+867,Bracknell Forest,37,5,32,13.5
+315,Merton,56,26,30,46.4
+207,Kensington and Chelsea,40,12,28,30.0
+314,Kingston upon Thames,52,24,28,46.2
+202,Camden,57,36,21,63.2
+857,Rutland,21,1,20,4.8
+201,City of London,1,0,1,0.0
+420,Isles Of Scilly,1,0,1,0.0
