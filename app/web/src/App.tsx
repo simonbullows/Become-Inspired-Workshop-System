@@ -326,11 +326,20 @@ const App: React.FC = () => {
       if (typeof s.lat !== 'number' || typeof s.lng !== 'number') continue;
       const isSel = selected?.urn === s.urn;
       const isWorkedWith = activeProject === 'schools' && WORKED_WITH_SCHOOLS.has(normalizeSchoolName(s.name));
+      const hasContactEmail = Array.isArray(s.emails) && s.emails.length > 0;
+
+      const stroke = isSel
+        ? '#22c55e'
+        : (!hasContactEmail ? '#dc2626' : (isWorkedWith ? '#f59e0b' : '#2563eb'));
+      const fill = isSel
+        ? '#86efac'
+        : (!hasContactEmail ? '#f87171' : (isWorkedWith ? '#fbbf24' : '#60a5fa'));
+
       const m = L.circleMarker([s.lat, s.lng], {
         radius: isSel ? 7 : 4,
-        color: isSel ? '#22c55e' : (isWorkedWith ? '#f59e0b' : '#2563eb'),
-        weight: isSel ? 2 : (isWorkedWith ? 2 : 1),
-        fillColor: isSel ? '#86efac' : (isWorkedWith ? '#fbbf24' : '#60a5fa'),
+        color: stroke,
+        weight: isSel ? 2 : ((!hasContactEmail || isWorkedWith) ? 2 : 1),
+        fillColor: fill,
         fillOpacity: 0.9,
       });
       m.on('click', () => { selectSchool(s); });
