@@ -43,8 +43,8 @@ urn,district_code,district_name,school_name,website,town,postcode,region,has_ema
 119775,888,Lancashire,Balshaw's Church of England High School,www.balshaws.org.uk,Leyland,PR25 3AH,North West,yes
 119380,888,Lancashire,Bamber Bridge St Aidan's Church of England Primary School,www.staidansprimaryschool.co.uk,Preston,PR5 6GX,North West,yes
 119405,888,Lancashire,Banks Methodist School,http://www.banks.lancsngfl.ac.uk,Southport,PR9 8EY,North West,yes
-119384,888,Lancashire,Banks St Stephen's CofE School,www.bank-st-stephens.lancs.sch.uk,Southport,PR9 8BL,North West,no
-119260,888,Lancashire,Barden Primary School,www.barden.lancs.sch.uk,Burnley,BB10 1JD,North West,no
+119384,888,Lancashire,Banks St Stephen's CofE School,www.bank-st-stephens.lancs.sch.uk,Southport,PR9 8BL,North West,yes
+119260,888,Lancashire,Barden Primary School,www.barden.lancs.sch.uk,Burnley,BB10 1JD,North West,yes
 150407,888,Lancashire,Barnacre Road Primary School,,Longridge,PR3 2PD,North West,no
 119360,888,Lancashire,Barnoldswick Church of England Controlled Primary School,www.barnoldswick.lancs.sch.uk,Barnoldswick,BB18 5TB,North West,yes
 119397,888,Lancashire,Barrow URC Primary School,www.barrow.lancsngfl.ac.uk/,Clitheroe,BB7 9AZ,North West,no
@@ -57,7 +57,7 @@ urn,district_code,district_name,school_name,website,town,postcode,region,has_ema
 137512,888,Lancashire,Belthorn Academy Primary School,www.belthornacademy.co.uk,Blackburn,BB1 2NY,North West,no
 119381,888,Lancashire,Bickerstaffe CofE Primary School and Nursery,http://www.bickerstaffe.lancsngfl.ac.uk/,Ormskirk,L39 0EH,North West,no
 119519,888,Lancashire,Bilsborrow John Cross Church of England Primary School,www.johncross.lancs.sch.uk,Preston,PR3 0RE,North West,no
-149982,888,Lancashire,Bishop Martin Church of England Primary School,www.bishopmartin.lancs.sch.uk/,Skelmersdale,WN8 9BN,North West,no
+149982,888,Lancashire,Bishop Martin Church of England Primary School,www.bishopmartin.lancs.sch.uk/,Skelmersdale,WN8 9BN,North West,yes
 137296,888,Lancashire,Bishop Rawstorne Church of England Academy,www.bishopr.co.uk,Leyland,PR26 9HH,North West,no
 145816,888,Lancashire,Blacko Primary School,www.blacko.lancs.sch.uk,Nelson,BB9 6LS,North West,no
 119861,888,Lancashire,Bleasdale School,http://www.bleasdaleschool.lancs.sch.uk,Carnforth,LA5 0RG,North West,no

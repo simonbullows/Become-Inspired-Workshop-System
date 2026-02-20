@@ -1,6 +1,6 @@
 district_code,district_name,total_schools,emails_collected,remaining_to_scrape,coverage_pct,status,district_file
 886,Kent,595,96,499,16.1,pending,districts/886_kent.csv
-888,Lancashire,627,139,488,22.2,pending,districts/888_lancashire.csv
+888,Lancashire,627,142,485,22.6,pending,districts/888_lancashire.csv
 881,Essex,558,84,474,15.1,pending,districts/881_essex.csv
 850,Hampshire,531,123,408,23.2,pending,districts/850_hampshire.csv
 330,Birmingham,444,55,389,12.4,pending,districts/330_birmingham.csv
