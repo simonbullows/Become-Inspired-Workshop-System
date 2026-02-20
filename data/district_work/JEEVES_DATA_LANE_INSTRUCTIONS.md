@@ -33,6 +33,23 @@ Process districts strictly in sequence using:
 
 No skipping unless status is explicitly set to `blocked`.
 
+## Current hard lock (must follow)
+
+You are locked to **Queue 001 (District 888 - Lancashire)** until explicit approval from Simon/Pepper.
+Do not start Queue 002+.
+
+### Queue 001 definition of done (strict)
+Queue 001 is only complete when all required enrichment is exhausted for Lancashire:
+- contact emails collected where discoverable
+- pupil premium fields verified/updated
+- Ofsted mention/report fields verified/updated
+- required contact/meta fields in current schema reviewed and filled where available
+
+When you believe Queue 001 is complete:
+1. Rebuild metrics (`manage_district_queue.mjs rebuild` + `complete 888`)
+2. Send final evidence summary
+3. Wait for explicit approval before any next queue item
+
 ## Git workflow (while app is being built)
 
 ### 1) Work on data branch only
