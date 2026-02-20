@@ -1,0 +1,3 @@
+district_code,district_name,district_label,region,county,nation,active,notes,source,updated_at
+201,City of London,201 - City of London,London,Greater London,England,1,Starter seed from district_work index,district_work,2026-02-20T09:41:00Z
+202,Camden,202 - Camden,London,Greater London,England,1,Starter seed from district_work index,district_work,2026-02-20T09:41:00Z

@@ -1,0 +1,3 @@
+authority_id,authority_name,authority_type,ons_code,gss_code,website,main_phone,main_email,address_line_1,address_line_2,address_line_3,town,postcode,active,source,updated_at
+city-of-london-corp,City of London Corporation,other,,,https://www.cityoflondon.gov.uk,,,Guildhall,,,London,EC2V 7HH,1,manual_seed,2026-02-20T09:41:00Z
+camden-council,Camden Council,london_borough,,,https://www.camden.gov.uk,,,,,,London,,1,manual_seed,2026-02-20T09:41:00Z

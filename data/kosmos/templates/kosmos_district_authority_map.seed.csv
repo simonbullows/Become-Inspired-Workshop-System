@@ -1,0 +1,3 @@
+district_code,authority_id,relationship_type,is_primary,source,updated_at
+201,city-of-london-corp,local_authority,1,manual_seed,2026-02-20T09:41:00Z
+202,camden-council,local_authority,1,manual_seed,2026-02-20T09:41:00Z

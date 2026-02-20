@@ -1,0 +1,3 @@
+contact_id,authority_id,contact_type,contact_label,email,phone,website,department,notes,is_primary,source,last_verified_at,updated_at
+city-of-london-general,city-of-london-corp,general,General enquiries,,,,Corporate contact point placeholder,1,manual_seed,,2026-02-20T09:41:00Z
+camden-education,camden-council,education,Education enquiries,,,,Children and Learning,Seed row; replace with verified details,1,manual_seed,,2026-02-20T09:41:00Z
