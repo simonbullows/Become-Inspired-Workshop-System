@@ -1,0 +1,154 @@
+district_code,district_name,total_schools,emails_collected,remaining_to_scrape,coverage_pct,status,district_file
+888,Lancashire,627,96,531,15.3,pending,districts/888_lancashire.csv
+886,Kent,595,83,512,13.9,pending,districts/886_kent.csv
+881,Essex,558,84,474,15.1,pending,districts/881_essex.csv
+850,Hampshire,531,123,408,23.2,pending,districts/850_hampshire.csv
+330,Birmingham,444,55,389,12.4,pending,districts/330_birmingham.csv
+926,Norfolk,423,43,380,10.2,pending,districts/926_norfolk.csv
+919,Hertfordshire,531,160,371,30.1,pending,districts/919_hertfordshire.csv
+860,Staffordshire,409,47,362,11.5,pending,districts/860_staffordshire.csv
+936,Surrey,400,52,348,13.0,pending,districts/936_surrey.csv
+830,Derbyshire,419,77,342,18.4,pending,districts/830_derbyshire.csv
+925,Lincolnshire,361,32,329,8.9,pending,districts/925_lincolnshire.csv
+878,Devon,371,47,324,12.7,pending,districts/878_devon.csv
+935,Suffolk,323,22,301,6.8,pending,districts/935_suffolk.csv
+891,Nottinghamshire,341,44,297,12.9,pending,districts/891_nottinghamshire.csv
+815,North Yorkshire,355,60,295,16.9,pending,districts/815_north-yorkshire.csv
+931,Oxfordshire,307,19,288,6.2,pending,districts/931_oxfordshire.csv
+383,Leeds,280,12,268,4.3,pending,districts/383_leeds.csv
+908,Cornwall,280,16,264,5.7,pending,districts/908_cornwall.csv
+855,Leicestershire,287,30,257,10.5,pending,districts/855_leicestershire.csv
+873,Cambridgeshire,270,27,243,10.0,pending,districts/873_cambridgeshire.csv
+916,Gloucestershire,300,58,242,19.3,pending,districts/916_gloucestershire.csv
+933,Somerset,269,31,238,11.5,pending,districts/933_somerset.csv
+938,West Sussex,285,70,215,24.6,pending,districts/938_west-sussex.csv
+937,Warwickshire,252,43,209,17.1,pending,districts/937_warwickshire.csv
+825,Buckinghamshire,235,32,203,13.6,pending,districts/825_buckinghamshire.csv
+885,Worcestershire,244,43,201,17.6,pending,districts/885_worcestershire.csv
+840,County Durham,262,62,200,23.7,pending,districts/840_county-durham.csv
+380,Bradford,211,28,183,13.3,pending,districts/380_bradford.csv
+941,West Northamptonshire,186,4,182,2.2,pending,districts/941_west-northamptonshire.csv
+865,Wiltshire,235,54,181,23.0,pending,districts/865_wiltshire.csv
+845,East Sussex,187,27,160,14.4,pending,districts/845_east-sussex.csv
+382,Kirklees,181,21,160,11.6,pending,districts/382_kirklees.csv
+373,Sheffield,180,25,155,13.9,pending,districts/373_sheffield.csv
+838,Dorset,158,5,153,3.2,pending,districts/838_dorset.csv
+811,East Riding of Yorkshire,149,2,147,1.3,pending,districts/811_east-riding-of-yorkshire.csv
+893,Shropshire,151,7,144,4.6,pending,districts/893_shropshire.csv
+801,"Bristol, City of",155,12,143,7.7,pending,districts/801_bristol-city-of.csv
+942,Cumberland,172,31,141,18.0,pending,districts/942_cumberland.csv
+929,Northumberland,168,28,140,16.7,pending,districts/929_northumberland.csv
+940,North Northamptonshire,144,5,139,3.5,pending,districts/940_north-northamptonshire.csv
+341,Liverpool,170,33,137,19.4,pending,districts/341_liverpool.csv
+895,Cheshire East,155,24,131,15.5,pending,districts/895_cheshire-east.csv
+384,Wakefield,143,15,128,10.5,pending,districts/384_wakefield.csv
+352,Manchester,188,62,126,33.0,pending,districts/352_manchester.csv
+372,Rotherham,124,1,123,0.8,pending,districts/372_rotherham.csv
+371,Doncaster,128,7,121,5.5,pending,districts/371_doncaster.csv
+896,Cheshire West and Chester,161,43,118,26.7,pending,districts/896_cheshire-west-and-chester.csv
+344,Wirral,125,9,116,7.2,pending,districts/344_wirral.csv
+350,Bolton,128,14,114,10.9,pending,districts/350_bolton.csv
+331,Coventry,118,5,113,4.2,pending,districts/331_coventry.csv
+823,Central Bedfordshire,130,18,112,13.8,pending,districts/823_central-bedfordshire.csv
+803,South Gloucestershire,116,5,111,4.3,pending,districts/803_south-gloucestershire.csv
+359,Wigan,127,16,111,12.6,pending,districts/359_wigan.csv
+333,Sandwell,124,16,108,12.9,pending,districts/333_sandwell.csv
+943,Westmorland and Furness,147,39,108,26.5,pending,districts/943_westmorland-and-furness.csv
+356,Stockport,115,8,107,7.0,pending,districts/356_stockport.csv
+336,Wolverhampton,111,5,106,4.5,pending,districts/336_wolverhampton.csv
+353,Oldham,108,4,104,3.7,pending,districts/353_oldham.csv
+335,Walsall,122,21,101,17.2,pending,districts/335_walsall.csv
+826,Milton Keynes,115,15,100,13.0,pending,districts/826_milton-keynes.csv
+394,Sunderland,116,16,100,13.8,pending,districts/394_sunderland.csv
+892,Nottingham,106,7,99,6.6,pending,districts/892_nottingham.csv
+839,"Bournemouth, Christchurch and Poole",98,0,98,0.0,pending,districts/839_bournemouth-christchurch-and-poole.csv
+831,Derby,106,8,98,7.5,pending,districts/831_derby.csv
+305,Bromley,100,4,96,4.0,pending,districts/305_bromley.csv
+810,"Kingston upon Hull, City of",98,2,96,2.0,pending,districts/810_kingston-upon-hull-city-of.csv
+391,Newcastle upon Tyne,99,4,95,4.0,pending,districts/391_newcastle-upon-tyne.csv
+343,Sefton,102,7,95,6.9,pending,districts/343_sefton.csv
+306,Croydon,126,32,94,25.4,pending,districts/306_croydon.csv
+856,Leicester,115,21,94,18.3,pending,districts/856_leicester.csv
+887,Medway,103,9,94,8.7,pending,districts/887_medway.csv
+879,Plymouth,98,4,94,4.1,pending,districts/879_plymouth.csv
+357,Tameside,99,7,92,7.1,pending,districts/357_tameside.csv
+316,Newham,104,14,90,13.5,pending,districts/316_newham.csv
+355,Salford,100,10,90,10.0,pending,districts/355_salford.csv
+370,Barnsley,91,4,87,4.4,pending,districts/370_barnsley.csv
+861,Stoke-on-Trent,94,7,87,7.4,pending,districts/861_stoke-on-trent.csv
+332,Dudley,108,22,86,20.4,pending,districts/332_dudley.csv
+877,Warrington,88,3,85,3.4,pending,districts/877_warrington.csv
+866,Swindon,88,4,84,4.5,pending,districts/866_swindon.csv
+354,Rochdale,90,7,83,7.8,pending,districts/354_rochdale.csv
+334,Solihull,84,2,82,2.4,pending,districts/334_solihull.csv
+800,Bath and North East Somerset,81,0,81,0.0,pending,districts/800_bath-and-north-east-somerset.csv
+351,Bury,84,4,80,4.8,pending,districts/351_bury.csv
+390,Gateshead,83,3,80,3.6,pending,districts/390_gateshead.csv
+802,North Somerset,80,0,80,0.0,pending,districts/802_north-somerset.csv
+302,Barnet,133,56,77,42.1,pending,districts/302_barnet.csv
+392,North Tyneside,78,2,76,2.6,pending,districts/392_north-tyneside.csv
+813,North Lincolnshire,80,6,74,7.5,pending,districts/813_north-lincolnshire.csv
+808,Stockton-on-Tees,78,4,74,5.1,pending,districts/808_stockton-on-tees.csv
+312,Hillingdon,98,25,73,25.5,pending,districts/312_hillingdon.csv
+889,Blackburn with Darwen,77,5,72,6.5,pending,districts/889_blackburn-with-darwen.csv
+894,Telford and Wrekin,75,3,72,4.0,pending,districts/894_telford-and-wrekin.csv
+317,Redbridge,79,8,71,10.1,pending,districts/317_redbridge.csv
+884,"Herefordshire, County of",100,31,69,31.0,pending,districts/884_herefordshire-county-of.csv
+874,Peterborough,82,13,69,15.9,pending,districts/874_peterborough.csv
+303,Bexley,84,16,68,19.0,pending,districts/303_bexley.csv
+311,Havering,83,15,68,18.1,pending,districts/311_havering.csv
+210,Southwark,103,36,67,35.0,pending,districts/210_southwark.csv
+822,Bedford,77,11,66,14.3,pending,districts/822_bedford.csv
+308,Enfield,97,32,65,33.0,pending,districts/308_enfield.csv
+342,St. Helens,69,4,65,5.8,pending,districts/342_st-helens.csv
+381,Calderdale,100,36,64,36.0,pending,districts/381_calderdale.csv
+209,Lewisham,86,22,64,25.6,pending,districts/209_lewisham.csv
+358,Trafford,90,26,64,28.9,pending,districts/358_trafford.csv
+320,Waltham Forest,79,15,64,19.0,pending,districts/320_waltham-forest.csv
+872,Wokingham,71,9,62,12.7,pending,districts/872_wokingham.csv
+340,Knowsley,61,0,61,0.0,pending,districts/340_knowsley.csv
+208,Lambeth,91,31,60,34.1,pending,districts/208_lambeth.csv
+852,Southampton,77,17,60,22.1,pending,districts/852_southampton.csv
+846,Brighton and Hove,64,5,59,7.8,pending,districts/846_brighton-and-hove.csv
+313,Hounslow,77,18,59,23.4,pending,districts/313_hounslow.csv
+812,North East Lincolnshire,63,4,59,6.3,pending,districts/812_north-east-lincolnshire.csv
+869,West Berkshire,82,23,59,28.0,pending,districts/869_west-berkshire.csv
+816,York,63,4,59,6.3,pending,districts/816_york.csv
+851,Portsmouth,61,3,58,4.9,pending,districts/851_portsmouth.csv
+876,Halton,66,9,57,13.6,pending,districts/876_halton.csv
+309,Haringey,86,29,57,33.7,pending,districts/309_haringey.csv
+807,Redcar and Cleveland,60,3,57,5.0,pending,districts/807_redcar-and-cleveland.csv
+821,Luton,70,14,56,20.0,pending,districts/821_luton.csv
+883,Thurrock,56,1,55,1.8,pending,districts/883_thurrock.csv
+307,Ealing,94,40,54,42.6,pending,districts/307_ealing.csv
+868,Windsor and Maidenhead,66,12,54,18.2,pending,districts/868_windsor-and-maidenhead.csv
+806,Middlesbrough,57,4,53,7.0,pending,districts/806_middlesbrough.csv
+304,Brent,89,38,51,42.7,pending,districts/304_brent.csv
+870,Reading,61,10,51,16.4,pending,districts/870_reading.csv
+211,Tower Hamlets,95,44,51,46.3,pending,districts/211_tower-hamlets.csv
+318,Richmond upon Thames,60,10,50,16.7,pending,districts/318_richmond-upon-thames.csv
+206,Islington,66,17,49,25.8,pending,districts/206_islington.csv
+882,Southend-on-Sea,52,4,48,7.7,pending,districts/882_southend-on-sea.csv
+319,Sutton,64,16,48,25.0,pending,districts/319_sutton.csv
+212,Wandsworth,84,36,48,42.9,pending,districts/212_wandsworth.csv
+310,Harrow,60,13,47,21.7,pending,districts/310_harrow.csv
+203,Greenwich,89,43,46,48.3,pending,districts/203_greenwich.csv
+921,Isle of Wight,47,2,45,4.3,pending,districts/921_isle-of-wight.csv
+301,Barking and Dagenham,61,17,44,27.9,pending,districts/301_barking-and-dagenham.csv
+890,Blackpool,44,1,43,2.3,pending,districts/890_blackpool.csv
+871,Slough,51,8,43,15.7,pending,districts/871_slough.csv
+393,South Tyneside,62,19,43,30.6,pending,districts/393_south-tyneside.csv
+841,Darlington,43,1,42,2.3,pending,districts/841_darlington.csv
+204,Hackney,77,35,42,45.5,pending,districts/204_hackney.csv
+880,Torbay,43,1,42,2.3,pending,districts/880_torbay.csv
+205,Hammersmith and Fulham,58,18,40,31.0,pending,districts/205_hammersmith-and-fulham.csv
+213,Westminster,56,17,39,30.4,pending,districts/213_westminster.csv
+805,Hartlepool,39,4,35,10.3,pending,districts/805_hartlepool.csv
+867,Bracknell Forest,37,5,32,13.5,pending,districts/867_bracknell-forest.csv
+315,Merton,56,26,30,46.4,pending,districts/315_merton.csv
+207,Kensington and Chelsea,40,12,28,30.0,pending,districts/207_kensington-and-chelsea.csv
+314,Kingston upon Thames,52,24,28,46.2,pending,districts/314_kingston-upon-thames.csv
+202,Camden,57,36,21,63.2,pending,districts/202_camden.csv
+857,Rutland,21,1,20,4.8,pending,districts/857_rutland.csv
+201,City of London,1,0,1,0.0,pending,districts/201_city-of-london.csv
+420,Isles Of Scilly,1,0,1,0.0,pending,districts/420_isles-of-scilly.csv
