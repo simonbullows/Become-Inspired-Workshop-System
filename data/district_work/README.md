@@ -2,6 +2,8 @@
 
 ## Daily workflow (one district at a time)
 
+> Jeeves must read: `data/district_work/JEEVES_INSTRUCTIONS.md` before starting.
+
 1. Rebuild index from live district CSVs:
    - `node scripts/manage_district_queue.mjs rebuild`
 2. Pull current next district:
