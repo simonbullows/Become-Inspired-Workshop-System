@@ -88,27 +88,27 @@ urn,district_code,district_name,school_name,website,town,postcode,region,has_ema
 119484,888,Lancashire,Burnley St Peter's Church of England Primary School,www.st-peters-burnley.lancs.sch.uk/,Burnley,BB11 2DL,North West,no
 119402,888,Lancashire,Burscough Bridge Methodist School,www.burscoughbridge.lancs.sch.uk/,Ormskirk,L40 0SG,North West,yes
 119376,888,Lancashire,Burscough Bridge St John's Church of England Primary School,www.stjohnsburscough.co.uk,Ormskirk,L40 4AE,North West,no
-119481,888,Lancashire,Burscough Lordsgate Township Church of England Primary School,www.lordsgateschool.co.uk/,Ormskirk,L40 7RS,North West,no
+119481,888,Lancashire,Burscough Lordsgate Township Church of England Primary School,www.lordsgateschool.co.uk/,Ormskirk,L40 7RS,North West,yes
 146282,888,Lancashire,Burscough Priory Academy,https://www.burscoughprioryacademy.org/,Ormskirk,L40 7RZ,North West,yes
-119518,888,Lancashire,Calder Vale St John Church of England Primary School,www.caldervale.lancsngfl.ac.uk/,Preston,PR3 1SR,North West,no
-119799,888,Lancashire,"Cardinal Allen Catholic High School, Fleetwood",http://www.cardinalallen.co.uk/,Fleetwood,FY7 8AY,North West,no
+119518,888,Lancashire,Calder Vale St John Church of England Primary School,www.caldervale.lancsngfl.ac.uk/,Preston,PR3 1SR,North West,yes
+119799,888,Lancashire,"Cardinal Allen Catholic High School, Fleetwood",http://www.cardinalallen.co.uk/,Fleetwood,FY7 8AY,North West,yes
 119557,888,Lancashire,Carleton St Hilda's Church of England Primary School,http://www.sthildas-carleton.lancs.sch.uk/,Poulton-le-Fylde,FY6 7PE,North West,no
 119522,888,Lancashire,"Carnforth Christ Church, Church of England, Voluntary Aided Primary School",www.christchurch-carnforth.lancs.sch.uk,Carnforth,LA5 9LJ,North West,no
-119126,888,Lancashire,Carnforth Community Primary School,https://www.carnforthprimary.lancs.sch.uk/,Carnforth,LA5 9LQ,North West,no
+119126,888,Lancashire,Carnforth Community Primary School,https://www.carnforthprimary.lancs.sch.uk/,Carnforth,LA5 9LQ,North West,yes
 145082,888,Lancashire,Carnforth High School,http://www.carnforthhigh.co.uk,Carnforth,LA5 9LS,North West,yes
 150966,888,Lancashire,Carr Hill High School,,Preston,PR4 2ST,North West,yes
-119392,888,Lancashire,"Carter's Charity Voluntary Controlled Primary School, Preesall",www.carters.lancs.sch.uk,Poulton-Le-Fylde,FY6 0HH,North West,no
-142055,888,Lancashire,Castercliff Primary School,www.castercliffprimaryacademy.co.uk,Nelson,BB9 8JJ,North West,no
-145978,888,Lancashire,Casterton Primary Academy,https://www.castertonprimaryacademy.co.uk/,Burnley,BB10 2PZ,North West,no
-148231,888,Lancashire,Castle View Primary Academy,https://castleview.school,Lancaster,LA1 3LE,North West,no
-119160,888,Lancashire,Catforth Primary School,www.catforthprimary.co.uk,Preston,PR4 0HL,North West,no
-119322,888,Lancashire,Caton Primary School,catonprimary.school,Lancaster,LA2 9NH,North West,no
+119392,888,Lancashire,"Carter's Charity Voluntary Controlled Primary School, Preesall",www.carters.lancs.sch.uk,Poulton-Le-Fylde,FY6 0HH,North West,yes
+142055,888,Lancashire,Castercliff Primary School,www.castercliffprimaryacademy.co.uk,Nelson,BB9 8JJ,North West,yes
+145978,888,Lancashire,Casterton Primary Academy,https://www.castertonprimaryacademy.co.uk/,Burnley,BB10 2PZ,North West,yes
+148231,888,Lancashire,Castle View Primary Academy,https://castleview.school,Lancaster,LA1 3LE,North West,yes
+119160,888,Lancashire,Catforth Primary School,www.catforthprimary.co.uk,Preston,PR4 0HL,North West,yes
+119322,888,Lancashire,Caton Primary School,catonprimary.school,Lancaster,LA2 9NH,North West,yes
 119524,888,Lancashire,Caton St Paul's Church of England Primary School,https://catonstpauls.com/,Lancaster,LA2 9PJ,North West,no
-119540,888,Lancashire,Cawthorne's Endowed School,http://www.abbeystead.co.uk,Lancaster,LA2 9BQ,North West,no
-147260,888,Lancashire,Central Lancaster High School,http://www.lancasterhigh.lancs.sch.uk,Lancaster,LA1 3LS,North West,no
+119540,888,Lancashire,Cawthorne's Endowed School,http://www.abbeystead.co.uk,Lancaster,LA2 9BQ,North West,yes
+147260,888,Lancashire,Central Lancaster High School,http://www.lancasterhigh.lancs.sch.uk,Lancaster,LA1 3LS,North West,yes
 133398,888,Lancashire,Chadwick High School,,Lancaster,LA1 2AY,North West,no
-119277,888,Lancashire,Charles Saer Community Primary School,www.charlessaer.lancs.sch.uk,Fleetwood,FY7 8DD,North West,no
-119418,888,Lancashire,Chatburn Church of England Primary School,www.chatburn.lancsngfl.ac.uk,Clitheroe,BB7 4AS,North West,no
+119277,888,Lancashire,Charles Saer Community Primary School,www.charlessaer.lancs.sch.uk,Fleetwood,FY7 8DD,North West,yes
+119418,888,Lancashire,Chatburn Church of England Primary School,www.chatburn.lancsngfl.ac.uk,Clitheroe,BB7 4AS,North West,yes
 119877,888,Lancashire,Chorley Astley Park School,www.astleypark.lancs.sch.uk,Chorley,PR7 1JZ,North West,no
 119467,888,Lancashire,Chorley St James' Church of England Primary School,https://chorleystjamesblogs.net,Chorley,PR6 0TE,North West,no
 119463,888,Lancashire,Christ Church Charnock Richard CofE Primary School,http://www.charnockrichard.lancs.sch.uk,Chorley,PR7 5NA,North West,no
