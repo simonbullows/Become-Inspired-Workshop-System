@@ -51,17 +51,25 @@ function main() {
     district_file: String(r[idx.district_file] ?? '').trim(),
   }));
 
-  const next = data.find(r => r.remaining > 0 && r.status === 'in_progress')
-    || data.find(r => r.remaining > 0 && r.status === 'pending')
-    || data.find(r => r.remaining > 0 && r.status !== 'done');
+  const ordered = [...data].sort((a, b) => {
+    if (b.remaining !== a.remaining) return b.remaining - a.remaining;
+    return a.district_name.localeCompare(b.district_name);
+  });
+
+  const next = ordered.find(r => r.remaining > 0 && r.status === 'in_progress')
+    || ordered.find(r => r.remaining > 0 && r.status === 'pending')
+    || ordered.find(r => r.remaining > 0 && r.status !== 'done');
 
   if (!next) {
     console.log('All districts are complete.');
     return;
   }
 
+  const sequenceNo = ordered.findIndex(r => r.district_code === next.district_code) + 1;
+
   const prompt = [
     `Jeeves scraping task`,
+    `Queue item: ${sequenceNo}`,
     `District: ${next.district_code} ${next.district_name}`,
     `File: data/district_work/${next.district_file}`,
     `Goal: Scrape missing school emails for rows where has_email_collected = no.`,

@@ -86,6 +86,7 @@ function main() {
   ]];
 
   const queueRows = [[
+    'sequence_no',
     'queue_id',
     'district_code',
     'district_name',
@@ -125,6 +126,7 @@ function main() {
       ]);
 
       queueRows.push([
+        String(i + 1),
         queueId,
         d.district_code,
         d.district_name,
