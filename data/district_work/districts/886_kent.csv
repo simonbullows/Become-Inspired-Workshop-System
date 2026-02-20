@@ -1,9 +1,9 @@
 urn,district_code,district_name,school_name,website,town,postcode,region,has_email_collected
-141308,886,Kent,Adisham Church of England Primary School,www.adisham.kent.sch.uk/,Canterbury,CT3 3JW,South East,no
-118365,886,Kent,Aldington Primary School,http://www.aldington.kent.sch.uk/,Ashford,TN25 7EE,South East,no
+141308,886,Kent,Adisham Church of England Primary School,www.adisham.kent.sch.uk/,Canterbury,CT3 3JW,South East,yes
+118365,886,Kent,Aldington Primary School,http://www.aldington.kent.sch.uk/,Ashford,TN25 7EE,South East,yes
 146950,886,Kent,All Soul's Church of England Primary School,www.allsouls.kent.sch.uk/,Folkestone,CT19 4LG,South East,no
 139096,886,Kent,Allington Primary School,www.allington.kent.sch.uk/,Maidstone,ME16 0PG,South East,no
-136499,886,Kent,Amherst School,http://www.amherst.kent.sch.uk,Sevenoaks,TN13 2AX,South East,no
+136499,886,Kent,Amherst School,http://www.amherst.kent.sch.uk,Sevenoaks,TN13 2AX,South East,yes
 139822,886,Kent,Archbishop Courtenay Primary School,www.archbishopcourtenay.org.uk/,Maidstone,ME15 6QN,South East,no
 135125,886,Kent,Ashford Oaks Community Primary School,http://www.ashfordoaks.kent.sch.uk/,Ashford,TN23 4QR,South East,no
 147833,886,Kent,Aspire School,www.aspire-ba-mat.org.uk,Sittingbourne,ME10 5DA,South East,no
@@ -11,9 +11,9 @@ urn,district_code,district_name,school_name,website,town,postcode,region,has_ema
 118449,886,Kent,Aycliffe Community Primary School,www.aycliffecpschool.co.uk,Dover,CT17 9HJ,South East,no
 149319,886,Kent,Aylesford School,www.aylesford.kent.sch.uk,Aylesford,ME20 7JU,South East,no
 151466,886,Kent,Aylesham Primary School,www.aylesham.kent.sch.uk,Canterbury,CT3 3BS,South East,no
-118730,886,Kent,Bapchild and Tonge Church of England Primary School and Nursery,www.bapchildprimary.co.uk,Sittingbourne,ME9 9NL,South East,no
-142924,886,Kent,Barming Primary School,https://www.barming.kent.sch.uk/,Maidstone,ME16 9DY,South East,no
-137474,886,Kent,Barton Court Grammar School,http://www.bartoncourt.org,Canterbury,CT1 1PH,South East,no
+118730,886,Kent,Bapchild and Tonge Church of England Primary School and Nursery,www.bapchildprimary.co.uk,Sittingbourne,ME9 9NL,South East,yes
+142924,886,Kent,Barming Primary School,https://www.barming.kent.sch.uk/,Maidstone,ME16 9DY,South East,yes
+137474,886,Kent,Barton Court Grammar School,http://www.bartoncourt.org,Canterbury,CT1 1PH,South East,yes
 138169,886,Kent,Barton Junior School,www.bartonjuniorschool.org/,Dover,CT16 2ND,South East,no
 149039,886,Kent,Barton Manor School,https://www.bartonmanor.org/,Canterbury,CT1 1SU,South East,no
 118266,886,Kent,Bean Primary School,https://www.bean.kent.sch.uk/,Dartford,DA2 8AW,South East,no
@@ -28,19 +28,19 @@ urn,district_code,district_name,school_name,website,town,postcode,region,has_ema
 118468,886,Kent,Bishops Down Primary and Nursery School,https://www.bishops-down.kent.sch.uk,Tunbridge Wells,TN4 9SU,South East,no
 118356,886,Kent,Blean Primary School,www.bleanprimary.org.uk/,Canterbury,CT2 9ED,South East,no
 140899,886,Kent,Bobbing Village School,www.bourne-alliance-mat.org.uk,Sittingbourne,ME9 8PL,South East,no
-118673,886,Kent,Bodsham Church of England Primary School,www.bodsham.kent.sch.uk,Ashford,TN25 5JQ,South East,no
-144867,886,Kent,Borden Church of England Primary School,www.borden.kent.sch.uk,Sittingbourne,ME9 8JS,South East,no
+118673,886,Kent,Bodsham Church of England Primary School,www.bodsham.kent.sch.uk,Ashford,TN25 5JQ,South East,yes
+144867,886,Kent,Borden Church of England Primary School,www.borden.kent.sch.uk,Sittingbourne,ME9 8JS,South East,yes
 137800,886,Kent,Borden Grammar School,http://website.bordengrammar.kent.sch.uk/,Sittingbourne,ME10 4DB,South East,no
 118288,886,Kent,Boughton Monchelsea Primary School,http://www.boughton-monchelsea.kent.sch.uk,Maidstone,ME17 4HP,South East,no
 118705,886,Kent,Boughton-under-Blean and Dunkirk Primary School,www.bad.kent.sch.uk,Faversham,ME13 9AW,South East,no
-118663,886,Kent,Brabourne Church of England Primary School,www.brabourne.kent.sch.uk,Ashford,TN25 5LQ,South East,no
-144868,886,Kent,Bredgar Church of England Primary School,www.bredgar.kent.sch.uk/,Sittingbourne,ME9 8HB,South East,no
+118663,886,Kent,Brabourne Church of England Primary School,www.brabourne.kent.sch.uk,Ashford,TN25 5LQ,South East,yes
+144868,886,Kent,Bredgar Church of England Primary School,www.bredgar.kent.sch.uk/,Sittingbourne,ME9 8HB,South East,yes
 118619,886,Kent,Bredhurst Church of England Voluntary Controlled Primary School,www.bredhurst.kent.sch.uk/,Gillingham,ME7 3JY,South East,no
 142689,886,Kent,Brenchley and Matfield Church of England Primary School,www.bmprimary.org.uk,Tonbridge,TN12 7NY,South East,no
 143517,886,Kent,Brenzett Church of England Primary School,www.brenzett.kent.sch.uk,Romney Marsh,TN29 9UA,South East,no
 118566,886,Kent,Broadwater Down Primary School,www.broadwater-down.kent.sch.uk,Tunbridge Wells,TN2 5RP,South East,no
-137458,886,Kent,Brockhill Park Performing Arts College,http://www.brockhill.kent.sch.uk/,Hythe,CT21 4HL,South East,no
-118534,886,Kent,"Bromstone Primary School, Broadstairs",www.bromstoneschool.com/,Broadstairs,CT10 2PW,South East,no
+137458,886,Kent,Brockhill Park Performing Arts College,http://www.brockhill.kent.sch.uk/,Hythe,CT21 4HL,South East,yes
+118534,886,Kent,"Bromstone Primary School, Broadstairs",www.bromstoneschool.com/,Broadstairs,CT10 2PW,South East,yes
 118373,886,Kent,Brook Community Primary School,www.brook-ashford.kent.sch.uk,Ashford,TN25 5PB,South East,no
 118484,886,Kent,Brookfield Infant School,https://flourish-federation.secure-primarysite.net/,Aylesford,ME20 6PY,South East,no
 118869,886,Kent,Brookfield Junior School,www.flourishfederation.co.uk,Aylesford,ME20 6PY,South East,no
@@ -424,7 +424,7 @@ urn,district_code,district_name,school_name,website,town,postcode,region,has_ema
 149893,886,Kent,The Abbey School,www.abbeyschoolfaversham.co.uk,Faversham,ME13 8RZ,South East,no
 118255,886,Kent,The Anthony Roper Primary School,www.anthony-roper.kent.sch.uk/,Dartford,DA4 0AA,South East,no
 140592,886,Kent,The Brent Primary School,www.brent.kent.sch.uk,Dartford,DA2 6BA,South East,no
-136302,886,Kent,The Canterbury Academy,http://www.canterbury.kent.sch.uk/,Canterbury,CT2 8QA,South East,no
+136302,886,Kent,The Canterbury Academy,http://www.canterbury.kent.sch.uk/,Canterbury,CT2 8QA,South East,yes
 136344,886,Kent,The Canterbury Primary School,www.canterbury.kent.sch.uk/,Canterbury,CT2 8PT,South East,no
 144015,886,Kent,The Charles Dickens School,www.cds.kent.sch.uk,Broadstairs,CT10 2RL,South East,no
 150255,886,Kent,The Churchill School,http://www.thechurchillschool.co.uk,Folkestone,CT18 7RH,South East,no
