@@ -32,11 +32,17 @@ function parseCsv(text) {
 }
 
 const EMAIL_RE = /[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}/gi;
+const EMAIL_EXACT_RE = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
+const BAD_SUFFIX_RE = /\.(png|jpg|jpeg|gif|svg|webp|ico)$/i;
 
 function extractEmails(raw) {
   if (!raw) return [];
   const m = String(raw).match(EMAIL_RE) || [];
-  const uniq = [...new Set(m.map(x => x.toLowerCase()))];
+  const uniq = [...new Set(
+    m.map(x => x.toLowerCase().trim())
+      .filter(x => !BAD_SUFFIX_RE.test(x))
+      .filter(x => EMAIL_EXACT_RE.test(x))
+  )];
   return uniq.slice(0, 30);
 }
 

@@ -9,18 +9,22 @@ function parseBool(v) {
   return (s === 'true' || s === '1' || s === 'yes') ? 1 : 0;
 }
 
+const EMAIL_EXACT_RE = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
+const BAD_SUFFIX_RE = /\.(png|jpg|jpeg|gif|svg|webp|ico)$/i;
+
 function splitEmails(raw) {
   if (!raw) return [];
   const s = String(raw);
-  // CSV seems to store as a string; allow commas/semicolons/whitespace.
   const parts = s
     .replace(/[\[\]"]+/g, '')
     .split(/[,;\s]+/g)
-    .map(x => x.trim())
-    .filter(Boolean);
+    .map(x => x.trim().toLowerCase())
+    .filter(Boolean)
+    .filter(e => e.includes('@'))
+    .filter(e => !BAD_SUFFIX_RE.test(e))
+    .filter(e => EMAIL_EXACT_RE.test(e));
 
-  // basic sanity: must contain @
-  const uniq = [...new Set(parts.filter(e => e.includes('@')))];
+  const uniq = [...new Set(parts)];
   return uniq.slice(0, 20);
 }
 
