@@ -204,12 +204,21 @@ const App: React.FC = () => {
 
   type FilterOverrides = Partial<{ q: string; region: string; phase: string; hasSend: boolean; hasPupilPremium: boolean }>;
 
+  const appliedFiltersRef = useRef<{ q: string; region: string; phase: string; hasSend: boolean; hasPupilPremium: boolean }>({
+    q: '',
+    region: '',
+    phase: '',
+    hasSend: false,
+    hasPupilPremium: false,
+  });
+
   function currentPinParams(overrides: FilterOverrides = {}) {
-    const effectiveQ = overrides.q ?? q;
-    const effectiveRegion = overrides.region ?? region;
-    const effectivePhase = overrides.phase ?? phase;
-    const effectiveHasSend = overrides.hasSend ?? hasSend;
-    const effectiveHasPupilPremium = overrides.hasPupilPremium ?? hasPupilPremium;
+    const base = appliedFiltersRef.current;
+    const effectiveQ = overrides.q ?? base.q;
+    const effectiveRegion = overrides.region ?? base.region;
+    const effectivePhase = overrides.phase ?? base.phase;
+    const effectiveHasSend = overrides.hasSend ?? base.hasSend;
+    const effectiveHasPupilPremium = overrides.hasPupilPremium ?? base.hasPupilPremium;
 
     const p = new URLSearchParams();
     if (effectiveQ) p.set('q', effectiveQ);
@@ -257,6 +266,14 @@ const App: React.FC = () => {
       const effectivePhase = overrides.phase ?? phase;
       const effectiveHasSend = overrides.hasSend ?? hasSend;
       const effectiveHasPupilPremium = overrides.hasPupilPremium ?? hasPupilPremium;
+
+      appliedFiltersRef.current = {
+        q: effectiveQ,
+        region: effectiveRegion,
+        phase: effectivePhase,
+        hasSend: effectiveHasSend,
+        hasPupilPremium: effectiveHasPupilPremium,
+      };
 
       const listParams = new URLSearchParams();
       if (effectiveQ) listParams.set('q', effectiveQ);
