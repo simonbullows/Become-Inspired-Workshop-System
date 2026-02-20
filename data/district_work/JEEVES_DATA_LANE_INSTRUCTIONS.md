@@ -55,6 +55,15 @@ Report:
 - blockers
 - branch + commit hash pushed
 
+### Push failure fallback (mandatory)
+If `git push` fails for auth/network reasons:
+1. Create a patch artifact for the latest commit:
+   - `git format-patch -1 --stdout > queueNNN.patch`
+2. Upload the patch file into chat (or paste full patch text in chat).
+3. Include the exact files changed and commit hash.
+
+Do not stop at a local filesystem path only. The patch content must be delivered in chat so Pepper/Simon can apply it.
+
 ## Conflict-safe merge approach
 
 Pepper/Simon will merge your branch and sync DB from your latest `KOSMOS_With_Emails.csv`.
