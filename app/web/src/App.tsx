@@ -497,6 +497,12 @@ const App: React.FC = () => {
             <input
               value={q}
               onChange={e => setQ(e.target.value)}
+              onKeyDown={e => {
+                if (e.key === 'Enter') {
+                  e.preventDefault();
+                  refresh().catch(err => setErr(String(err?.message || err)));
+                }
+              }}
               placeholder={projectMeta.searchPlaceholder}
               className="w-full px-3 py-2 rounded-xl bg-white/5 border border-white/10 focus:outline-none focus:ring-2 focus:ring-cyan-400/40"
             />
