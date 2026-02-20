@@ -38,10 +38,28 @@ From helper scripts in `app/api/scripts`:
 - **Email subset:** `KOSMOS_With_Emails.csv`
 - **Focused enrichment subset:** `KOSMOS_Schools_Enriched.csv`
 
+## District-by-district ops system
+
+District queue now has a managed workflow script:
+- `scripts/manage_district_queue.mjs`
+
+Core commands:
+- `node scripts/manage_district_queue.mjs rebuild`
+- `node scripts/manage_district_queue.mjs summary`
+- `node scripts/manage_district_queue.mjs next`
+- `node scripts/manage_district_queue.mjs set-status <code> <pending|in_progress|blocked|done>`
+
+Current queue totals after rebuild:
+- Districts: **153**
+- Schools: **22,011**
+- Emails collected: **3,328**
+- Remaining to scrape: **18,683**
+- Next district target: **888 Lancashire** (`districts/888_lancashire.csv`)
+
 ## Next actions checklist
 
 - [ ] Verify whether URNs `125791` and `125814` should be added to canonical full set or removed from downstream files.
 - [ ] Re-run merge/enrichment so `Complete` and `With_Emails` are consistent with canonical source.
 - [ ] Fill remaining missing coordinates in DB (21,968 / 22,011 currently geocoded).
-- [ ] Add a small script that prints these counts in one command for daily sanity checks.
+- [x] Add a small script that prints these counts in one command for daily sanity checks.
 - [ ] Freeze naming/versioning convention for exports to stop file drift.

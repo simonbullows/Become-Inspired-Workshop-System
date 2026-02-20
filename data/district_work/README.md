@@ -1,6 +1,21 @@
 # District Work Pack for Jeeves
 
-- Start with `district_index.csv` (sorted by highest remaining to scrape).
-- Work one district at a time using the `district_file` path.
-- In each district file, prioritize rows where `has_email_collected = no`.
-- Update `status` in `district_index.csv` as you go: pending -> in_progress -> done.
+## Daily workflow (one district at a time)
+
+1. Rebuild index from live district CSVs:
+   - `node scripts/manage_district_queue.mjs rebuild`
+2. Pull current next district:
+   - `node scripts/manage_district_queue.mjs next`
+3. Mark it in progress:
+   - `node scripts/manage_district_queue.mjs set-status <district_code> in_progress`
+4. Work the district file shown in `district_file`.
+   - Prioritize rows where `has_email_collected = no`.
+5. When finished:
+   - `node scripts/manage_district_queue.mjs rebuild`
+   - If complete, mark done: `node scripts/manage_district_queue.mjs set-status <district_code> done`
+
+## Useful commands
+
+- `node scripts/manage_district_queue.mjs summary` -> global district progress totals
+- `node scripts/manage_district_queue.mjs next` -> current district target (prefers `in_progress`, otherwise highest pending)
+- `node scripts/manage_district_queue.mjs set-status <code> <pending|in_progress|blocked|done>` -> manual status control
