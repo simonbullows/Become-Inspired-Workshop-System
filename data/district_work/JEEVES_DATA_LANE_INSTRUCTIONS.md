@@ -79,3 +79,6 @@ Do not try to resolve app-code conflicts.
 6. `node scripts/build_kosmos_ops_layers.mjs`
 7. Commit + push to `data-collection`
 8. Send handover summary
+9. **STOP and wait for explicit approval before starting the next queue item**
+
+Do not proceed to queue 002/003/etc until Simon/Pepper confirms.
