@@ -168,6 +168,14 @@ function printRow(prefix, row) {
   console.log(`${prefix} ${row.district_code} ${row.district_name} | remaining=${row.remaining_to_scrape} | coverage=${row.coverage_pct}% | status=${row.status} | file=${row.district_file}`);
 }
 
+function pickNextRow(rows) {
+  const active = rows.find(r => r.remaining_to_scrape > 0 && r.status === 'in_progress');
+  if (active) return active;
+  const pending = rows.find(r => r.remaining_to_scrape > 0 && (r.status === 'pending' || !r.status));
+  if (pending) return pending;
+  return rows.find(r => r.remaining_to_scrape > 0 && r.status !== 'done') || null;
+}
+
 function main() {
   const [command = 'rebuild', arg1, arg2] = process.argv.slice(2);
 
@@ -185,13 +193,30 @@ function main() {
   }
 
   if (command === 'next') {
-    const rows = readIndexRows().filter(r => r.remaining_to_scrape > 0 && r.status !== 'done');
-    const next = rows.find(r => r.status === 'in_progress') || rows.find(r => r.status === 'pending' || !r.status) || rows[0];
+    const rows = readIndexRows();
+    const next = pickNextRow(rows);
     if (!next) {
       console.log('[district-queue] all districts complete');
       return;
     }
     printRow('[district-queue] next:', next);
+    return;
+  }
+
+  if (command === 'claim-next') {
+    const rows = readIndexRows();
+    const next = pickNextRow(rows);
+    if (!next) {
+      console.log('[district-queue] all districts complete');
+      return;
+    }
+
+    if (next.status !== 'in_progress') {
+      next.status = 'in_progress';
+      writeIndex(rows);
+    }
+
+    printRow('[district-queue] claimed:', next);
     return;
   }
 
@@ -217,6 +242,26 @@ function main() {
     return;
   }
 
+  if (command === 'complete') {
+    const code = String(arg1 ?? '').trim();
+    if (!code) {
+      console.error('Usage: node scripts/manage_district_queue.mjs complete <district_code>');
+      process.exit(1);
+    }
+
+    const rows = buildRows(readExistingStatus());
+    const target = rows.find(r => r.district_code === code);
+    if (!target) {
+      console.error(`[district-queue] district not found: ${code}`);
+      process.exit(1);
+    }
+
+    target.status = target.remaining_to_scrape === 0 ? 'done' : 'pending';
+    writeIndex(rows);
+    printRow('[district-queue] completed-pass:', target);
+    return;
+  }
+
   if (command === 'summary') {
     const rows = readIndexRows();
     const totals = {
@@ -236,7 +281,7 @@ function main() {
   }
 
   console.error(`Unknown command: ${command}`);
-  console.error('Commands: rebuild | next | set-status | summary');
+  console.error('Commands: rebuild | next | claim-next | set-status | complete | summary');
   process.exit(1);
 }
 
