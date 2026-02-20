@@ -109,20 +109,20 @@ urn,district_code,district_name,school_name,website,town,postcode,region,has_ema
 133398,888,Lancashire,Chadwick High School,,Lancaster,LA1 2AY,North West,no
 119277,888,Lancashire,Charles Saer Community Primary School,www.charlessaer.lancs.sch.uk,Fleetwood,FY7 8DD,North West,yes
 119418,888,Lancashire,Chatburn Church of England Primary School,www.chatburn.lancsngfl.ac.uk,Clitheroe,BB7 4AS,North West,yes
-119877,888,Lancashire,Chorley Astley Park School,www.astleypark.lancs.sch.uk,Chorley,PR7 1JZ,North West,no
-119467,888,Lancashire,Chorley St James' Church of England Primary School,https://chorleystjamesblogs.net,Chorley,PR6 0TE,North West,no
+119877,888,Lancashire,Chorley Astley Park School,www.astleypark.lancs.sch.uk,Chorley,PR7 1JZ,North West,yes
+119467,888,Lancashire,Chorley St James' Church of England Primary School,https://chorleystjamesblogs.net,Chorley,PR6 0TE,North West,yes
 119463,888,Lancashire,Christ Church Charnock Richard CofE Primary School,http://www.charnockrichard.lancs.sch.uk,Chorley,PR7 5NA,North West,no
 150615,888,Lancashire,Christ The King Catholic High School,,Preston,PR1 4PR,North West,no
 149124,888,Lancashire,"Christ The King Roman Catholic Primary School, a Voluntary Academy",www.king-pri.lancs.sch.uk/,Burnley,BB11 4RB,North West,no
-119331,888,Lancashire,Clayton Brook Primary School,www.claytonbrook.lancs.sch.uk,Preston,PR5 8HL,North West,no
-137641,888,Lancashire,Clayton-le-Moors All Saints' Church of England Primary School,http://www.allsaints-clm.lancs.sch.uk,Accrington,BB5 5HT,North West,no
-119186,888,Lancashire,Clayton-le-Moors Mount Pleasant Primary School,www.mountpleasant.lancs.sch.uk/,Accrington,BB5 5NH,North West,no
-119318,888,Lancashire,Clayton-le-Woods Manor Road Primary School,www.manor-road.lancsngfl.ac.uk/,Chorley,PR6 7JR,North West,no
-119291,888,Lancashire,Clifton Primary School,http://www.clifton-pri.lancs.sch.uk,Lytham St Annes,FY8 3PY,North West,no
-119321,888,Lancashire,Clitheroe Brookside Primary School,http://www.brookside.lancs.sch.uk,Clitheroe,BB7 1NW,North West,no
-119161,888,Lancashire,Clitheroe Pendle Primary School,www.pendle.lancs.sch.uk,Clitheroe,BB7 2AL,North West,no
-136390,888,Lancashire,Clitheroe Royal Grammar School,http://www.crgs.org.uk,Clitheroe,BB7 2DJ,North West,no
-142054,888,Lancashire,Coal Clough Academy,coalclough.org,Burnley,BB11 4PF,North West,no
+119331,888,Lancashire,Clayton Brook Primary School,www.claytonbrook.lancs.sch.uk,Preston,PR5 8HL,North West,yes
+137641,888,Lancashire,Clayton-le-Moors All Saints' Church of England Primary School,http://www.allsaints-clm.lancs.sch.uk,Accrington,BB5 5HT,North West,yes
+119186,888,Lancashire,Clayton-le-Moors Mount Pleasant Primary School,www.mountpleasant.lancs.sch.uk/,Accrington,BB5 5NH,North West,yes
+119318,888,Lancashire,Clayton-le-Woods Manor Road Primary School,www.manor-road.lancsngfl.ac.uk/,Chorley,PR6 7JR,North West,yes
+119291,888,Lancashire,Clifton Primary School,http://www.clifton-pri.lancs.sch.uk,Lytham St Annes,FY8 3PY,North West,yes
+119321,888,Lancashire,Clitheroe Brookside Primary School,http://www.brookside.lancs.sch.uk,Clitheroe,BB7 1NW,North West,yes
+119161,888,Lancashire,Clitheroe Pendle Primary School,www.pendle.lancs.sch.uk,Clitheroe,BB7 2AL,North West,yes
+136390,888,Lancashire,Clitheroe Royal Grammar School,http://www.crgs.org.uk,Clitheroe,BB7 2DJ,North West,yes
+142054,888,Lancashire,Coal Clough Academy,coalclough.org,Burnley,BB11 4PF,North West,yes
 119335,888,Lancashire,Coates Lane Primary School,http://www.coateslane.lancs.sch.uk,BARNOLDSWICK,BB18 6EZ,North West,no
 119525,888,Lancashire,Cockerham Parochial CofE Primary School,http://www.cockerham.lancs.sch.uk,"Cockerham, Lancaster",LA2 0EF,North West,no
 119433,888,Lancashire,Colne Christ Church Church of England Voluntary Aided Primary School,www.colnechristchurch.co.uk,Colne,BB8 7AA,North West,no
