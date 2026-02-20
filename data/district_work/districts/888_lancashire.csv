@@ -8,7 +8,7 @@ urn,district_code,district_name,school_name,website,town,postcode,region,has_ema
 119184,888,Lancashire,Accrington Peel Park Primary School,www.peelpark.lancs.sch.uk,Accrington,BB5 6QR,North West,yes
 119185,888,Lancashire,Accrington Spring Hill Community Primary School,www.springhillschool.co.uk/,Accrington,BB5 0JD,North West,yes
 137421,888,Lancashire,Accrington St Christopher's Church of England High School,http://www.st-christophers.org/,Accrington,BB5 4AY,North West,yes
-119445,888,Lancashire,Accrington St John with St Augustine Church of England Primary School,http://www.st-john-augustine.lancs.sch.uk,Accrington,BB5 6AD,North West,no
+119445,888,Lancashire,Accrington St John with St Augustine Church of England Primary School,http://www.st-john-augustine.lancs.sch.uk,Accrington,BB5 6AD,North West,yes
 119446,888,Lancashire,Accrington St Mary Magdalen's Church of England Primary School,www.st-marymagdalens.lancs.sch.uk/,Accrington,BB5 1DW,North West,yes
 119341,888,Lancashire,Accrington Woodnook Primary School,www.woodnookschool.co.uk/,Accrington,BB5 2HS,North West,no
 135347,888,Lancashire,Acorns Primary School,www.acorns.lancs.sch.uk,Preston,PR1 6AU,North West,yes
@@ -25,7 +25,7 @@ urn,district_code,district_name,school_name,website,town,postcode,region,has_ema
 134991,888,Lancashire,Appletree Nursery School,,Lancaster,LA1 5QB,North West,no
 149981,888,Lancashire,Appley Bridge All Saints Church of England Primary Academy,www.appleybridgeallsaints.lancs.sch.uk/,Wigan,WN6 9DT,North West,no
 119814,888,Lancashire,Archbishop Temple Church of England High School,http://www.archbishoptemple.com,Preston,PR2 8RA,North West,no
-119523,888,Lancashire,Arkholme Church of England Primary School,http://www.arkholme.lancs.sch.uk,Carnforth,LA6 1AU,North West,no
+119523,888,Lancashire,Arkholme Church of England Primary School,http://www.arkholme.lancs.sch.uk,Carnforth,LA6 1AU,North West,yes
 119707,888,Lancashire,Ashton Community Science College,http://www.ashtoncsc.lancs.sch.uk/,Preston,PR2 1SL,North West,yes
 119238,888,Lancashire,Ashton Primary School,www.ashton.lancs.sch.uk/,Preston,PR2 1TU,North West,yes
 119602,888,Lancashire,Ashton-on-Ribble St Andrew's Church of England Primary School,http://www.standrewscofe.net,Preston,PR2 1EQ,North West,no
