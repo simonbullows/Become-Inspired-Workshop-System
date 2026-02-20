@@ -3,3 +3,9 @@
 html, body {
   height: 100%;
 }
+
+/* Ensure native dropdown option text stays readable in Chromium dark UI */
+select option {
+  color: #0f172a;
+  background: #ffffff;
+}
