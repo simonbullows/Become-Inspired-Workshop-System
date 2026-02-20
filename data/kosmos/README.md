@@ -19,8 +19,14 @@ Every operational output should include:
 1. Fill/update files in `templates/`.
 2. Build district-labelled school mapping export:
    - `node scripts/build_kosmos_district_map.mjs`
-3. Validate generated output quality:
+3. Build operational scope + queue exports for Jeeves automation:
+   - `node scripts/build_kosmos_ops_layers.mjs`
+4. Validate generated output quality:
    - `node scripts/validate_kosmos_district_map.mjs`
+
+Operational exports produced:
+- `exports/kosmos_target_set.csv`
+- `exports/district_scrape_queue.csv`
 
 ## Notes
 
