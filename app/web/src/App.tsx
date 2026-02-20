@@ -34,6 +34,11 @@ type SchoolActionRecord = {
 
 type SchoolActionState = Record<string, SchoolActionRecord>;
 
+type CrmPipeline = { stage: string; owner: string; priority: 'low' | 'normal' | 'high'; nextActionAt: string };
+type CrmContact = { id: string; name: string; role: string; email: string; phone: string; source: string; confidence: 'low' | 'medium' | 'high'; notes: string };
+type CrmActivity = { id: string; type: string; summary: string; body: string; actor: string; happenedAt: string };
+type CrmTask = { id: string; title: string; status: 'open' | 'done'; owner: string; dueAt: string; notes: string };
+
 const DEFAULT_ACTION_RECORD: SchoolActionRecord = {
   status: 'new',
   notes: '',
@@ -157,8 +162,8 @@ function sourceValue(s: School | null, key: string) {
   return (s?.source_row && s.source_row[key]) ? String(s.source_row[key]).trim() : '';
 }
 
-async function fetchJson(url: string) {
-  const r = await fetch(url);
+async function fetchJson(url: string, init?: RequestInit) {
+  const r = await fetch(url, init);
   const j = await r.json();
   if (!r.ok) throw new Error(j?.error || r.statusText);
   return j;
@@ -183,6 +188,11 @@ const App: React.FC = () => {
   const [newSegment, setNewSegment] = useState('');
   const [activeProject, setActiveProject] = useState<ProjectKey>('schools');
   const [filteredMeta, setFilteredMeta] = useState<{ schools: number; withEmails: number; withoutEmails: number; geocoded: number } | null>(null);
+  const [crmTab, setCrmTab] = useState<'overview' | 'contacts' | 'timeline' | 'tasks'>('overview');
+  const [crmPipeline, setCrmPipeline] = useState<CrmPipeline>({ stage: 'new', owner: '', priority: 'normal', nextActionAt: '' });
+  const [crmContacts, setCrmContacts] = useState<CrmContact[]>([]);
+  const [crmActivities, setCrmActivities] = useState<CrmActivity[]>([]);
+  const [crmTasks, setCrmTasks] = useState<CrmTask[]>([]);
 
   useEffect(() => {
     fetchJson('/api/stats').then(setStats).catch(()=>{});
@@ -413,12 +423,39 @@ const App: React.FC = () => {
     return (j.school || null) as School | null;
   }
 
+  async function loadSchoolCrm(urn: string) {
+    const j = await fetchJson('/api/schools/' + encodeURIComponent(urn) + '/crm');
+    setCrmPipeline({
+      stage: j.pipeline?.stage || 'new',
+      owner: j.pipeline?.owner || '',
+      priority: j.pipeline?.priority || 'normal',
+      nextActionAt: j.pipeline?.nextActionAt || '',
+    });
+    setCrmContacts(j.contacts || []);
+    setCrmActivities(j.activities || []);
+    setCrmTasks(j.tasks || []);
+  }
+
+  async function savePipeline(patch: Partial<CrmPipeline>) {
+    if (!selected) return;
+    const next = { ...crmPipeline, ...patch };
+    setCrmPipeline(next);
+    await fetchJson('/api/schools/' + encodeURIComponent(selected.urn) + '/pipeline', {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(next),
+    } as any);
+  }
+
   async function selectSchool(s: School) {
     setSelectedLoading(true);
     try {
       const full = await loadFullSchool(s.urn).catch(() => null);
-      setSelected(full || s);
+      const next = full || s;
+      setSelected(next);
       setDrawerExpanded(false);
+      setCrmTab('overview');
+      await loadSchoolCrm(next.urn).catch(() => {});
     } finally {
       setSelectedLoading(false);
     }
@@ -703,29 +740,55 @@ const App: React.FC = () => {
                 </div>
 
                 <div className="p-4 grid md:grid-cols-2 gap-4">
-                  <div className="grid gap-2 text-sm">
-                    <div><span className="text-black/50">Phase:</span> {selected.phase || '—'}</div>
-                    <div>
-                      <span className="text-black/50">Headteacher:</span>{' '}
-                      {[
-                        sourceValue(selected, 'HeadTitle (name)'),
-                        sourceValue(selected, 'HeadFirstName'),
-                        sourceValue(selected, 'HeadLastName'),
-                      ].filter(Boolean).join(' ') || '—'}
+                  <div className="grid gap-3 text-sm">
+                    <div className="flex flex-wrap gap-2 text-xs">
+                      {(['overview', 'contacts', 'timeline', 'tasks'] as const).map(tab => (
+                        <button key={tab} onClick={() => setCrmTab(tab)} className={(crmTab === tab ? 'bg-black text-white ' : 'bg-white ') + 'px-2 py-1 rounded-lg border border-black/15'}>{tab}</button>
+                      ))}
                     </div>
-                    {sourceValue(selected, 'HeadPreferredJobTitle') ? (
-                      <div><span className="text-black/50">Head role:</span> {sourceValue(selected, 'HeadPreferredJobTitle')}</div>
+
+                    {crmTab === 'overview' ? (
+                      <>
+                        <div><span className="text-black/50">Phase:</span> {selected.phase || '—'}</div>
+                        <div>
+                          <span className="text-black/50">Headteacher:</span>{' '}
+                          {[
+                            sourceValue(selected, 'HeadTitle (name)'),
+                            sourceValue(selected, 'HeadFirstName'),
+                            sourceValue(selected, 'HeadLastName'),
+                          ].filter(Boolean).join(' ') || '—'}
+                        </div>
+                        <div><span className="text-black/50">Phone:</span> {formatTelephone(selected.telephone)}</div>
+                        <div><span className="text-black/50">Emails:</span> {(selected.emails || []).join(', ') || '—'}</div>
+                        <div><span className="text-black/50">Pipeline stage:</span> {crmPipeline.stage}</div>
+                        <div><span className="text-black/50">Owner:</span> <input value={crmPipeline.owner || ''} onChange={e => savePipeline({ owner: e.target.value }).catch(()=>{})} className="ml-2 px-2 py-1 rounded border border-black/15" /></div>
+                        <div><span className="text-black/50">Priority:</span>
+                          <select value={crmPipeline.priority} onChange={e => savePipeline({ priority: e.target.value as any }).catch(()=>{})} className="ml-2 px-2 py-1 rounded border border-black/15">
+                            <option value="low">low</option><option value="normal">normal</option><option value="high">high</option>
+                          </select>
+                        </div>
+                        <div><span className="text-black/50">Next action:</span>
+                          <input type="datetime-local" value={crmPipeline.nextActionAt || ''} onChange={e => savePipeline({ nextActionAt: e.target.value }).catch(()=>{})} className="ml-2 px-2 py-1 rounded border border-black/15" />
+                        </div>
+                      </>
                     ) : null}
-                    <div><span className="text-black/50">Phone:</span> {formatTelephone(selected.telephone)}</div>
-                    <div>
-                      <span className="text-black/50">Website:</span> {selected.website
-                        ? <a className="text-blue-700 hover:underline" href={(selected.website.startsWith('http') ? selected.website : `https://${selected.website}`)} target="_blank">{selected.website}</a>
-                        : '—'}
-                    </div>
-                    <div><span className="text-black/50">Emails:</span> {(selected.emails || []).join(', ') || '—'}</div>
-                    <div><span className="text-black/50">Flags:</span> {selected.has_send ? 'SEND' : 'No SEND'} • {selected.has_pupil_premium ? 'Pupil Premium' : 'No Pupil Premium'}</div>
-                    {selected.ofsted_mention ? (
-                      <div><span className="text-black/50">Ofsted mention:</span> {selected.ofsted_mention}</div>
+
+                    {crmTab === 'contacts' ? (
+                      <div className="grid gap-2">
+                        {crmContacts.length ? crmContacts.map(c => <div key={c.id} className="rounded-lg border border-black/10 p-2"><div className="font-semibold">{c.name} <span className="text-black/50">({c.role || 'role n/a'})</span></div><div className="text-xs">{c.email || '—'} {c.phone ? `• ${c.phone}` : ''}</div></div>) : <div className="text-black/60 text-xs">No contacts yet.</div>}
+                      </div>
+                    ) : null}
+
+                    {crmTab === 'timeline' ? (
+                      <div className="grid gap-2 max-h-80 overflow-auto">
+                        {crmActivities.length ? crmActivities.map(a => <div key={a.id} className="rounded-lg border border-black/10 p-2"><div className="text-xs text-black/50">{a.type} • {a.happenedAt}</div><div className="font-semibold">{a.summary}</div>{a.body ? <div className="text-xs">{a.body}</div> : null}</div>) : <div className="text-black/60 text-xs">No activity yet.</div>}
+                      </div>
+                    ) : null}
+
+                    {crmTab === 'tasks' ? (
+                      <div className="grid gap-2 max-h-80 overflow-auto">
+                        {crmTasks.length ? crmTasks.map(t => <div key={t.id} className="rounded-lg border border-black/10 p-2"><div className="font-semibold">{t.title}</div><div className="text-xs text-black/60">{t.status} {t.owner ? `• ${t.owner}` : ''} {t.dueAt ? `• due ${t.dueAt}` : ''}</div></div>) : <div className="text-black/60 text-xs">No tasks yet.</div>}
+                      </div>
                     ) : null}
 
                     {!!selected.source_row && Object.keys(selected.source_row).length > 0 ? (

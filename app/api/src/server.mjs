@@ -208,6 +208,158 @@ app.delete('/api/campaigns/:id', (req, res) => {
   res.json({ ok: true });
 });
 
+// ---- School CRM API ----
+
+const PipelinePatch = z.object({
+  stage: z.string().min(1).max(40).optional(),
+  owner: z.string().max(120).optional(),
+  priority: z.enum(['low', 'normal', 'high']).optional(),
+  nextActionAt: z.string().max(60).optional(),
+});
+
+const ContactCreate = z.object({
+  name: z.string().min(1).max(140),
+  role: z.string().max(140).optional().default(''),
+  email: z.string().max(240).optional().default(''),
+  phone: z.string().max(80).optional().default(''),
+  source: z.string().max(200).optional().default(''),
+  confidence: z.enum(['low', 'medium', 'high']).optional().default('medium'),
+  notes: z.string().max(4000).optional().default(''),
+});
+
+const ActivityCreate = z.object({
+  type: z.enum(['note', 'call', 'email', 'meeting', 'task']).optional().default('note'),
+  summary: z.string().min(1).max(300),
+  body: z.string().max(20000).optional().default(''),
+  actor: z.string().max(120).optional().default(''),
+  happenedAt: z.string().max(60).optional(),
+});
+
+const TaskCreate = z.object({
+  title: z.string().min(1).max(300),
+  owner: z.string().max(120).optional().default(''),
+  dueAt: z.string().max(60).optional().default(''),
+  notes: z.string().max(4000).optional().default(''),
+});
+
+const TaskPatch = z.object({
+  title: z.string().min(1).max(300).optional(),
+  owner: z.string().max(120).optional(),
+  dueAt: z.string().max(60).optional(),
+  notes: z.string().max(4000).optional(),
+  status: z.enum(['open', 'done']).optional(),
+});
+
+app.get('/api/schools/:urn/crm', (req, res) => {
+  const urn = String(req.params.urn || '');
+  const school = db.prepare('SELECT urn FROM schools WHERE urn = ?').get(urn);
+  if (!school) return res.status(404).json({ error: 'not_found' });
+
+  const pipeline = db.prepare('SELECT * FROM school_pipeline WHERE urn = ?').get(urn)
+    || { urn, stage: 'new', owner: '', priority: 'normal', nextActionAt: '', updatedAt: '' };
+  const contacts = db.prepare('SELECT * FROM school_contacts WHERE urn = ? ORDER BY updatedAt DESC').all(urn);
+  const activities = db.prepare('SELECT * FROM school_activities WHERE urn = ? ORDER BY happenedAt DESC, createdAt DESC LIMIT 200').all(urn);
+  const tasks = db.prepare('SELECT * FROM school_tasks WHERE urn = ? ORDER BY status ASC, dueAt ASC, updatedAt DESC').all(urn);
+
+  res.json({ pipeline, contacts, activities, tasks });
+});
+
+app.patch('/api/schools/:urn/pipeline', (req, res) => {
+  const urn = String(req.params.urn || '');
+  const parsed = PipelinePatch.safeParse(req.body);
+  if (!parsed.success) return res.status(400).json({ error: parsed.error.flatten() });
+
+  const ts = new Date().toISOString();
+  const existing = db.prepare('SELECT * FROM school_pipeline WHERE urn = ?').get(urn)
+    || { urn, stage: 'new', owner: '', priority: 'normal', nextActionAt: '', updatedAt: ts };
+  const next = { ...existing, ...parsed.data, updatedAt: ts };
+
+  db.prepare(`
+    INSERT INTO school_pipeline (urn, stage, owner, priority, nextActionAt, updatedAt)
+    VALUES (?, ?, ?, ?, ?, ?)
+    ON CONFLICT(urn) DO UPDATE SET
+      stage=excluded.stage,
+      owner=excluded.owner,
+      priority=excluded.priority,
+      nextActionAt=excluded.nextActionAt,
+      updatedAt=excluded.updatedAt
+  `).run(next.urn, next.stage, next.owner, next.priority, next.nextActionAt, next.updatedAt);
+
+  res.json({ ok: true, pipeline: next });
+});
+
+app.post('/api/schools/:urn/contacts', (req, res) => {
+  const urn = String(req.params.urn || '');
+  const parsed = ContactCreate.safeParse(req.body);
+  if (!parsed.success) return res.status(400).json({ error: parsed.error.flatten() });
+
+  const id = crypto.randomUUID();
+  const ts = new Date().toISOString();
+  const d = parsed.data;
+
+  db.prepare(`INSERT INTO school_contacts (id, urn, name, role, email, phone, source, confidence, notes, createdAt, updatedAt)
+              VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`)
+    .run(id, urn, d.name, d.role, d.email, d.phone, d.source, d.confidence, d.notes, ts, ts);
+
+  res.status(201).json({ id });
+});
+
+app.delete('/api/schools/:urn/contacts/:id', (req, res) => {
+  const id = String(req.params.id || '');
+  db.prepare('DELETE FROM school_contacts WHERE id = ?').run(id);
+  res.json({ ok: true });
+});
+
+app.post('/api/schools/:urn/activities', (req, res) => {
+  const urn = String(req.params.urn || '');
+  const parsed = ActivityCreate.safeParse(req.body);
+  if (!parsed.success) return res.status(400).json({ error: parsed.error.flatten() });
+
+  const id = crypto.randomUUID();
+  const ts = new Date().toISOString();
+  const d = parsed.data;
+  const happenedAt = d.happenedAt || ts;
+
+  db.prepare(`INSERT INTO school_activities (id, urn, type, summary, body, actor, happenedAt, createdAt)
+              VALUES (?, ?, ?, ?, ?, ?, ?, ?)`)
+    .run(id, urn, d.type, d.summary, d.body, d.actor, happenedAt, ts);
+
+  res.status(201).json({ id });
+});
+
+app.post('/api/schools/:urn/tasks', (req, res) => {
+  const urn = String(req.params.urn || '');
+  const parsed = TaskCreate.safeParse(req.body);
+  if (!parsed.success) return res.status(400).json({ error: parsed.error.flatten() });
+
+  const id = crypto.randomUUID();
+  const ts = new Date().toISOString();
+  const d = parsed.data;
+
+  db.prepare(`INSERT INTO school_tasks (id, urn, title, status, owner, dueAt, notes, createdAt, updatedAt)
+              VALUES (?, ?, ?, 'open', ?, ?, ?, ?, ?)`)
+    .run(id, urn, d.title, d.owner, d.dueAt, d.notes, ts, ts);
+
+  res.status(201).json({ id });
+});
+
+app.patch('/api/schools/:urn/tasks/:id', (req, res) => {
+  const id = String(req.params.id || '');
+  const parsed = TaskPatch.safeParse(req.body);
+  if (!parsed.success) return res.status(400).json({ error: parsed.error.flatten() });
+
+  const existing = db.prepare('SELECT * FROM school_tasks WHERE id = ?').get(id);
+  if (!existing) return res.status(404).json({ error: 'not_found' });
+
+  const ts = new Date().toISOString();
+  const next = { ...existing, ...parsed.data, updatedAt: ts };
+
+  db.prepare('UPDATE school_tasks SET title=?, status=?, owner=?, dueAt=?, notes=?, updatedAt=? WHERE id=?')
+    .run(next.title, next.status, next.owner, next.dueAt, next.notes, next.updatedAt, id);
+
+  res.json({ ok: true });
+});
+
 app.listen(PORT, () => {
   console.log(`[bi-api] listening on http://0.0.0.0:${PORT}`);
 });

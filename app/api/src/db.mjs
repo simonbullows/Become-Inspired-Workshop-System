@@ -74,6 +74,65 @@ CREATE INDEX IF NOT EXISTS idx_schools_postcode ON schools(postcode);
 CREATE INDEX IF NOT EXISTS idx_schools_region ON schools(region);
 CREATE INDEX IF NOT EXISTS idx_schools_phase ON schools(phase);
 CREATE INDEX IF NOT EXISTS idx_schools_flags ON schools(has_pupil_premium, has_send, has_governors);
+
+-- CRM: pipeline per school
+CREATE TABLE IF NOT EXISTS school_pipeline (
+  urn TEXT PRIMARY KEY,
+  stage TEXT NOT NULL DEFAULT 'new',
+  owner TEXT NOT NULL DEFAULT '',
+  priority TEXT NOT NULL DEFAULT 'normal',
+  nextActionAt TEXT NOT NULL DEFAULT '',
+  updatedAt TEXT NOT NULL,
+  FOREIGN KEY (urn) REFERENCES schools(urn) ON DELETE CASCADE
+);
+CREATE INDEX IF NOT EXISTS idx_pipeline_stage ON school_pipeline(stage);
+CREATE INDEX IF NOT EXISTS idx_pipeline_owner ON school_pipeline(owner);
+
+-- CRM: contacts per school
+CREATE TABLE IF NOT EXISTS school_contacts (
+  id TEXT PRIMARY KEY,
+  urn TEXT NOT NULL,
+  name TEXT NOT NULL DEFAULT '',
+  role TEXT NOT NULL DEFAULT '',
+  email TEXT NOT NULL DEFAULT '',
+  phone TEXT NOT NULL DEFAULT '',
+  source TEXT NOT NULL DEFAULT '',
+  confidence TEXT NOT NULL DEFAULT 'medium',
+  notes TEXT NOT NULL DEFAULT '',
+  createdAt TEXT NOT NULL,
+  updatedAt TEXT NOT NULL,
+  FOREIGN KEY (urn) REFERENCES schools(urn) ON DELETE CASCADE
+);
+CREATE INDEX IF NOT EXISTS idx_contacts_urn ON school_contacts(urn);
+
+-- CRM: activity timeline
+CREATE TABLE IF NOT EXISTS school_activities (
+  id TEXT PRIMARY KEY,
+  urn TEXT NOT NULL,
+  type TEXT NOT NULL DEFAULT 'note',
+  summary TEXT NOT NULL DEFAULT '',
+  body TEXT NOT NULL DEFAULT '',
+  actor TEXT NOT NULL DEFAULT '',
+  happenedAt TEXT NOT NULL,
+  createdAt TEXT NOT NULL,
+  FOREIGN KEY (urn) REFERENCES schools(urn) ON DELETE CASCADE
+);
+CREATE INDEX IF NOT EXISTS idx_activities_urn ON school_activities(urn, happenedAt DESC);
+
+-- CRM: tasks
+CREATE TABLE IF NOT EXISTS school_tasks (
+  id TEXT PRIMARY KEY,
+  urn TEXT NOT NULL,
+  title TEXT NOT NULL,
+  status TEXT NOT NULL DEFAULT 'open',
+  owner TEXT NOT NULL DEFAULT '',
+  dueAt TEXT NOT NULL DEFAULT '',
+  notes TEXT NOT NULL DEFAULT '',
+  createdAt TEXT NOT NULL,
+  updatedAt TEXT NOT NULL,
+  FOREIGN KEY (urn) REFERENCES schools(urn) ON DELETE CASCADE
+);
+CREATE INDEX IF NOT EXISTS idx_tasks_urn ON school_tasks(urn, status, dueAt);
 `);
 
 // Lightweight migration: add source_row_json for legacy DBs.
