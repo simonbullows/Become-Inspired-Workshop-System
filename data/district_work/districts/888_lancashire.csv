@@ -1,46 +1,46 @@
 urn,district_code,district_name,school_name,website,town,postcode,region,has_email_collected
-119307,888,Lancashire,Abbey Village Primary School,www.abbeyvillage.lancs.sch.uk,Chorley,PR6 8DD,North West,no
-139290,888,Lancashire,Academy@Worden,http://www.academyatworden.co.uk,Leyland,PR25 1RN,North West,no
-135649,888,Lancashire,Accrington Academy,http://www.accrington-academy.org/,Accrington,BB5 4FF,North West,no
+119307,888,Lancashire,Abbey Village Primary School,www.abbeyvillage.lancs.sch.uk,Chorley,PR6 8DD,North West,yes
+139290,888,Lancashire,Academy@Worden,http://www.academyatworden.co.uk,Leyland,PR25 1RN,North West,yes
+135649,888,Lancashire,Accrington Academy,http://www.accrington-academy.org/,Accrington,BB5 4FF,North West,yes
 151164,888,Lancashire,Accrington Benjamin Hargreaves Church of England Primary School,,Accrington,BB5 2AQ,North West,no
-148919,888,Lancashire,Accrington Huncoat Primary School,www.huncoat.lancs.sch.uk/,Accrington,BB5 6LR,North West,no
-119183,888,Lancashire,Accrington Hyndburn Park Primary School,www.hyndburnpark.lancs.sch.uk,Accrington,BB5 1ST,North West,no
-119184,888,Lancashire,Accrington Peel Park Primary School,www.peelpark.lancs.sch.uk,Accrington,BB5 6QR,North West,no
+148919,888,Lancashire,Accrington Huncoat Primary School,www.huncoat.lancs.sch.uk/,Accrington,BB5 6LR,North West,yes
+119183,888,Lancashire,Accrington Hyndburn Park Primary School,www.hyndburnpark.lancs.sch.uk,Accrington,BB5 1ST,North West,yes
+119184,888,Lancashire,Accrington Peel Park Primary School,www.peelpark.lancs.sch.uk,Accrington,BB5 6QR,North West,yes
 119185,888,Lancashire,Accrington Spring Hill Community Primary School,www.springhillschool.co.uk/,Accrington,BB5 0JD,North West,no
-137421,888,Lancashire,Accrington St Christopher's Church of England High School,http://www.st-christophers.org/,Accrington,BB5 4AY,North West,no
+137421,888,Lancashire,Accrington St Christopher's Church of England High School,http://www.st-christophers.org/,Accrington,BB5 4AY,North West,yes
 119445,888,Lancashire,Accrington St John with St Augustine Church of England Primary School,http://www.st-john-augustine.lancs.sch.uk,Accrington,BB5 6AD,North West,no
-119446,888,Lancashire,Accrington St Mary Magdalen's Church of England Primary School,www.st-marymagdalens.lancs.sch.uk/,Accrington,BB5 1DW,North West,no
+119446,888,Lancashire,Accrington St Mary Magdalen's Church of England Primary School,www.st-marymagdalens.lancs.sch.uk/,Accrington,BB5 1DW,North West,yes
 119341,888,Lancashire,Accrington Woodnook Primary School,www.woodnookschool.co.uk/,Accrington,BB5 2HS,North West,no
 135347,888,Lancashire,Acorns Primary School,www.acorns.lancs.sch.uk,Preston,PR1 6AU,North West,no
 119330,888,Lancashire,Adlington Primary School,http://www.adlingtonprimaryschool.co.uk,Chorley,PR7 4JA,North West,no
 146755,888,Lancashire,Adlington St Paul's Church of England Primary School,,Chorley,PR6 9QZ,North West,no
 138544,888,Lancashire,Albany Academy,http://www.albanyacademy.co.uk,Chorley,PR7 3AY,North West,no
-119722,888,Lancashire,Alder Grange School,http://www.aldergrange.com,Rossendale,BB4 8HW,North West,no
-119802,888,Lancashire,All Hallows Catholic High School,http://www.allhallows.lancs.sch.uk,Preston,PR1 0LN,North West,no
+119722,888,Lancashire,Alder Grange School,http://www.aldergrange.com,Rossendale,BB4 8HW,North West,yes
+119802,888,Lancashire,All Hallows Catholic High School,http://www.allhallows.lancs.sch.uk,Preston,PR1 0LN,North West,yes
 147565,888,Lancashire,"All Saints' Roman Catholic High School, a Voluntary Academy",http://www.allsaintshigh.lancs.sch.uk/,Rossendale,BB4 6SJ,North West,no
 151005,888,Lancashire,"Alston Lane Catholic Primary School, Longridge",www.alstonlane.lancs.sch.uk,Preston,PR3 3BJ,North West,no
-119202,888,Lancashire,Anderton Primary School,www.andertonprimaryschool.co.uk/,Adlington,PR6 9NN,North West,no
+119202,888,Lancashire,Anderton Primary School,www.andertonprimaryschool.co.uk/,Adlington,PR6 9NN,North West,yes
 119146,888,Lancashire,Ansdell Primary School,www.ansdellprimary.co.uk/,Lytham St Annes,FY8 4DR,North West,no
-119880,888,Lancashire,Applebee Wood Community Specialist School,www.applebeewood.co.uk,Preston,PR5 5SS,North West,no
+119880,888,Lancashire,Applebee Wood Community Specialist School,www.applebeewood.co.uk,Preston,PR5 5SS,North West,yes
 134991,888,Lancashire,Appletree Nursery School,,Lancaster,LA1 5QB,North West,no
 149981,888,Lancashire,Appley Bridge All Saints Church of England Primary Academy,www.appleybridgeallsaints.lancs.sch.uk/,Wigan,WN6 9DT,North West,no
 119814,888,Lancashire,Archbishop Temple Church of England High School,http://www.archbishoptemple.com,Preston,PR2 8RA,North West,no
 119523,888,Lancashire,Arkholme Church of England Primary School,http://www.arkholme.lancs.sch.uk,Carnforth,LA6 1AU,North West,no
-119707,888,Lancashire,Ashton Community Science College,http://www.ashtoncsc.lancs.sch.uk/,Preston,PR2 1SL,North West,no
-119238,888,Lancashire,Ashton Primary School,www.ashton.lancs.sch.uk/,Preston,PR2 1TU,North West,no
+119707,888,Lancashire,Ashton Community Science College,http://www.ashtoncsc.lancs.sch.uk/,Preston,PR2 1SL,North West,yes
+119238,888,Lancashire,Ashton Primary School,www.ashton.lancs.sch.uk/,Preston,PR2 1TU,North West,yes
 119602,888,Lancashire,Ashton-on-Ribble St Andrew's Church of England Primary School,http://www.standrewscofe.net,Preston,PR2 1EQ,North West,no
-119370,888,Lancashire,Aughton Christ Church Church of England Voluntary Controlled Primary School,http://www.aughtonchristchurch.lancs.sch.uk,Ormskirk,L39 5AS,North West,no
-119388,888,Lancashire,Aughton St Michael's Church of England Primary School,www.aughtonstmichaels.co.uk/,Ormskirk,L39 5DG,North West,no
+119370,888,Lancashire,Aughton Christ Church Church of England Voluntary Controlled Primary School,http://www.aughtonchristchurch.lancs.sch.uk,Ormskirk,L39 5AS,North West,yes
+119388,888,Lancashire,Aughton St Michael's Church of England Primary School,www.aughtonstmichaels.co.uk/,Ormskirk,L39 5DG,North West,yes
 119287,888,Lancashire,Aughton Town Green Primary School,www.towngreen.lancsngfl.ac.uk/,Ormskirk,L39 6SF,North West,no
-119414,888,Lancashire,Bacup Holy Trinity Stacksteads Church of England Primary School,www.stacksteads.lancs.sch.uk,Bacup,OL13 0QW,North West,no
+119414,888,Lancashire,Bacup Holy Trinity Stacksteads Church of England Primary School,www.stacksteads.lancs.sch.uk,Bacup,OL13 0QW,North West,yes
 119097,888,Lancashire,Bacup Nursery School,www.bacup.lancs.sch.uk,Bacup,OL13 8EF,North West,no
-119191,888,Lancashire,Bacup St Saviour's Community Primary School,www.bacupstsavioursprimary.co.uk/,Bacup,OL13 9RR,North West,no
+119191,888,Lancashire,Bacup St Saviour's Community Primary School,www.bacupstsavioursprimary.co.uk/,Bacup,OL13 9RR,North West,yes
 119193,888,Lancashire,Bacup Thorn Primary School,www.thorn.lancs.sch.uk/,Bacup,OL13 8EF,North West,no
-150261,888,Lancashire,Bacup and Rawtenstall Grammar School,https://www.brgs.org.uk/,Rossendale,BB4 7BJ,North West,no
+150261,888,Lancashire,Bacup and Rawtenstall Grammar School,https://www.brgs.org.uk/,Rossendale,BB4 7BJ,North West,yes
 119813,888,Lancashire,Baines School,http://baines.lancs.sch.uk/,Poulton-le-Fylde,FY6 8BE,North West,no
 119415,888,Lancashire,Balderstone St Leonard's Church of England Voluntary Aided Primary School,http://www.balderstoneschool.co.uk,Blackburn,BB2 7LL,North West,no
-150117,888,Lancashire,Balshaw Lane Community Primary School,http://www.balshawlane.co.uk,Chorley,PR7 6NS,North West,no
-119775,888,Lancashire,Balshaw's Church of England High School,www.balshaws.org.uk,Leyland,PR25 3AH,North West,no
+150117,888,Lancashire,Balshaw Lane Community Primary School,http://www.balshawlane.co.uk,Chorley,PR7 6NS,North West,yes
+119775,888,Lancashire,Balshaw's Church of England High School,www.balshaws.org.uk,Leyland,PR25 3AH,North West,yes
 119380,888,Lancashire,Bamber Bridge St Aidan's Church of England Primary School,www.staidansprimaryschool.co.uk,Preston,PR5 6GX,North West,no
 119405,888,Lancashire,Banks Methodist School,http://www.banks.lancsngfl.ac.uk,Southport,PR9 8EY,North West,no
 119384,888,Lancashire,Banks St Stephen's CofE School,www.bank-st-stephens.lancs.sch.uk,Southport,PR9 8BL,North West,no
@@ -307,7 +307,7 @@ urn,district_code,district_name,school_name,website,town,postcode,region,has_ema
 119164,888,Lancashire,Padiham Primary School,http://www.padiham.lancs.sch.uk,Burnley,BB12 8SJ,North West,no
 119425,888,Lancashire,Padiham St Leonard's Voluntary Aided Church of England Primary School,http://www.st-leonards.lancs.sch.uk,"Padiham, Burnley",BB12 8HT,North West,no
 137127,888,Lancashire,Parbold Douglas Church of England Academy,www.pda.lancs.sch.uk,Nr Wigan,WN8 7HS,North West,no
-119172,888,Lancashire,Park Primary School,www.colnepark.lancs.sch.uk/,Colne,BB8 0QJ,North West,no
+119172,888,Lancashire,Park Primary School,www.colnepark.lancs.sch.uk/,Colne,BB8 0QJ,North West,yes
 138647,888,Lancashire,Parklands High School,http://www.parklandsacademy.co.uk,Chorley,PR7 1LL,North West,no
 139053,888,Lancashire,Pendle Primary Academy,www.pendleprimaryacademy.co.uk,Nelson,BB9 5AW,North West,no
 134989,888,Lancashire,Pendle Vale College,http://www.pendlevale.lancs.sch.uk/,Nelson,BB9 8LF,North West,no
