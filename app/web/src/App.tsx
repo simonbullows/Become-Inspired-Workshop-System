@@ -22,6 +22,14 @@ type School = {
   lng: number | null;
 };
 
+type UniversityRow = {
+  university: string;
+  email?: string;
+  phone_raw?: string;
+  contact_url?: string;
+  status?: string;
+};
+
 type LeadStatus = 'new' | 'contacting' | 'interested' | 'booked' | 'not_now';
 
 type SchoolActionRecord = {
@@ -193,6 +201,8 @@ const App: React.FC = () => {
   const [newSegment, setNewSegment] = useState('');
   const [activeProject, setActiveProject] = useState<ProjectKey>('schools');
   const [filteredMeta, setFilteredMeta] = useState<{ schools: number; withEmails: number; withoutEmails: number; geocoded: number } | null>(null);
+  const [universities, setUniversities] = useState<UniversityRow[]>([]);
+  const [universitiesMeta, setUniversitiesMeta] = useState<{ total: number; withEmail: number } | null>(null);
   const [crmTab, setCrmTab] = useState<'overview' | 'contacts' | 'timeline' | 'tasks'>('overview');
   const [crmPipeline, setCrmPipeline] = useState<CrmPipeline>({ stage: 'new', owner: '', priority: 'normal', nextActionAt: '' });
   const [crmContacts, setCrmContacts] = useState<CrmContact[]>([]);
@@ -205,6 +215,19 @@ const App: React.FC = () => {
   useEffect(() => {
     fetchJson('/api/stats').then(setStats).catch(()=>{});
   }, []);
+
+  useEffect(() => {
+    if (activeProject !== 'universities') return;
+    fetchJson('/api/universities')
+      .then((j) => {
+        setUniversities(j.universities || []);
+        setUniversitiesMeta(j.meta || { total: 0, withEmail: 0 });
+      })
+      .catch(() => {
+        setUniversities([]);
+        setUniversitiesMeta({ total: 0, withEmail: 0 });
+      });
+  }, [activeProject]);
 
   useEffect(() => {
     try {
@@ -687,24 +710,39 @@ const App: React.FC = () => {
           </div>
 
           <div className="mt-3 text-[11px] text-slate-400 grid gap-1">
-            <div>
-              Filtered total: {filteredMeta?.schools ?? '…'} schools • with email: {filteredMeta?.withEmails ?? '…'} • without email: {filteredMeta?.withoutEmails ?? '…'}
-            </div>
-            <div>
-              Showing {schools.length} schools in list (max 1000) • Pins loaded: {geocodedPins}/{pins.length} geocoded (viewport sample)
-            </div>
+            {activeProject === 'universities' ? (
+              <>
+                <div>
+                  Universities loaded: {universitiesMeta?.total ?? 0} • with email: {universitiesMeta?.withEmail ?? 0}
+                </div>
+                <div>
+                  Showing {universities.length} universities in list
+                </div>
+              </>
+            ) : (
+              <>
+                <div>
+                  Filtered total: {filteredMeta?.schools ?? '…'} schools • with email: {filteredMeta?.withEmails ?? '…'} • without email: {filteredMeta?.withoutEmails ?? '…'}
+                </div>
+                <div>
+                  Showing {schools.length} schools in list (max 1000) • Pins loaded: {geocodedPins}/{pins.length} geocoded (viewport sample)
+                </div>
+              </>
+            )}
             {activeProject === 'schools' ? (
               <div className="text-[10px] text-slate-300">Map colours: <span className="text-blue-300">blue</span> = has contact email, <span className="text-red-300">red</span> = no contact email, <span className="text-amber-300">amber</span> = worked with before, <span className="text-emerald-300">green</span> = selected</div>
             ) : null}
             <div className="text-[10px] text-slate-500 flex items-center gap-2">
               <span>{loading ? 'Loading…' : (lastRefreshAt ? `Last refresh: ${new Date(lastRefreshAt).toLocaleTimeString()}` : 'Not refreshed yet')}</span>
               <button
-                onClick={() => refresh().catch(e => setErr(String(e?.message || e)))}
+                onClick={() => activeProject === 'universities'
+                  ? fetchJson('/api/universities').then((j) => { setUniversities(j.universities || []); setUniversitiesMeta(j.meta || { total: 0, withEmail: 0 }); }).catch(e => setErr(String(e?.message || e)))
+                  : refresh().catch(e => setErr(String(e?.message || e)))}
                 className="px-2 py-1 rounded-lg bg-white/5 border border-white/10 hover:bg-white/10"
               >
                 Refresh
               </button>
-              {pins.length && geocodedPins === 0 ? (
+              {activeProject === 'schools' && pins.length && geocodedPins === 0 ? (
                 <span className="text-amber-300">No geocoded pins yet (geocoding may still be running)</span>
               ) : null}
             </div>
@@ -755,24 +793,34 @@ const App: React.FC = () => {
           ) : null}
 
           <div className="mt-4 grid gap-2">
-            {schools.slice(0, 60).map(s => (
-              <button
-                key={s.urn}
-                onClick={() => selectSchool(s)}
-                className={
-                  "text-left p-3 rounded-2xl border transition " +
-                  (selected?.urn === s.urn
-                    ? "bg-cyan-500/10 border-cyan-500/30"
-                    : "bg-white/5 border-white/10 hover:bg-white/10")
-                }
-              >
-                <div className="text-sm font-bold text-slate-100 leading-tight">{s.name}</div>
-                <div className="text-xs text-slate-400">{s.town} • {s.postcode} • {s.phase}</div>
-                <div className="mt-1 text-[10px] text-slate-400">
-                  {s.has_send ? 'SEND' : ''}{s.has_send && s.has_pupil_premium ? ' • ' : ''}{s.has_pupil_premium ? 'Pupil Premium' : ''}
+            {activeProject === 'universities' ? (
+              universities.slice(0, 80).map((u, idx) => (
+                <div key={`${u.university}-${idx}`} className="text-left p-3 rounded-2xl border transition bg-white/5 border-white/10">
+                  <div className="text-sm font-bold text-slate-100 leading-tight">{u.university}</div>
+                  <div className="text-xs text-slate-400">{u.email || '—'} {u.phone_raw ? `• ${u.phone_raw}` : ''}</div>
+                  <div className="mt-1 text-[10px] text-slate-400 truncate">{u.contact_url || 'No URL'}</div>
                 </div>
-              </button>
-            ))}
+              ))
+            ) : (
+              schools.slice(0, 60).map(s => (
+                <button
+                  key={s.urn}
+                  onClick={() => selectSchool(s)}
+                  className={
+                    "text-left p-3 rounded-2xl border transition " +
+                    (selected?.urn === s.urn
+                      ? "bg-cyan-500/10 border-cyan-500/30"
+                      : "bg-white/5 border-white/10 hover:bg-white/10")
+                  }
+                >
+                  <div className="text-sm font-bold text-slate-100 leading-tight">{s.name}</div>
+                  <div className="text-xs text-slate-400">{s.town} • {s.postcode} • {s.phase}</div>
+                  <div className="mt-1 text-[10px] text-slate-400">
+                    {s.has_send ? 'SEND' : ''}{s.has_send && s.has_pupil_premium ? ' • ' : ''}{s.has_pupil_premium ? 'Pupil Premium' : ''}
+                  </div>
+                </button>
+              ))
+            )}
           </div>
 
           

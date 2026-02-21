@@ -1,6 +1,8 @@
 import express from 'express';
 import cors from 'cors';
 import crypto from 'node:crypto';
+import fs from 'node:fs';
+import path from 'node:path';
 import { z } from 'zod';
 import { db, safeJson } from './db.mjs';
 
@@ -11,6 +13,61 @@ app.use(cors());
 app.use(express.json({ limit: '1mb' }));
 
 app.get('/healthz', (req, res) => res.json({ ok: true }));
+
+function parseCsvLine(line) {
+  const out = [];
+  let cur = '';
+  let inQuotes = false;
+  for (let i = 0; i < line.length; i++) {
+    const c = line[i];
+    if (c === '"') {
+      if (inQuotes && line[i + 1] === '"') {
+        cur += '"';
+        i++;
+      } else {
+        inQuotes = !inQuotes;
+      }
+      continue;
+    }
+    if (c === ',' && !inQuotes) {
+      out.push(cur);
+      cur = '';
+      continue;
+    }
+    cur += c;
+  }
+  out.push(cur);
+  return out;
+}
+
+function parseCsv(text) {
+  const lines = String(text || '').split(/\r?\n/).filter(Boolean);
+  if (!lines.length) return [];
+  const headers = parseCsvLine(lines[0]).map(h => h.trim());
+  return lines.slice(1).map((line) => {
+    const cols = parseCsvLine(line);
+    const row = {};
+    headers.forEach((h, i) => {
+      row[h] = (cols[i] || '').trim();
+    });
+    return row;
+  });
+}
+
+app.get('/api/universities', (req, res) => {
+  const root = path.resolve(process.cwd(), '..', '..');
+  const cleanPath = path.join(root, 'data', 'universities', 'universities_comms_clean.csv');
+  const masterPath = path.join(root, 'data', 'universities', 'universities_master.csv');
+  const filePath = fs.existsSync(masterPath) ? masterPath : cleanPath;
+
+  if (!fs.existsSync(filePath)) {
+    return res.json({ universities: [], meta: { total: 0, withEmail: 0 } });
+  }
+
+  const rows = parseCsv(fs.readFileSync(filePath, 'utf8'));
+  const withEmail = rows.filter(r => String(r.email || '').includes('@')).length;
+  res.json({ universities: rows, meta: { total: rows.length, withEmail } });
+});
 
 // ---- Schools API (v0.1) ----
 
