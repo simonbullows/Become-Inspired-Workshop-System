@@ -221,7 +221,6 @@ const App: React.FC = () => {
     { key: 'universities', name: 'Universities Outreach' },
     { key: 'hotels', name: 'Hotels Outreach' },
   ]);
-  const [newProjectKey, setNewProjectKey] = useState('');
   const [newProjectName, setNewProjectName] = useState('');
   const [newEntityName, setNewEntityName] = useState('');
   const [newEntityLat, setNewEntityLat] = useState('');
@@ -784,15 +783,17 @@ const App: React.FC = () => {
 
           <div className="mt-3 rounded-xl border border-white/10 p-2 grid gap-2">
             <div className="text-[11px] text-slate-300 font-bold">Project builder</div>
-            <div className="grid grid-cols-2 gap-2">
-              <input value={newProjectKey} onChange={e => setNewProjectKey(e.target.value)} placeholder="project key" className="px-2 py-1 rounded-lg bg-white/5 border border-white/10" />
+            <div className="grid grid-cols-1 gap-2">
               <input value={newProjectName} onChange={e => setNewProjectName(e.target.value)} placeholder="project name" className="px-2 py-1 rounded-lg bg-white/5 border border-white/10" />
             </div>
             <button
-              onClick={() => fetchJson('/api/projects', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ key: newProjectKey.trim().toLowerCase().replace(/\s+/g, '-'), name: newProjectName.trim(), entityLabel: 'entity' }) } as any)
-                .then(() => fetchJson('/api/projects').then(j => setProjects(j.projects || [])))
-                .then(() => { setNewProjectKey(''); setNewProjectName(''); })
-                .catch(e => setErr(String(e?.message || e)))}
+              onClick={() => {
+                const autoKey = newProjectName.trim().toLowerCase().replace(/[^a-z0-9\s_-]/g, '').replace(/\s+/g, '-').slice(0, 40);
+                return fetchJson('/api/projects', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ key: autoKey, name: newProjectName.trim(), entityLabel: 'entity' }) } as any)
+                  .then(() => fetchJson('/api/projects').then(j => setProjects(j.projects || [])))
+                  .then(() => { setNewProjectName(''); })
+                  .catch(e => setErr(String(e?.message || e)));
+              }}
               className="px-2 py-1 rounded-lg bg-white/5 border border-white/10 hover:bg-white/10 text-xs"
             >
               Create project
