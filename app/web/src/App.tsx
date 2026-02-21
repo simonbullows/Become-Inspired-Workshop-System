@@ -30,6 +30,14 @@ type UniversityRow = {
   status?: string;
 };
 
+type UniversityPin = {
+  key: string;
+  name: string;
+  email?: string;
+  lat: number;
+  lng: number;
+};
+
 type LeadStatus = 'new' | 'contacting' | 'interested' | 'booked' | 'not_now';
 
 type SchoolActionRecord = {
@@ -203,6 +211,7 @@ const App: React.FC = () => {
   const [filteredMeta, setFilteredMeta] = useState<{ schools: number; withEmails: number; withoutEmails: number; geocoded: number } | null>(null);
   const [universities, setUniversities] = useState<UniversityRow[]>([]);
   const [universitiesMeta, setUniversitiesMeta] = useState<{ total: number; withEmail: number } | null>(null);
+  const [universityPins, setUniversityPins] = useState<UniversityPin[]>([]);
   const [crmTab, setCrmTab] = useState<'overview' | 'contacts' | 'timeline' | 'tasks'>('overview');
   const [crmPipeline, setCrmPipeline] = useState<CrmPipeline>({ stage: 'new', owner: '', priority: 'normal', nextActionAt: '' });
   const [crmContacts, setCrmContacts] = useState<CrmContact[]>([]);
@@ -228,6 +237,57 @@ const App: React.FC = () => {
         setUniversitiesMeta({ total: 0, withEmail: 0 });
       });
   }, [activeProject]);
+
+  useEffect(() => {
+    if (activeProject !== 'universities' || !universities.length) {
+      if (activeProject !== 'universities') setUniversityPins([]);
+      return;
+    }
+
+    const cacheKey = 'bi-university-geocode-v1';
+    let cancelled = false;
+
+    async function geocode() {
+      let cache: Record<string, { lat: number; lng: number }> = {};
+      try { cache = JSON.parse(window.localStorage.getItem(cacheKey) || '{}'); } catch {}
+
+      const pins: UniversityPin[] = [];
+      for (const u of universities) {
+        const name = String(u.university || '').trim();
+        if (!name) continue;
+        const cached = cache[name];
+        if (cached && Number.isFinite(cached.lat) && Number.isFinite(cached.lng)) {
+          pins.push({ key: name, name, email: u.email, lat: cached.lat, lng: cached.lng });
+          continue;
+        }
+
+        try {
+          const r = await fetch(`https://nominatim.openstreetmap.org/search?format=json&limit=1&q=${encodeURIComponent(name + ', United Kingdom')}`);
+          const j = await r.json();
+          if (Array.isArray(j) && j[0]?.lat && j[0]?.lon) {
+            const lat = Number(j[0].lat);
+            const lng = Number(j[0].lon);
+            if (Number.isFinite(lat) && Number.isFinite(lng)) {
+              cache[name] = { lat, lng };
+              pins.push({ key: name, name, email: u.email, lat, lng });
+              try { window.localStorage.setItem(cacheKey, JSON.stringify(cache)); } catch {}
+            }
+          }
+        } catch {}
+      }
+
+      if (!cancelled) {
+        setUniversityPins(pins);
+        if (pins.length && mapRef.current) {
+          const bounds = L.latLngBounds(pins.map(p => [p.lat, p.lng] as [number, number]));
+          mapRef.current.fitBounds(bounds, { padding: [24, 24], maxZoom: 10 });
+        }
+      }
+    }
+
+    geocode().catch(() => {});
+    return () => { cancelled = true; };
+  }, [activeProject, universities]);
 
   useEffect(() => {
     try {
@@ -418,6 +478,24 @@ const App: React.FC = () => {
     layer.clearLayers();
     markerByUrnRef.current = new Map();
 
+    if (activeProject === 'universities') {
+      for (const u of universityPins) {
+        const hasEmail = String(u.email || '').includes('@');
+        const stroke = hasEmail ? '#2563eb' : '#dc2626';
+        const fill = hasEmail ? '#60a5fa' : '#f87171';
+        const m = L.circleMarker([u.lat, u.lng], {
+          radius: 5,
+          color: stroke,
+          weight: 2,
+          fillColor: fill,
+          fillOpacity: 0.9,
+        });
+        m.bindTooltip(u.name, { direction: 'top' });
+        m.addTo(layer);
+      }
+      return;
+    }
+
     for (const s of items) {
       if (typeof s.lat !== 'number' || typeof s.lng !== 'number') continue;
       const isSel = selected?.urn === s.urn;
@@ -447,7 +525,7 @@ const App: React.FC = () => {
   useEffect(() => {
     renderMarkers(pins);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [pins, selected?.urn, activeProject]);
+  }, [pins, selected?.urn, activeProject, universityPins]);
 
   async function loadFullSchool(urn: string) {
     const j = await fetchJson('/api/schools/' + encodeURIComponent(urn));
@@ -828,23 +906,9 @@ const App: React.FC = () => {
         </aside>
 
         <main className="relative h-full">
-          {activeProject === 'schools' ? (
-            <div id="map" className="h-full w-full" />
-          ) : (
-            <div className="h-full w-full p-6 overflow-auto bg-slate-900">
-              <h2 className="text-xl font-black">Universities Outreach</h2>
-              <p className="text-sm text-slate-400 mt-1">Loaded from universities_comms_clean.csv</p>
-              <div className="mt-4 grid gap-2 max-w-4xl">
-                {universities.slice(0, 200).map((u, i) => (
-                  <div key={`${u.university}-${i}`} className="rounded-xl border border-white/10 bg-white/5 p-3">
-                    <div className="font-semibold">{u.university}</div>
-                    <div className="text-xs text-slate-300">{u.email || '—'} {u.phone_raw ? `• ${u.phone_raw}` : ''}</div>
-                    <div className="text-[11px] text-slate-400 truncate">{u.contact_url || 'No URL'}</div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          )}
+          <div id="map" className="h-full w-full" />
+
+          {/* universities render directly on map */}
           {/* Map overlay: expanded school window should appear over the map */}
           {activeProject === 'schools' && drawerExpanded && selected ? (
             <div className="absolute inset-0 z-[9999]">

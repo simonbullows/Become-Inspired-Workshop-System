@@ -58,13 +58,17 @@ app.get('/api/universities', (req, res) => {
   const root = path.resolve(process.cwd(), '..', '..');
   const cleanPath = path.join(root, 'data', 'universities', 'universities_comms_clean.csv');
   const masterPath = path.join(root, 'data', 'universities', 'universities_master.csv');
-  const filePath = fs.existsSync(masterPath) ? masterPath : cleanPath;
 
-  if (!fs.existsSync(filePath)) {
-    return res.json({ universities: [], meta: { total: 0, withEmail: 0 } });
-  }
+  const readRows = (p) => {
+    if (!fs.existsSync(p)) return [];
+    const rows = parseCsv(fs.readFileSync(p, 'utf8'));
+    return rows;
+  };
 
-  const rows = parseCsv(fs.readFileSync(filePath, 'utf8'));
+  const masterRows = readRows(masterPath);
+  const cleanRows = readRows(cleanPath);
+  const rows = masterRows.length > 0 ? masterRows : cleanRows;
+
   const withEmail = rows.filter(r => String(r.email || '').includes('@')).length;
   res.json({ universities: rows, meta: { total: rows.length, withEmail } });
 });
