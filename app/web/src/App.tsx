@@ -189,7 +189,12 @@ function sourceValue(s: School | null, key: string) {
 async function fetchJson(url: string, init?: RequestInit) {
   const r = await fetch(url, init);
   const j = await r.json();
-  if (!r.ok) throw new Error(j?.error || r.statusText);
+  if (!r.ok) {
+    const detail = typeof j?.error === 'string'
+      ? j.error
+      : (j?.error ? JSON.stringify(j.error) : r.statusText);
+    throw new Error(detail || r.statusText);
+  }
   return j;
 }
 
@@ -784,7 +789,7 @@ const App: React.FC = () => {
               <input value={newProjectName} onChange={e => setNewProjectName(e.target.value)} placeholder="project name" className="px-2 py-1 rounded-lg bg-white/5 border border-white/10" />
             </div>
             <button
-              onClick={() => fetchJson('/api/projects', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ key: newProjectKey.trim(), name: newProjectName.trim(), entityLabel: 'entity' }) } as any)
+              onClick={() => fetchJson('/api/projects', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ key: newProjectKey.trim().toLowerCase().replace(/\s+/g, '-'), name: newProjectName.trim(), entityLabel: 'entity' }) } as any)
                 .then(() => fetchJson('/api/projects').then(j => setProjects(j.projects || [])))
                 .then(() => { setNewProjectKey(''); setNewProjectName(''); })
                 .catch(e => setErr(String(e?.message || e)))}
