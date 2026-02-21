@@ -12,23 +12,56 @@ const app = express();
 app.use(cors());
 app.use(express.json({ limit: '1mb' }));
 
-const PROJECTS = {
-  schools: { key: 'schools', name: 'Schools Outreach', entityLabel: 'school' },
-  universities: { key: 'universities', name: 'Universities Outreach', entityLabel: 'university' },
-  hotels: { key: 'hotels', name: 'Hotels Outreach', entityLabel: 'hotel' },
+const BUILTIN_PROJECTS = {
+  schools: { key: 'schools', name: 'Schools Outreach', entityLabel: 'school', sourceType: 'builtin' },
+  universities: { key: 'universities', name: 'Universities Outreach', entityLabel: 'university', sourceType: 'builtin' },
+  hotels: { key: 'hotels', name: 'Hotels Outreach', entityLabel: 'hotel', sourceType: 'builtin' },
 };
 
+function listProjects() {
+  const custom = db.prepare('SELECT project_key, name, entity_label, source_type FROM projects ORDER BY createdAt DESC').all()
+    .map(r => ({ key: r.project_key, name: r.name, entityLabel: r.entity_label, sourceType: r.source_type || 'manual' }));
+  return [...Object.values(BUILTIN_PROJECTS), ...custom.filter(c => !BUILTIN_PROJECTS[c.key])];
+}
+
 function getProjectOr404(projectKey, res) {
-  const p = PROJECTS[String(projectKey || '')];
-  if (!p) {
+  const key = String(projectKey || '');
+  const built = BUILTIN_PROJECTS[key];
+  if (built) return built;
+  const row = db.prepare('SELECT project_key, name, entity_label, source_type FROM projects WHERE project_key = ?').get(key);
+  if (!row) {
     res.status(404).json({ error: 'unknown_project' });
     return null;
   }
-  return p;
+  return { key: row.project_key, name: row.name, entityLabel: row.entity_label, sourceType: row.source_type || 'manual' };
 }
 
+const ProjectCreate = z.object({
+  key: z.string().regex(/^[a-z0-9_-]{2,40}$/),
+  name: z.string().min(2).max(120),
+  entityLabel: z.string().min(2).max(40).optional().default('entity'),
+});
+
+const EntityCreate = z.object({
+  id: z.string().min(1).max(120).optional(),
+  name: z.string().min(1).max(240),
+  lat: z.coerce.number().optional(),
+  lng: z.coerce.number().optional(),
+  data: z.record(z.any()).optional().default({}),
+});
+
 app.get('/healthz', (req, res) => res.json({ ok: true }));
-app.get('/api/projects', (req, res) => res.json({ projects: Object.values(PROJECTS) }));
+app.get('/api/projects', (req, res) => res.json({ projects: listProjects() }));
+app.post('/api/projects', (req, res) => {
+  const parsed = ProjectCreate.safeParse(req.body);
+  if (!parsed.success) return res.status(400).json({ error: parsed.error.flatten() });
+  const d = parsed.data;
+  if (BUILTIN_PROJECTS[d.key]) return res.status(409).json({ error: 'reserved_project_key' });
+  const ts = new Date().toISOString();
+  db.prepare('INSERT INTO projects (project_key, name, entity_label, source_type, config_json, createdAt, updatedAt) VALUES (?, ?, ?, ?, ?, ?, ?)')
+    .run(d.key, d.name, d.entityLabel, 'manual', '{}', ts, ts);
+  res.status(201).json({ ok: true, project: { key: d.key, name: d.name, entityLabel: d.entityLabel, sourceType: 'manual' } });
+});
 
 function parseCsvLine(line) {
   const out = [];
@@ -107,7 +140,23 @@ app.get('/api/:project/entities', (req, res) => {
     return res.json({ entities: rows.map(r => ({ id: String(r.university || ''), name: String(r.university || ''), project: 'universities', lat: Number(r.lat), lng: Number(r.lng), data: r })) });
   }
 
-  return res.json({ entities: [] });
+  const rows = db.prepare('SELECT id, name, lat, lng, data_json FROM project_entities WHERE project_key = ? ORDER BY name ASC').all(project.key);
+  return res.json({ entities: rows.map(r => ({ id: r.id, name: r.name, project: project.key, lat: r.lat, lng: r.lng, data: safeJson(r.data_json, {}) })) });
+});
+
+app.post('/api/:project/entities', (req, res) => {
+  const project = getProjectOr404(req.params.project, res);
+  if (!project) return;
+  if (project.sourceType === 'builtin') return res.status(400).json({ error: 'builtin_project_readonly' });
+
+  const parsed = EntityCreate.safeParse(req.body);
+  if (!parsed.success) return res.status(400).json({ error: parsed.error.flatten() });
+  const d = parsed.data;
+  const id = d.id || crypto.randomUUID();
+  const ts = new Date().toISOString();
+  db.prepare('INSERT INTO project_entities (id, project_key, name, lat, lng, data_json, createdAt, updatedAt) VALUES (?, ?, ?, ?, ?, ?, ?, ?)')
+    .run(id, project.key, d.name, d.lat ?? null, d.lng ?? null, JSON.stringify(d.data || {}), ts, ts);
+  res.status(201).json({ ok: true, id });
 });
 
 // ---- Schools API (v0.1) ----

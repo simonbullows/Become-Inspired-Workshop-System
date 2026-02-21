@@ -190,6 +190,29 @@ CREATE TABLE IF NOT EXISTS crm_tasks (
   updatedAt TEXT NOT NULL
 );
 CREATE INDEX IF NOT EXISTS idx_crm_tasks_entity ON crm_tasks(project_key, entity_id, status, dueAt);
+
+-- Project registry + generic entities for user-created projects
+CREATE TABLE IF NOT EXISTS projects (
+  project_key TEXT PRIMARY KEY,
+  name TEXT NOT NULL,
+  entity_label TEXT NOT NULL DEFAULT 'entity',
+  source_type TEXT NOT NULL DEFAULT 'manual',
+  config_json TEXT NOT NULL DEFAULT '{}',
+  createdAt TEXT NOT NULL,
+  updatedAt TEXT NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS project_entities (
+  id TEXT PRIMARY KEY,
+  project_key TEXT NOT NULL,
+  name TEXT NOT NULL,
+  lat REAL,
+  lng REAL,
+  data_json TEXT NOT NULL DEFAULT '{}',
+  createdAt TEXT NOT NULL,
+  updatedAt TEXT NOT NULL
+);
+CREATE INDEX IF NOT EXISTS idx_project_entities_project ON project_entities(project_key, name);
 `);
 
 // Lightweight migration: add source_row_json for legacy DBs.

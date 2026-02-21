@@ -68,9 +68,9 @@ const DEFAULT_ACTION_RECORD: SchoolActionRecord = {
 
 const QUICK_ACTIONS_STORAGE_KEY = 'bi-workshop-quick-actions-v1';
 
-type ProjectKey = 'schools' | 'universities' | 'hotels';
+type ProjectKey = string;
 
-const PROJECTS: Record<ProjectKey, { name: string; subtitle: string; searchPlaceholder: string }> = {
+const PROJECTS_DEFAULT: Record<string, { name: string; subtitle: string; searchPlaceholder: string }> = {
   schools: {
     name: 'Schools Outreach',
     subtitle: 'Education lead mapping & outreach',
@@ -211,6 +211,18 @@ const App: React.FC = () => {
   const [quickActionsByUrn, setQuickActionsByUrn] = useState<SchoolActionState>({});
   const [newSegment, setNewSegment] = useState('');
   const [activeProject, setActiveProject] = useState<ProjectKey>('schools');
+  const [projects, setProjects] = useState<Array<{ key: string; name: string; entityLabel?: string; sourceType?: string }>>([
+    { key: 'schools', name: 'Schools Outreach' },
+    { key: 'universities', name: 'Universities Outreach' },
+    { key: 'hotels', name: 'Hotels Outreach' },
+  ]);
+  const [newProjectKey, setNewProjectKey] = useState('');
+  const [newProjectName, setNewProjectName] = useState('');
+  const [newEntityName, setNewEntityName] = useState('');
+  const [newEntityLat, setNewEntityLat] = useState('');
+  const [newEntityLng, setNewEntityLng] = useState('');
+  const [projectEntities, setProjectEntities] = useState<any[]>([]);
+  const [selectedProjectEntity, setSelectedProjectEntity] = useState<any | null>(null);
   const [filteredMeta, setFilteredMeta] = useState<{ schools: number; withEmails: number; withoutEmails: number; geocoded: number } | null>(null);
   const [universities, setUniversities] = useState<UniversityRow[]>([]);
   const [universitiesMeta, setUniversitiesMeta] = useState<{ total: number; withEmail: number } | null>(null);
@@ -227,22 +239,34 @@ const App: React.FC = () => {
 
   useEffect(() => {
     fetchJson('/api/stats').then(setStats).catch(()=>{});
+    fetchJson('/api/projects').then(j => setProjects(j.projects || [])).catch(()=>{});
   }, []);
 
   useEffect(() => {
     if (activeProject !== 'universities') {
       setSelectedUniversity(null);
+    }
+    if (activeProject === 'universities') {
+      fetchJson('/api/universities')
+        .then((j) => {
+          setUniversities(j.universities || []);
+          setUniversitiesMeta(j.meta || { total: 0, withEmail: 0 });
+        })
+        .catch(() => {
+          setUniversities([]);
+          setUniversitiesMeta({ total: 0, withEmail: 0 });
+        });
       return;
     }
-    fetchJson('/api/universities')
-      .then((j) => {
-        setUniversities(j.universities || []);
-        setUniversitiesMeta(j.meta || { total: 0, withEmail: 0 });
-      })
-      .catch(() => {
-        setUniversities([]);
-        setUniversitiesMeta({ total: 0, withEmail: 0 });
-      });
+
+    if (!['schools', 'hotels'].includes(activeProject)) {
+      fetchJson('/api/' + encodeURIComponent(activeProject) + '/entities')
+        .then((j) => setProjectEntities(j.entities || []))
+        .catch(() => setProjectEntities([]));
+    } else {
+      setProjectEntities([]);
+      setSelectedProjectEntity(null);
+    }
   }, [activeProject]);
 
   useEffect(() => {
@@ -465,22 +489,23 @@ const App: React.FC = () => {
         const hasEmail = String(u.email || '').includes('@');
         const stroke = isSel ? '#22c55e' : (hasEmail ? '#2563eb' : '#dc2626');
         const fill = isSel ? '#86efac' : (hasEmail ? '#60a5fa' : '#f87171');
-        const m = L.circleMarker([u.lat, u.lng], {
-          radius: isSel ? 7 : 5,
-          color: stroke,
-          weight: 2,
-          fillColor: fill,
-          fillOpacity: 0.9,
-        });
+        const m = L.circleMarker([u.lat, u.lng], { radius: isSel ? 7 : 5, color: stroke, weight: 2, fillColor: fill, fillOpacity: 0.9 });
         m.bindTooltip(u.name, { direction: 'top' });
         m.bindPopup(`<div style="min-width:220px"><strong>${u.name}</strong><br/>${u.email || 'No email'}</div>`);
-        m.on('click', () => {
-          m.openPopup();
-          setQ(u.name);
-          setCrmTab('overview');
-          setDrawerExpanded(false);
-          if (row) setSelectedUniversity(row);
-        });
+        m.on('click', () => { m.openPopup(); setQ(u.name); setCrmTab('overview'); setDrawerExpanded(false); if (row) setSelectedUniversity(row); });
+        m.addTo(layer);
+      }
+      return;
+    }
+
+    if (!['schools', 'universities', 'hotels'].includes(activeProject)) {
+      for (const e of projectEntities) {
+        const lat = Number(e.lat); const lng = Number(e.lng);
+        if (!Number.isFinite(lat) || !Number.isFinite(lng)) continue;
+        const isSel = selectedProjectEntity?.id === e.id;
+        const m = L.circleMarker([lat, lng], { radius: isSel ? 7 : 5, color: isSel ? '#22c55e' : '#2563eb', weight: 2, fillColor: isSel ? '#86efac' : '#60a5fa', fillOpacity: 0.9 });
+        m.bindTooltip(e.name, { direction: 'top' });
+        m.on('click', () => { setSelectedProjectEntity(e); setCrmTab('overview'); setDrawerExpanded(false); });
         m.addTo(layer);
       }
       return;
@@ -515,7 +540,7 @@ const App: React.FC = () => {
   useEffect(() => {
     renderMarkers(pins);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [pins, selected?.urn, activeProject, universityPins, universities, selectedUniversity?.university]);
+  }, [pins, selected?.urn, activeProject, universityPins, universities, selectedUniversity?.university, projectEntities, selectedProjectEntity?.id]);
 
   async function loadFullSchool(urn: string) {
     const j = await fetchJson('/api/schools/' + encodeURIComponent(urn));
@@ -525,6 +550,7 @@ const App: React.FC = () => {
   function currentEntityRef() {
     if (activeProject === 'schools' && selected) return { project: 'schools', id: selected.urn };
     if (activeProject === 'universities' && selectedUniversity) return { project: 'universities', id: selectedUniversity.university };
+    if (!['schools', 'universities', 'hotels'].includes(activeProject) && selectedProjectEntity) return { project: activeProject, id: selectedProjectEntity.id };
     return null;
   }
 
@@ -643,11 +669,20 @@ const App: React.FC = () => {
     loadEntityCrm('universities', selectedUniversity.university).catch(() => {});
   }, [activeProject, selectedUniversity?.university]);
 
+  useEffect(() => {
+    if (['schools', 'universities', 'hotels'].includes(activeProject) || !selectedProjectEntity?.id) return;
+    loadEntityCrm(activeProject as any, selectedProjectEntity.id).catch(() => {});
+  }, [activeProject, selectedProjectEntity?.id]);
+
   const selectedActions = selected
     ? (quickActionsByUrn[selected.urn] || DEFAULT_ACTION_RECORD)
     : DEFAULT_ACTION_RECORD;
 
-  const projectMeta = PROJECTS[activeProject];
+  const projectMeta = PROJECTS_DEFAULT[activeProject] || {
+    name: (projects.find(p => p.key === activeProject)?.name || activeProject),
+    subtitle: 'Project workspace',
+    searchPlaceholder: 'Search entries',
+  };
 
   const allKnownSegments = useMemo(() => {
     const s = new Set<string>();
@@ -727,8 +762,8 @@ const App: React.FC = () => {
                 onChange={(e) => setActiveProject(e.target.value as ProjectKey)}
                 className="px-3 py-2 rounded-xl bg-white/5 border border-white/10"
               >
-                {(Object.keys(PROJECTS) as ProjectKey[]).map((k) => (
-                  <option key={k} value={k}>{PROJECTS[k].name}</option>
+                {projects.map((p) => (
+                  <option key={p.key} value={p.key}>{p.name}</option>
                 ))}
               </select>
             </label>
@@ -736,8 +771,44 @@ const App: React.FC = () => {
             {activeProject !== 'schools' ? (
               <div className="text-[11px] text-amber-300 rounded-xl border border-amber-300/30 bg-amber-500/10 px-3 py-2">
                 {activeProject === 'universities'
-                  ? 'Universities mode enabled. Deep-research data wiring is in progress.'
-                  : 'Hotels project mode is scaffolded. Data source wiring is next.'}
+                  ? 'Universities mode enabled.'
+                  : (activeProject === 'hotels' ? 'Hotels project mode is scaffolded.' : 'Custom project mode enabled with default CRM pack.')}
+              </div>
+            ) : null}
+          </div>
+
+          <div className="mt-3 rounded-xl border border-white/10 p-2 grid gap-2">
+            <div className="text-[11px] text-slate-300 font-bold">Project builder</div>
+            <div className="grid grid-cols-2 gap-2">
+              <input value={newProjectKey} onChange={e => setNewProjectKey(e.target.value)} placeholder="project key" className="px-2 py-1 rounded-lg bg-white/5 border border-white/10" />
+              <input value={newProjectName} onChange={e => setNewProjectName(e.target.value)} placeholder="project name" className="px-2 py-1 rounded-lg bg-white/5 border border-white/10" />
+            </div>
+            <button
+              onClick={() => fetchJson('/api/projects', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ key: newProjectKey.trim(), name: newProjectName.trim(), entityLabel: 'entity' }) } as any)
+                .then(() => fetchJson('/api/projects').then(j => setProjects(j.projects || [])))
+                .then(() => { setNewProjectKey(''); setNewProjectName(''); })
+                .catch(e => setErr(String(e?.message || e)))}
+              className="px-2 py-1 rounded-lg bg-white/5 border border-white/10 hover:bg-white/10 text-xs"
+            >
+              Create project
+            </button>
+            {!['schools', 'universities', 'hotels'].includes(activeProject) ? (
+              <div className="grid gap-2">
+                <div className="text-[11px] text-slate-300">Add entry to {activeProject}</div>
+                <input value={newEntityName} onChange={e => setNewEntityName(e.target.value)} placeholder="Entity name" className="px-2 py-1 rounded-lg bg-white/5 border border-white/10" />
+                <div className="grid grid-cols-2 gap-2">
+                  <input value={newEntityLat} onChange={e => setNewEntityLat(e.target.value)} placeholder="lat" className="px-2 py-1 rounded-lg bg-white/5 border border-white/10" />
+                  <input value={newEntityLng} onChange={e => setNewEntityLng(e.target.value)} placeholder="lng" className="px-2 py-1 rounded-lg bg-white/5 border border-white/10" />
+                </div>
+                <button
+                  onClick={() => fetchJson('/api/' + encodeURIComponent(activeProject) + '/entities', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ name: newEntityName.trim(), lat: newEntityLat ? Number(newEntityLat) : undefined, lng: newEntityLng ? Number(newEntityLng) : undefined, data: {} }) } as any)
+                    .then(() => fetchJson('/api/' + encodeURIComponent(activeProject) + '/entities').then(j => setProjectEntities(j.entities || [])))
+                    .then(() => { setNewEntityName(''); setNewEntityLat(''); setNewEntityLng(''); })
+                    .catch(e => setErr(String(e?.message || e)))}
+                  className="px-2 py-1 rounded-lg bg-white/5 border border-white/10 hover:bg-white/10 text-xs"
+                >
+                  Add entry
+                </button>
               </div>
             ) : null}
           </div>
@@ -799,12 +870,13 @@ const App: React.FC = () => {
           <div className="mt-3 text-[11px] text-slate-400 grid gap-1">
             {activeProject === 'universities' ? (
               <>
-                <div>
-                  Universities loaded: {universitiesMeta?.total ?? 0} • with email: {universitiesMeta?.withEmail ?? 0}
-                </div>
-                <div>
-                  Showing {universities.length} universities in list
-                </div>
+                <div>Universities loaded: {universitiesMeta?.total ?? 0} • with email: {universitiesMeta?.withEmail ?? 0}</div>
+                <div>Showing {universities.length} universities in list</div>
+              </>
+            ) : (!['schools','hotels'].includes(activeProject) ? (
+              <>
+                <div>Entries loaded: {projectEntities.length}</div>
+                <div>Showing {projectEntities.length} {activeProject} entries</div>
               </>
             ) : (
               <>
@@ -815,7 +887,7 @@ const App: React.FC = () => {
                   Showing {schools.length} schools in list (max 1000) • Pins loaded: {geocodedPins}/{pins.length} geocoded (viewport sample)
                 </div>
               </>
-            )}
+            ))}
             {activeProject === 'schools' ? (
               <div className="text-[10px] text-slate-300">Map colours: <span className="text-blue-300">blue</span> = has contact email, <span className="text-red-300">red</span> = no contact email, <span className="text-amber-300">amber</span> = worked with before, <span className="text-emerald-300">green</span> = selected</div>
             ) : null}
@@ -824,7 +896,9 @@ const App: React.FC = () => {
               <button
                 onClick={() => activeProject === 'universities'
                   ? fetchJson('/api/universities').then((j) => { setUniversities(j.universities || []); setUniversitiesMeta(j.meta || { total: 0, withEmail: 0 }); }).catch(e => setErr(String(e?.message || e)))
-                  : refresh().catch(e => setErr(String(e?.message || e)))}
+                  : (!['schools','hotels'].includes(activeProject)
+                    ? fetchJson('/api/' + encodeURIComponent(activeProject) + '/entities').then((j) => setProjectEntities(j.entities || [])).catch(e => setErr(String(e?.message || e)))
+                    : refresh().catch(e => setErr(String(e?.message || e))))}
                 className="px-2 py-1 rounded-lg bg-white/5 border border-white/10 hover:bg-white/10"
               >
                 Refresh
@@ -979,6 +1053,21 @@ const App: React.FC = () => {
                   <div className="mt-1 text-[10px] text-slate-400 truncate">{u.contact_url || 'No URL'}</div>
                 </button>
               ))
+            ) : (!['schools','universities','hotels'].includes(activeProject) ? (
+              projectEntities.slice(0, 80).map((e, idx) => (
+                <button
+                  key={`${e.id}-${idx}`}
+                  onClick={() => {
+                    setSelectedProjectEntity(e);
+                    const lat = Number(e.lat); const lng = Number(e.lng);
+                    if (Number.isFinite(lat) && Number.isFinite(lng)) mapRef.current?.flyTo([lat, lng], Math.max(mapRef.current?.getZoom() || 6, 10), { duration: 0.6 });
+                  }}
+                  className={"text-left p-3 rounded-2xl border transition " + (selectedProjectEntity?.id === e.id ? "bg-cyan-500/10 border-cyan-500/30" : "bg-white/5 border-white/10 hover:bg-white/10")}
+                >
+                  <div className="text-sm font-bold text-slate-100 leading-tight">{e.name}</div>
+                  <div className="text-xs text-slate-400">{e.id}</div>
+                </button>
+              ))
             ) : (
               schools.slice(0, 60).map(s => (
                 <button
@@ -998,7 +1087,7 @@ const App: React.FC = () => {
                   </div>
                 </button>
               ))
-            )}
+            ))}
           </div>
 
           
