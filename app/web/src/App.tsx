@@ -466,6 +466,11 @@ const App: React.FC = () => {
           fillOpacity: 0.9,
         });
         m.bindTooltip(u.name, { direction: 'top' });
+        m.bindPopup(`<div style="min-width:220px"><strong>${u.name}</strong><br/>${u.email || 'No email'}</div>`);
+        m.on('click', () => {
+          m.openPopup();
+          setQ(u.name);
+        });
         m.addTo(layer);
       }
       return;
