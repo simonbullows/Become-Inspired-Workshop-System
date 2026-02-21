@@ -478,6 +478,7 @@ const App: React.FC = () => {
           m.openPopup();
           setQ(u.name);
           setCrmTab('overview');
+          setDrawerExpanded(false);
           if (row) setSelectedUniversity(row);
         });
         m.addTo(layer);
@@ -836,11 +837,16 @@ const App: React.FC = () => {
 
           {/* Drawer: university details */}
           {activeProject === 'universities' && selectedUniversity ? (
-            <div className="mt-4 rounded-2xl border border-black/10 bg-white text-black overflow-hidden shadow-sm">
+            <div
+              className="mt-4 rounded-2xl border border-black/10 bg-white text-black overflow-hidden shadow-sm"
+              onClick={() => setDrawerExpanded(true)}
+              role="button"
+              tabIndex={0}
+            >
               <div className="flex items-center justify-between px-3 py-2 border-b border-black/10 bg-white">
                 <div className="text-xs font-black tracking-wide text-black/80">University details</div>
                 <button
-                  onClick={() => setSelectedUniversity(null)}
+                  onClick={(e) => { e.stopPropagation(); setSelectedUniversity(null); }}
                   className="text-[11px] px-2 py-1 rounded-lg bg-black/5 border border-black/10 hover:bg-black/10 text-black"
                 >
                   Close
@@ -953,6 +959,7 @@ const App: React.FC = () => {
                   key={`${u.university}-${idx}`}
                   onClick={() => {
                     setCrmTab('overview');
+                    setDrawerExpanded(false);
                     setSelectedUniversity(u);
                     const lat = Number(u.lat);
                     const lng = Number(u.lng);
@@ -1002,6 +1009,40 @@ const App: React.FC = () => {
           <div id="map" className="h-full w-full" />
 
           {/* universities render directly on map */}
+          {/* Map overlay: expanded university window */}
+          {activeProject === 'universities' && drawerExpanded && selectedUniversity ? (
+            <div className="absolute inset-0 z-[9999]">
+              <div className="absolute inset-0 bg-black/60" onClick={() => setDrawerExpanded(false)} />
+              <div className="absolute left-1/2 top-1/2 w-[min(920px,92vw)] -translate-x-1/2 -translate-y-1/2 rounded-2xl bg-white text-black border border-black/10 shadow-2xl">
+                <div className="flex items-start justify-between gap-3 p-4 border-b border-black/10">
+                  <div>
+                    <div className="text-lg font-black leading-tight">{selectedUniversity.university}</div>
+                    <div className="text-xs text-black/60">{selectedUniversity.email || '—'} • {selectedUniversity.phone_raw || '—'}</div>
+                  </div>
+                  <button onClick={() => setDrawerExpanded(false)} className="text-sm px-3 py-2 rounded-xl bg-black/5 border border-black/10 hover:bg-black/10">Close</button>
+                </div>
+                <div className="p-4 grid md:grid-cols-2 gap-4">
+                  <div className="grid gap-2 text-sm">
+                    <div><span className="text-black/50">Contact URL:</span> {selectedUniversity.contact_url ? <a className="text-blue-700 hover:underline" href={selectedUniversity.contact_url} target="_blank">{selectedUniversity.contact_url}</a> : '—'}</div>
+                    <div><span className="text-black/50">Pipeline stage:</span>
+                      <select value={crmPipeline.stage} onChange={e => savePipeline({ stage: e.target.value }).catch(()=>{})} className="ml-2 px-2 py-1 rounded border border-black/15">
+                        <option value="new">new</option><option value="researched">researched</option><option value="contacted">contacted</option><option value="replied">replied</option><option value="qualified">qualified</option><option value="proposal">proposal</option><option value="booked">booked</option><option value="lost">lost</option>
+                      </select>
+                    </div>
+                    <div><span className="text-black/50">Owner:</span> <input value={crmPipeline.owner || ''} onChange={e => savePipeline({ owner: e.target.value }).catch(()=>{})} className="ml-2 px-2 py-1 rounded border border-black/15" /></div>
+                  </div>
+                  <div className="grid gap-2 text-sm">
+                    <div className="font-semibold">CRM quick adds</div>
+                    <input value={newContact.name} onChange={e => setNewContact(v => ({ ...v, name: e.target.value }))} placeholder="Contact name" className="px-2 py-1 rounded border border-black/15" />
+                    <button onClick={() => addCrmContact().catch(()=>{})} className="px-3 py-1 rounded bg-black text-white text-xs w-fit">Add contact</button>
+                    <input value={newTask.title} onChange={e => setNewTask(v => ({ ...v, title: e.target.value }))} placeholder="Task title" className="px-2 py-1 rounded border border-black/15" />
+                    <button onClick={() => addCrmTask().catch(()=>{})} className="px-3 py-1 rounded bg-black text-white text-xs w-fit">Add task</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          ) : null}
+
           {/* Map overlay: expanded school window should appear over the map */}
           {activeProject === 'schools' && drawerExpanded && selected ? (
             <div className="absolute inset-0 z-[9999]">
