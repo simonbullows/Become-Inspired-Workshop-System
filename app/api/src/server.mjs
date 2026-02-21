@@ -57,6 +57,7 @@ function parseCsv(text) {
 app.get('/api/universities', (req, res) => {
   const root = path.resolve(process.cwd(), '..', '..');
   const cleanPath = path.join(root, 'data', 'universities', 'universities_comms_clean.csv');
+  const mapPath = path.join(root, 'data', 'universities', 'universities_map.csv');
   const masterPath = path.join(root, 'data', 'universities', 'universities_master.csv');
 
   const readRows = (p) => {
@@ -66,8 +67,9 @@ app.get('/api/universities', (req, res) => {
   };
 
   const masterRows = readRows(masterPath);
+  const mapRows = readRows(mapPath);
   const cleanRows = readRows(cleanPath);
-  const rows = masterRows.length > 0 ? masterRows : cleanRows;
+  const rows = masterRows.length > 0 ? masterRows : (mapRows.length > 0 ? mapRows : cleanRows);
 
   const withEmail = rows.filter(r => String(r.email || '').includes('@')).length;
   res.json({ universities: rows, meta: { total: rows.length, withEmail } });

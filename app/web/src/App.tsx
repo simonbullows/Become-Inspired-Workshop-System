@@ -28,6 +28,8 @@ type UniversityRow = {
   phone_raw?: string;
   contact_url?: string;
   status?: string;
+  lat?: string | number;
+  lng?: string | number;
 };
 
 type UniversityPin = {
@@ -255,6 +257,15 @@ const App: React.FC = () => {
       for (const u of universities) {
         const name = String(u.university || '').trim();
         if (!name) continue;
+
+        const inlineLat = Number(u.lat);
+        const inlineLng = Number(u.lng);
+        if (Number.isFinite(inlineLat) && Number.isFinite(inlineLng)) {
+          pins.push({ key: name, name, email: u.email, lat: inlineLat, lng: inlineLng });
+          cache[name] = { lat: inlineLat, lng: inlineLng };
+          continue;
+        }
+
         const cached = cache[name];
         if (cached && Number.isFinite(cached.lat) && Number.isFinite(cached.lng)) {
           pins.push({ key: name, name, email: u.email, lat: cached.lat, lng: cached.lng });
@@ -270,11 +281,12 @@ const App: React.FC = () => {
             if (Number.isFinite(lat) && Number.isFinite(lng)) {
               cache[name] = { lat, lng };
               pins.push({ key: name, name, email: u.email, lat, lng });
-              try { window.localStorage.setItem(cacheKey, JSON.stringify(cache)); } catch {}
             }
           }
         } catch {}
       }
+
+      try { window.localStorage.setItem(cacheKey, JSON.stringify(cache)); } catch {}
 
       if (!cancelled) {
         setUniversityPins(pins);
