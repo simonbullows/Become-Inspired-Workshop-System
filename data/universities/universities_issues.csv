@@ -1,1 +1,2 @@
-university,issue_type,issue_reason,blocked_url,action_needed,last_checked_utc
+"university","issue_type","issue_reason","blocked_url","action_needed","last_checked_utc"
+"ALL","partial_data","Jeeves reports 90/164 procurement verified; repo currently includes subset pending full handoff file.","","Import full Jeeves handoff CSV when posted.","2026-02-21T19:40:48.1261762Z"
