@@ -1,1 +1,8 @@
 university,email,phone_raw,contact_url,issue_type,issue_reason,source_fragment,last_checked_utc
+Bournemouth University,press@bournemouth.ac.uk,+44 1202 961916,https://www.bournemouth.ac.uk/about/our-people/marketing-communicationsBPP University,parse_anomaly,merged_row_url_contamination,raw_markdown_row,
+De Montfort University,mediaoffice@dmu.ac.uk,+44 116 250 6631,https://www.dmu.ac.uk/about-dmu/contact-us/media-office.aspxUniversity of Derby,parse_anomaly,merged_row_url_contamination,raw_markdown_row,
+Health Sciences University (UK),press@healthsciencesuni.ac.uk,+44 20 7946 0123,https://www.healthsciencesuni.ac.uk/contact/communicationsHeriot-Watt University,parse_anomaly,merged_row_url_contamination,raw_markdown_row,
+University of Liverpool,press.office@liverpool.ac.uk,+44 (0)151 794 3554,https://www.liverpool.ac.uk/communications/about-us/contact-us/Liverpool Hope University,parse_anomaly,merged_row_url_contamination,raw_markdown_row,
+Oxford Brookes University,media@brookes.ac.uk,+44 1865 741111,https://www.brookes.ac.uk/about-brookes/news/press-office/University of Plymouth,parse_anomaly,merged_row_url_contamination,raw_markdown_row,
+Sheffield Hallam University,press@shu.ac.uk,+44 114 225 4444,https://www.shu.ac.uk/about-us/news/press-officeUniversity of South Wales,parse_anomaly,merged_row_url_contamination,raw_markdown_row,
+University of Westminster,press.office@westminster.ac.uk,+44 20 3506 5800,https://www.westminster.ac.uk/about-us/our-organisation/marketing-and-communications/press-officeUniversity of Winchester,parse_anomaly,merged_row_url_contamination,raw_markdown_row,
