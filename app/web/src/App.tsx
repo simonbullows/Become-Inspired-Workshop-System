@@ -477,6 +477,7 @@ const App: React.FC = () => {
         m.on('click', () => {
           m.openPopup();
           setQ(u.name);
+          setCrmTab('overview');
           if (row) setSelectedUniversity(row);
         });
         m.addTo(layer);
@@ -520,8 +521,14 @@ const App: React.FC = () => {
     return (j.school || null) as School | null;
   }
 
-  async function loadSchoolCrm(urn: string) {
-    const j = await fetchJson('/api/schools/' + encodeURIComponent(urn) + '/crm');
+  function currentEntityRef() {
+    if (activeProject === 'schools' && selected) return { project: 'schools', id: selected.urn };
+    if (activeProject === 'universities' && selectedUniversity) return { project: 'universities', id: selectedUniversity.university };
+    return null;
+  }
+
+  async function loadEntityCrm(project: 'schools' | 'universities', entityId: string) {
+    const j = await fetchJson('/api/' + project + '/entities/' + encodeURIComponent(entityId) + '/crm');
     setCrmPipeline({
       stage: j.pipeline?.stage || 'new',
       owner: j.pipeline?.owner || '',
@@ -534,10 +541,11 @@ const App: React.FC = () => {
   }
 
   async function savePipeline(patch: Partial<CrmPipeline>) {
-    if (!selected) return;
+    const ref = currentEntityRef();
+    if (!ref) return;
     const next = { ...crmPipeline, ...patch };
     setCrmPipeline(next);
-    await fetchJson('/api/schools/' + encodeURIComponent(selected.urn) + '/pipeline', {
+    await fetchJson('/api/' + ref.project + '/entities/' + encodeURIComponent(ref.id) + '/pipeline', {
       method: 'PATCH',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(next),
@@ -545,56 +553,63 @@ const App: React.FC = () => {
   }
 
   async function addCrmContact() {
-    if (!selected || !newContact.name.trim()) return;
-    await fetchJson('/api/schools/' + encodeURIComponent(selected.urn) + '/contacts', {
+    const ref = currentEntityRef();
+    if (!ref || !newContact.name.trim()) return;
+    await fetchJson('/api/' + ref.project + '/entities/' + encodeURIComponent(ref.id) + '/contacts', {
       method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(newContact),
     } as any);
     setNewContact({ name: '', role: '', email: '', phone: '' });
-    await loadSchoolCrm(selected.urn);
+    await loadEntityCrm(ref.project as any, ref.id);
   }
 
   async function addCrmActivity() {
-    if (!selected || !newActivity.summary.trim()) return;
-    await fetchJson('/api/schools/' + encodeURIComponent(selected.urn) + '/activities', {
+    const ref = currentEntityRef();
+    if (!ref || !newActivity.summary.trim()) return;
+    await fetchJson('/api/' + ref.project + '/entities/' + encodeURIComponent(ref.id) + '/activities', {
       method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(newActivity),
     } as any);
     setNewActivity({ type: 'note', summary: '', body: '' });
-    await loadSchoolCrm(selected.urn);
+    await loadEntityCrm(ref.project as any, ref.id);
   }
 
   async function addCrmTask() {
-    if (!selected || !newTask.title.trim()) return;
-    await fetchJson('/api/schools/' + encodeURIComponent(selected.urn) + '/tasks', {
+    const ref = currentEntityRef();
+    if (!ref || !newTask.title.trim()) return;
+    await fetchJson('/api/' + ref.project + '/entities/' + encodeURIComponent(ref.id) + '/tasks', {
       method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(newTask),
     } as any);
     setNewTask({ title: '', owner: '', dueAt: '' });
-    await loadSchoolCrm(selected.urn);
+    await loadEntityCrm(ref.project as any, ref.id);
   }
 
   async function toggleTaskDone(t: CrmTask) {
-    if (!selected) return;
-    await fetchJson('/api/schools/' + encodeURIComponent(selected.urn) + '/tasks/' + encodeURIComponent(t.id), {
+    const ref = currentEntityRef();
+    if (!ref) return;
+    await fetchJson('/api/' + ref.project + '/entities/' + encodeURIComponent(ref.id) + '/tasks/' + encodeURIComponent(t.id), {
       method: 'PATCH', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ status: t.status === 'done' ? 'open' : 'done' }),
     } as any);
-    await loadSchoolCrm(selected.urn);
+    await loadEntityCrm(ref.project as any, ref.id);
   }
 
   async function deleteCrmContact(id: string) {
-    if (!selected) return;
-    await fetchJson('/api/schools/' + encodeURIComponent(selected.urn) + '/contacts/' + encodeURIComponent(id), { method: 'DELETE' } as any);
-    await loadSchoolCrm(selected.urn);
+    const ref = currentEntityRef();
+    if (!ref) return;
+    await fetchJson('/api/' + ref.project + '/entities/' + encodeURIComponent(ref.id) + '/contacts/' + encodeURIComponent(id), { method: 'DELETE' } as any);
+    await loadEntityCrm(ref.project as any, ref.id);
   }
 
   async function deleteCrmActivity(id: string) {
-    if (!selected) return;
-    await fetchJson('/api/schools/' + encodeURIComponent(selected.urn) + '/activities/' + encodeURIComponent(id), { method: 'DELETE' } as any);
-    await loadSchoolCrm(selected.urn);
+    const ref = currentEntityRef();
+    if (!ref) return;
+    await fetchJson('/api/' + ref.project + '/entities/' + encodeURIComponent(ref.id) + '/activities/' + encodeURIComponent(id), { method: 'DELETE' } as any);
+    await loadEntityCrm(ref.project as any, ref.id);
   }
 
   async function deleteCrmTask(id: string) {
-    if (!selected) return;
-    await fetchJson('/api/schools/' + encodeURIComponent(selected.urn) + '/tasks/' + encodeURIComponent(id), { method: 'DELETE' } as any);
-    await loadSchoolCrm(selected.urn);
+    const ref = currentEntityRef();
+    if (!ref) return;
+    await fetchJson('/api/' + ref.project + '/entities/' + encodeURIComponent(ref.id) + '/tasks/' + encodeURIComponent(id), { method: 'DELETE' } as any);
+    await loadEntityCrm(ref.project as any, ref.id);
   }
 
   async function selectSchool(s: School) {
@@ -605,7 +620,7 @@ const App: React.FC = () => {
       setSelected(next);
       setDrawerExpanded(false);
       setCrmTab('overview');
-      await loadSchoolCrm(next.urn).catch(() => {});
+      await loadEntityCrm('schools', next.urn).catch(() => {});
     } finally {
       setSelectedLoading(false);
     }
@@ -621,6 +636,11 @@ const App: React.FC = () => {
       mapRef.current?.flyTo([lat, lng], Math.max(mapRef.current?.getZoom() || 6, 11), { duration: 0.6 });
     }
   }, [selected]);
+
+  useEffect(() => {
+    if (activeProject !== 'universities' || !selectedUniversity?.university) return;
+    loadEntityCrm('universities', selectedUniversity.university).catch(() => {});
+  }, [activeProject, selectedUniversity?.university]);
 
   const selectedActions = selected
     ? (quickActionsByUrn[selected.urn] || DEFAULT_ACTION_RECORD)
@@ -826,7 +846,7 @@ const App: React.FC = () => {
                   Close
                 </button>
               </div>
-              <div className="p-3 text-xs text-black/80 grid gap-1">
+              <div className="p-3 text-xs text-black/80 grid gap-2">
                 <div className="text-base font-black text-black">{selectedUniversity.university}</div>
                 <div><span className="text-black/50">Email:</span> {selectedUniversity.email || '—'}</div>
                 <div><span className="text-black/50">Phone:</span> {selectedUniversity.phone_raw || '—'}</div>
@@ -836,6 +856,48 @@ const App: React.FC = () => {
                     <a className="text-blue-700 hover:underline" href={selectedUniversity.contact_url} target="_blank">{selectedUniversity.contact_url}</a>
                   ) : '—'}
                 </div>
+
+                <div className="flex flex-wrap gap-2 text-xs mt-2">
+                  {(['overview', 'contacts', 'timeline', 'tasks'] as const).map(tab => (
+                    <button key={tab} onClick={() => setCrmTab(tab)} className={(crmTab === tab ? 'bg-black text-white ' : 'bg-white ') + 'px-2 py-1 rounded-lg border border-black/15'}>{tab}</button>
+                  ))}
+                </div>
+
+                {crmTab === 'overview' ? (
+                  <div className="grid gap-2">
+                    <div><span className="text-black/50">Pipeline stage:</span>
+                      <select value={crmPipeline.stage} onChange={e => savePipeline({ stage: e.target.value }).catch(()=>{})} className="ml-2 px-2 py-1 rounded border border-black/15">
+                        <option value="new">new</option><option value="researched">researched</option><option value="contacted">contacted</option><option value="replied">replied</option><option value="qualified">qualified</option><option value="proposal">proposal</option><option value="booked">booked</option><option value="lost">lost</option>
+                      </select>
+                    </div>
+                    <div><span className="text-black/50">Owner:</span> <input value={crmPipeline.owner || ''} onChange={e => savePipeline({ owner: e.target.value }).catch(()=>{})} className="ml-2 px-2 py-1 rounded border border-black/15" /></div>
+                  </div>
+                ) : null}
+
+                {crmTab === 'contacts' ? (
+                  <div className="grid gap-2">
+                    <input value={newContact.name} onChange={e => setNewContact(v => ({ ...v, name: e.target.value }))} placeholder="Contact name" className="px-2 py-1 rounded border border-black/15" />
+                    <input value={newContact.email} onChange={e => setNewContact(v => ({ ...v, email: e.target.value }))} placeholder="Email" className="px-2 py-1 rounded border border-black/15" />
+                    <button onClick={() => addCrmContact().catch(()=>{})} className="px-3 py-1 rounded bg-black text-white text-xs w-fit">Add contact</button>
+                    {crmContacts.slice(0,6).map(c => <div key={c.id} className="rounded-lg border border-black/10 p-2"><div className="font-semibold">{c.name}</div><div>{c.email || '—'}</div></div>)}
+                  </div>
+                ) : null}
+
+                {crmTab === 'timeline' ? (
+                  <div className="grid gap-2">
+                    <input value={newActivity.summary} onChange={e => setNewActivity(v => ({ ...v, summary: e.target.value }))} placeholder="Activity summary" className="px-2 py-1 rounded border border-black/15" />
+                    <button onClick={() => addCrmActivity().catch(()=>{})} className="px-3 py-1 rounded bg-black text-white text-xs w-fit">Add activity</button>
+                    {crmActivities.slice(0,6).map(a => <div key={a.id} className="rounded-lg border border-black/10 p-2"><div className="font-semibold">{a.summary}</div><div className="text-black/60">{a.type}</div></div>)}
+                  </div>
+                ) : null}
+
+                {crmTab === 'tasks' ? (
+                  <div className="grid gap-2">
+                    <input value={newTask.title} onChange={e => setNewTask(v => ({ ...v, title: e.target.value }))} placeholder="Task title" className="px-2 py-1 rounded border border-black/15" />
+                    <button onClick={() => addCrmTask().catch(()=>{})} className="px-3 py-1 rounded bg-black text-white text-xs w-fit">Add task</button>
+                    {crmTasks.slice(0,6).map(t => <div key={t.id} className="rounded-lg border border-black/10 p-2"><div className="font-semibold">{t.title}</div><div className="text-black/60">{t.status}</div></div>)}
+                  </div>
+                ) : null}
               </div>
             </div>
           ) : null}
@@ -890,6 +952,7 @@ const App: React.FC = () => {
                 <button
                   key={`${u.university}-${idx}`}
                   onClick={() => {
+                    setCrmTab('overview');
                     setSelectedUniversity(u);
                     const lat = Number(u.lat);
                     const lng = Number(u.lng);

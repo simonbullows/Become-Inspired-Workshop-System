@@ -133,6 +133,63 @@ CREATE TABLE IF NOT EXISTS school_tasks (
   FOREIGN KEY (urn) REFERENCES schools(urn) ON DELETE CASCADE
 );
 CREATE INDEX IF NOT EXISTS idx_tasks_urn ON school_tasks(urn, status, dueAt);
+
+-- Universal CRM tables (project + entity scoped)
+CREATE TABLE IF NOT EXISTS crm_pipeline (
+  project_key TEXT NOT NULL,
+  entity_id TEXT NOT NULL,
+  stage TEXT NOT NULL DEFAULT 'new',
+  owner TEXT NOT NULL DEFAULT '',
+  priority TEXT NOT NULL DEFAULT 'normal',
+  nextActionAt TEXT NOT NULL DEFAULT '',
+  updatedAt TEXT NOT NULL,
+  PRIMARY KEY (project_key, entity_id)
+);
+CREATE INDEX IF NOT EXISTS idx_crm_pipeline_stage ON crm_pipeline(project_key, stage);
+CREATE INDEX IF NOT EXISTS idx_crm_pipeline_owner ON crm_pipeline(project_key, owner);
+
+CREATE TABLE IF NOT EXISTS crm_contacts (
+  id TEXT PRIMARY KEY,
+  project_key TEXT NOT NULL,
+  entity_id TEXT NOT NULL,
+  name TEXT NOT NULL DEFAULT '',
+  role TEXT NOT NULL DEFAULT '',
+  email TEXT NOT NULL DEFAULT '',
+  phone TEXT NOT NULL DEFAULT '',
+  source TEXT NOT NULL DEFAULT '',
+  confidence TEXT NOT NULL DEFAULT 'medium',
+  notes TEXT NOT NULL DEFAULT '',
+  createdAt TEXT NOT NULL,
+  updatedAt TEXT NOT NULL
+);
+CREATE INDEX IF NOT EXISTS idx_crm_contacts_entity ON crm_contacts(project_key, entity_id, updatedAt DESC);
+
+CREATE TABLE IF NOT EXISTS crm_activities (
+  id TEXT PRIMARY KEY,
+  project_key TEXT NOT NULL,
+  entity_id TEXT NOT NULL,
+  type TEXT NOT NULL DEFAULT 'note',
+  summary TEXT NOT NULL DEFAULT '',
+  body TEXT NOT NULL DEFAULT '',
+  actor TEXT NOT NULL DEFAULT '',
+  happenedAt TEXT NOT NULL,
+  createdAt TEXT NOT NULL
+);
+CREATE INDEX IF NOT EXISTS idx_crm_activities_entity ON crm_activities(project_key, entity_id, happenedAt DESC);
+
+CREATE TABLE IF NOT EXISTS crm_tasks (
+  id TEXT PRIMARY KEY,
+  project_key TEXT NOT NULL,
+  entity_id TEXT NOT NULL,
+  title TEXT NOT NULL,
+  status TEXT NOT NULL DEFAULT 'open',
+  owner TEXT NOT NULL DEFAULT '',
+  dueAt TEXT NOT NULL DEFAULT '',
+  notes TEXT NOT NULL DEFAULT '',
+  createdAt TEXT NOT NULL,
+  updatedAt TEXT NOT NULL
+);
+CREATE INDEX IF NOT EXISTS idx_crm_tasks_entity ON crm_tasks(project_key, entity_id, status, dueAt);
 `);
 
 // Lightweight migration: add source_row_json for legacy DBs.

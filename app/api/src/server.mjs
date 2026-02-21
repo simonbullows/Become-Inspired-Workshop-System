@@ -12,7 +12,23 @@ const app = express();
 app.use(cors());
 app.use(express.json({ limit: '1mb' }));
 
+const PROJECTS = {
+  schools: { key: 'schools', name: 'Schools Outreach', entityLabel: 'school' },
+  universities: { key: 'universities', name: 'Universities Outreach', entityLabel: 'university' },
+  hotels: { key: 'hotels', name: 'Hotels Outreach', entityLabel: 'hotel' },
+};
+
+function getProjectOr404(projectKey, res) {
+  const p = PROJECTS[String(projectKey || '')];
+  if (!p) {
+    res.status(404).json({ error: 'unknown_project' });
+    return null;
+  }
+  return p;
+}
+
 app.get('/healthz', (req, res) => res.json({ ok: true }));
+app.get('/api/projects', (req, res) => res.json({ projects: Object.values(PROJECTS) }));
 
 function parseCsvLine(line) {
   const out = [];
@@ -54,7 +70,7 @@ function parseCsv(text) {
   });
 }
 
-app.get('/api/universities', (req, res) => {
+function loadUniversitiesRows() {
   const root = path.resolve(process.cwd(), '..', '..');
   const cleanPath = path.join(root, 'data', 'universities', 'universities_comms_clean.csv');
   const mapPath = path.join(root, 'data', 'universities', 'universities_map.csv');
@@ -62,17 +78,36 @@ app.get('/api/universities', (req, res) => {
 
   const readRows = (p) => {
     if (!fs.existsSync(p)) return [];
-    const rows = parseCsv(fs.readFileSync(p, 'utf8'));
-    return rows;
+    return parseCsv(fs.readFileSync(p, 'utf8'));
   };
 
   const masterRows = readRows(masterPath);
   const mapRows = readRows(mapPath);
   const cleanRows = readRows(cleanPath);
-  const rows = masterRows.length > 0 ? masterRows : (mapRows.length > 0 ? mapRows : cleanRows);
+  return masterRows.length > 0 ? masterRows : (mapRows.length > 0 ? mapRows : cleanRows);
+}
 
+app.get('/api/universities', (req, res) => {
+  const rows = loadUniversitiesRows();
   const withEmail = rows.filter(r => String(r.email || '').includes('@')).length;
   res.json({ universities: rows, meta: { total: rows.length, withEmail } });
+});
+
+app.get('/api/:project/entities', (req, res) => {
+  const project = getProjectOr404(req.params.project, res);
+  if (!project) return;
+
+  if (project.key === 'schools') {
+    const rows = db.prepare('SELECT urn, name, phase, region, town, postcode, website, telephone, emails_json, lat, lng FROM schools ORDER BY name ASC LIMIT 2000').all();
+    return res.json({ entities: rows.map(r => ({ id: r.urn, name: r.name, project: 'schools', lat: r.lat, lng: r.lng, data: { ...r, emails: safeJson(r.emails_json, []) } })) });
+  }
+
+  if (project.key === 'universities') {
+    const rows = loadUniversitiesRows();
+    return res.json({ entities: rows.map(r => ({ id: String(r.university || ''), name: String(r.university || ''), project: 'universities', lat: Number(r.lat), lng: Number(r.lng), data: r })) });
+  }
+
+  return res.json({ entities: [] });
 });
 
 // ---- Schools API (v0.1) ----
@@ -311,6 +346,136 @@ const TaskPatch = z.object({
   dueAt: z.string().max(60).optional(),
   notes: z.string().max(4000).optional(),
   status: z.enum(['open', 'done']).optional(),
+});
+
+// ---- Universal CRM API (project + entity) ----
+
+app.get('/api/:project/entities/:id/crm', (req, res) => {
+  const project = getProjectOr404(req.params.project, res);
+  if (!project) return;
+  const entityId = String(req.params.id || '');
+
+  const pipeline = db.prepare('SELECT * FROM crm_pipeline WHERE project_key = ? AND entity_id = ?').get(project.key, entityId)
+    || { project_key: project.key, entity_id: entityId, stage: 'new', owner: '', priority: 'normal', nextActionAt: '', updatedAt: '' };
+  const contacts = db.prepare('SELECT * FROM crm_contacts WHERE project_key = ? AND entity_id = ? ORDER BY updatedAt DESC').all(project.key, entityId);
+  const activities = db.prepare('SELECT * FROM crm_activities WHERE project_key = ? AND entity_id = ? ORDER BY happenedAt DESC, createdAt DESC LIMIT 200').all(project.key, entityId);
+  const tasks = db.prepare('SELECT * FROM crm_tasks WHERE project_key = ? AND entity_id = ? ORDER BY status ASC, dueAt ASC, updatedAt DESC').all(project.key, entityId);
+
+  res.json({ pipeline, contacts, activities, tasks });
+});
+
+app.patch('/api/:project/entities/:id/pipeline', (req, res) => {
+  const project = getProjectOr404(req.params.project, res);
+  if (!project) return;
+  const entityId = String(req.params.id || '');
+  const parsed = PipelinePatch.safeParse(req.body);
+  if (!parsed.success) return res.status(400).json({ error: parsed.error.flatten() });
+
+  const ts = new Date().toISOString();
+  const existing = db.prepare('SELECT * FROM crm_pipeline WHERE project_key = ? AND entity_id = ?').get(project.key, entityId)
+    || { project_key: project.key, entity_id: entityId, stage: 'new', owner: '', priority: 'normal', nextActionAt: '', updatedAt: ts };
+  const next = { ...existing, ...parsed.data, updatedAt: ts };
+
+  db.prepare(`
+    INSERT INTO crm_pipeline (project_key, entity_id, stage, owner, priority, nextActionAt, updatedAt)
+    VALUES (?, ?, ?, ?, ?, ?, ?)
+    ON CONFLICT(project_key, entity_id) DO UPDATE SET
+      stage=excluded.stage,
+      owner=excluded.owner,
+      priority=excluded.priority,
+      nextActionAt=excluded.nextActionAt,
+      updatedAt=excluded.updatedAt
+  `).run(next.project_key, next.entity_id, next.stage, next.owner, next.priority, next.nextActionAt, next.updatedAt);
+
+  res.json({ ok: true, pipeline: next });
+});
+
+app.post('/api/:project/entities/:id/contacts', (req, res) => {
+  const project = getProjectOr404(req.params.project, res);
+  if (!project) return;
+  const entityId = String(req.params.id || '');
+  const parsed = ContactCreate.safeParse(req.body);
+  if (!parsed.success) return res.status(400).json({ error: parsed.error.flatten() });
+
+  const id = crypto.randomUUID();
+  const ts = new Date().toISOString();
+  const d = parsed.data;
+  db.prepare(`INSERT INTO crm_contacts (id, project_key, entity_id, name, role, email, phone, source, confidence, notes, createdAt, updatedAt)
+              VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`)
+    .run(id, project.key, entityId, d.name, d.role, d.email, d.phone, d.source, d.confidence, d.notes, ts, ts);
+  res.status(201).json({ id });
+});
+
+app.delete('/api/:project/entities/:id/contacts/:contactId', (req, res) => {
+  const project = getProjectOr404(req.params.project, res);
+  if (!project) return;
+  db.prepare('DELETE FROM crm_contacts WHERE id = ? AND project_key = ?').run(String(req.params.contactId || ''), project.key);
+  res.json({ ok: true });
+});
+
+app.post('/api/:project/entities/:id/activities', (req, res) => {
+  const project = getProjectOr404(req.params.project, res);
+  if (!project) return;
+  const entityId = String(req.params.id || '');
+  const parsed = ActivityCreate.safeParse(req.body);
+  if (!parsed.success) return res.status(400).json({ error: parsed.error.flatten() });
+
+  const id = crypto.randomUUID();
+  const ts = new Date().toISOString();
+  const d = parsed.data;
+  const happenedAt = d.happenedAt || ts;
+  db.prepare(`INSERT INTO crm_activities (id, project_key, entity_id, type, summary, body, actor, happenedAt, createdAt)
+              VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`)
+    .run(id, project.key, entityId, d.type, d.summary, d.body, d.actor, happenedAt, ts);
+  res.status(201).json({ id });
+});
+
+app.delete('/api/:project/entities/:id/activities/:activityId', (req, res) => {
+  const project = getProjectOr404(req.params.project, res);
+  if (!project) return;
+  db.prepare('DELETE FROM crm_activities WHERE id = ? AND project_key = ?').run(String(req.params.activityId || ''), project.key);
+  res.json({ ok: true });
+});
+
+app.post('/api/:project/entities/:id/tasks', (req, res) => {
+  const project = getProjectOr404(req.params.project, res);
+  if (!project) return;
+  const entityId = String(req.params.id || '');
+  const parsed = TaskCreate.safeParse(req.body);
+  if (!parsed.success) return res.status(400).json({ error: parsed.error.flatten() });
+
+  const id = crypto.randomUUID();
+  const ts = new Date().toISOString();
+  const d = parsed.data;
+  db.prepare(`INSERT INTO crm_tasks (id, project_key, entity_id, title, status, owner, dueAt, notes, createdAt, updatedAt)
+              VALUES (?, ?, ?, ?, 'open', ?, ?, ?, ?, ?)`)
+    .run(id, project.key, entityId, d.title, d.owner, d.dueAt, d.notes, ts, ts);
+  res.status(201).json({ id });
+});
+
+app.patch('/api/:project/entities/:id/tasks/:taskId', (req, res) => {
+  const project = getProjectOr404(req.params.project, res);
+  if (!project) return;
+  const parsed = TaskPatch.safeParse(req.body);
+  if (!parsed.success) return res.status(400).json({ error: parsed.error.flatten() });
+
+  const taskId = String(req.params.taskId || '');
+  const existing = db.prepare('SELECT * FROM crm_tasks WHERE id = ? AND project_key = ?').get(taskId, project.key);
+  if (!existing) return res.status(404).json({ error: 'not_found' });
+
+  const ts = new Date().toISOString();
+  const next = { ...existing, ...parsed.data, updatedAt: ts };
+  db.prepare('UPDATE crm_tasks SET title=?, status=?, owner=?, dueAt=?, notes=?, updatedAt=? WHERE id=? AND project_key=?')
+    .run(next.title, next.status, next.owner, next.dueAt, next.notes, next.updatedAt, taskId, project.key);
+
+  res.json({ ok: true });
+});
+
+app.delete('/api/:project/entities/:id/tasks/:taskId', (req, res) => {
+  const project = getProjectOr404(req.params.project, res);
+  if (!project) return;
+  db.prepare('DELETE FROM crm_tasks WHERE id = ? AND project_key = ?').run(String(req.params.taskId || ''), project.key);
+  res.json({ ok: true });
 });
 
 app.get('/api/schools/:urn/crm', (req, res) => {
