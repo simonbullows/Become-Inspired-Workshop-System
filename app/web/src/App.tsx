@@ -31,6 +31,7 @@ type UniversityRow = {
   lat?: string | number;
   lng?: string | number;
   display_name?: string;
+  [key: string]: string | number | undefined;
 };
 
 type UniversityPin = {
@@ -688,6 +689,14 @@ const App: React.FC = () => {
     searchPlaceholder: 'Search entries',
   };
 
+  const universityExtraFields = useMemo(() => {
+    if (!selectedUniversity) return [] as Array<{ key: string; value: string | number }>;
+    const hidden = new Set(['university', 'display_name', 'email', 'phone_raw', 'contact_url', 'status', 'lat', 'lng']);
+    return Object.entries(selectedUniversity)
+      .filter(([k, v]) => !hidden.has(k) && String(v ?? '').trim() !== '')
+      .map(([key, value]) => ({ key, value: value as string | number }));
+  }, [selectedUniversity]);
+
   const allKnownSegments = useMemo(() => {
     const s = new Set<string>();
     Object.values(quickActionsByUrn).forEach((v) => (v.segments || []).forEach(seg => s.add(seg)));
@@ -1125,6 +1134,21 @@ const App: React.FC = () => {
                       </select>
                     </div>
                     <div><span className="text-black/50">Owner:</span> <input value={crmPipeline.owner || ''} onChange={e => savePipeline({ owner: e.target.value }).catch(()=>{})} className="ml-2 px-2 py-1 rounded border border-black/15" /></div>
+
+                    <div className="mt-2 rounded-xl border border-black/10 p-3 bg-black/[0.02]">
+                      <div className="text-xs font-bold text-black/70 mb-2">Extended dataset fields</div>
+                      {universityExtraFields.length ? (
+                        <div className="max-h-56 overflow-auto grid gap-1 text-xs">
+                          {universityExtraFields.map((f) => (
+                            <div key={f.key} className="break-words">
+                              <span className="text-black/50">{f.key}:</span> {String(f.value)}
+                            </div>
+                          ))}
+                        </div>
+                      ) : (
+                        <div className="text-xs text-black/50">No extended fields mapped yet for this university.</div>
+                      )}
+                    </div>
                   </div>
                   <div className="grid gap-2 text-sm">
                     <div className="font-semibold">CRM quick adds</div>
