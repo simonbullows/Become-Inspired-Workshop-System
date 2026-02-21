@@ -828,9 +828,25 @@ const App: React.FC = () => {
         </aside>
 
         <main className="relative h-full">
-          <div id="map" className="h-full w-full" />
+          {activeProject === 'schools' ? (
+            <div id="map" className="h-full w-full" />
+          ) : (
+            <div className="h-full w-full p-6 overflow-auto bg-slate-900">
+              <h2 className="text-xl font-black">Universities Outreach</h2>
+              <p className="text-sm text-slate-400 mt-1">Loaded from universities_comms_clean.csv</p>
+              <div className="mt-4 grid gap-2 max-w-4xl">
+                {universities.slice(0, 200).map((u, i) => (
+                  <div key={`${u.university}-${i}`} className="rounded-xl border border-white/10 bg-white/5 p-3">
+                    <div className="font-semibold">{u.university}</div>
+                    <div className="text-xs text-slate-300">{u.email || '—'} {u.phone_raw ? `• ${u.phone_raw}` : ''}</div>
+                    <div className="text-[11px] text-slate-400 truncate">{u.contact_url || 'No URL'}</div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
           {/* Map overlay: expanded school window should appear over the map */}
-          {drawerExpanded && selected ? (
+          {activeProject === 'schools' && drawerExpanded && selected ? (
             <div className="absolute inset-0 z-[9999]">
               <div
                 className="absolute inset-0 bg-black/60"
@@ -1051,9 +1067,11 @@ const App: React.FC = () => {
               </div>
             </div>
           ) : null}
-          <div className="absolute right-4 top-4 rounded-2xl bg-slate-950/70 border border-white/10 backdrop-blur px-3 py-2 text-xs text-slate-200">
-            OpenStreetMap • postcode-level pins (geocoding runs in background)
-          </div>
+          {activeProject === 'schools' ? (
+            <div className="absolute right-4 top-4 rounded-2xl bg-slate-950/70 border border-white/10 backdrop-blur px-3 py-2 text-xs text-slate-200">
+              OpenStreetMap • postcode-level pins (geocoding runs in background)
+            </div>
+          ) : null}
         </main>
       </div>
     </div>
