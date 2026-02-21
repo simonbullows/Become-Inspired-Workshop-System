@@ -49,13 +49,18 @@ const DEFAULT_ACTION_RECORD: SchoolActionRecord = {
 
 const QUICK_ACTIONS_STORAGE_KEY = 'bi-workshop-quick-actions-v1';
 
-type ProjectKey = 'schools' | 'hotels';
+type ProjectKey = 'schools' | 'universities' | 'hotels';
 
 const PROJECTS: Record<ProjectKey, { name: string; subtitle: string; searchPlaceholder: string }> = {
   schools: {
     name: 'Schools Outreach',
     subtitle: 'Education lead mapping & outreach',
     searchPlaceholder: 'Search school name, URN, postcode, town',
+  },
+  universities: {
+    name: 'Universities Outreach',
+    subtitle: 'Careers skills + procurement intelligence',
+    searchPlaceholder: 'Search university, city, region',
   },
   hotels: {
     name: 'Hotels Outreach',
@@ -620,7 +625,9 @@ const App: React.FC = () => {
 
             {activeProject !== 'schools' ? (
               <div className="text-[11px] text-amber-300 rounded-xl border border-amber-300/30 bg-amber-500/10 px-3 py-2">
-                Hotels project mode is scaffolded. Data source wiring is next.
+                {activeProject === 'universities'
+                  ? 'Universities mode enabled. Deep-research data wiring is in progress.'
+                  : 'Hotels project mode is scaffolded. Data source wiring is next.'}
               </div>
             ) : null}
           </div>
