@@ -246,59 +246,22 @@ const App: React.FC = () => {
       return;
     }
 
-    const cacheKey = 'bi-university-geocode-v1';
-    let cancelled = false;
-
-    async function geocode() {
-      let cache: Record<string, { lat: number; lng: number }> = {};
-      try { cache = JSON.parse(window.localStorage.getItem(cacheKey) || '{}'); } catch {}
-
-      const pins: UniversityPin[] = [];
-      for (const u of universities) {
+    const pins: UniversityPin[] = universities
+      .map((u) => {
         const name = String(u.university || '').trim();
-        if (!name) continue;
+        const lat = Number(u.lat);
+        const lng = Number(u.lng);
+        return { name, lat, lng, email: u.email };
+      })
+      .filter((u) => u.name && Number.isFinite(u.lat) && Number.isFinite(u.lng))
+      .filter((u) => u.lat >= 49 && u.lat <= 61.5 && u.lng >= -11 && u.lng <= 3)
+      .map((u) => ({ key: u.name, name: u.name, email: u.email, lat: u.lat, lng: u.lng }));
 
-        const inlineLat = Number(u.lat);
-        const inlineLng = Number(u.lng);
-        if (Number.isFinite(inlineLat) && Number.isFinite(inlineLng)) {
-          pins.push({ key: name, name, email: u.email, lat: inlineLat, lng: inlineLng });
-          cache[name] = { lat: inlineLat, lng: inlineLng };
-          continue;
-        }
-
-        const cached = cache[name];
-        if (cached && Number.isFinite(cached.lat) && Number.isFinite(cached.lng)) {
-          pins.push({ key: name, name, email: u.email, lat: cached.lat, lng: cached.lng });
-          continue;
-        }
-
-        try {
-          const r = await fetch(`https://nominatim.openstreetmap.org/search?format=json&limit=1&q=${encodeURIComponent(name + ', United Kingdom')}`);
-          const j = await r.json();
-          if (Array.isArray(j) && j[0]?.lat && j[0]?.lon) {
-            const lat = Number(j[0].lat);
-            const lng = Number(j[0].lon);
-            if (Number.isFinite(lat) && Number.isFinite(lng)) {
-              cache[name] = { lat, lng };
-              pins.push({ key: name, name, email: u.email, lat, lng });
-            }
-          }
-        } catch {}
-      }
-
-      try { window.localStorage.setItem(cacheKey, JSON.stringify(cache)); } catch {}
-
-      if (!cancelled) {
-        setUniversityPins(pins);
-        if (pins.length && mapRef.current) {
-          const bounds = L.latLngBounds(pins.map(p => [p.lat, p.lng] as [number, number]));
-          mapRef.current.fitBounds(bounds, { padding: [24, 24], maxZoom: 10 });
-        }
-      }
+    setUniversityPins(pins);
+    if (pins.length && mapRef.current) {
+      const bounds = L.latLngBounds(pins.map(p => [p.lat, p.lng] as [number, number]));
+      mapRef.current.fitBounds(bounds, { padding: [24, 24], maxZoom: 10 });
     }
-
-    geocode().catch(() => {});
-    return () => { cancelled = true; };
   }, [activeProject, universities]);
 
   useEffect(() => {
