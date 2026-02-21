@@ -30,6 +30,7 @@ type UniversityRow = {
   status?: string;
   lat?: string | number;
   lng?: string | number;
+  display_name?: string;
 };
 
 type UniversityPin = {
@@ -214,6 +215,7 @@ const App: React.FC = () => {
   const [universities, setUniversities] = useState<UniversityRow[]>([]);
   const [universitiesMeta, setUniversitiesMeta] = useState<{ total: number; withEmail: number } | null>(null);
   const [universityPins, setUniversityPins] = useState<UniversityPin[]>([]);
+  const [selectedUniversity, setSelectedUniversity] = useState<UniversityRow | null>(null);
   const [crmTab, setCrmTab] = useState<'overview' | 'contacts' | 'timeline' | 'tasks'>('overview');
   const [crmPipeline, setCrmPipeline] = useState<CrmPipeline>({ stage: 'new', owner: '', priority: 'normal', nextActionAt: '' });
   const [crmContacts, setCrmContacts] = useState<CrmContact[]>([]);
@@ -228,7 +230,10 @@ const App: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    if (activeProject !== 'universities') return;
+    if (activeProject !== 'universities') {
+      setSelectedUniversity(null);
+      return;
+    }
     fetchJson('/api/universities')
       .then((j) => {
         setUniversities(j.universities || []);
@@ -251,7 +256,7 @@ const App: React.FC = () => {
         const name = String(u.university || '').trim();
         const lat = Number(u.lat);
         const lng = Number(u.lng);
-        return { name, lat, lng, email: u.email };
+        return { key: name, name, lat, lng, email: u.email };
       })
       .filter((u) => u.name && Number.isFinite(u.lat) && Number.isFinite(u.lng))
       .filter((u) => u.lat >= 49 && u.lat <= 61.5 && u.lng >= -11 && u.lng <= 3)
@@ -455,11 +460,13 @@ const App: React.FC = () => {
 
     if (activeProject === 'universities') {
       for (const u of universityPins) {
+        const row = universities.find(x => x.university === u.name);
+        const isSel = selectedUniversity?.university === u.name;
         const hasEmail = String(u.email || '').includes('@');
-        const stroke = hasEmail ? '#2563eb' : '#dc2626';
-        const fill = hasEmail ? '#60a5fa' : '#f87171';
+        const stroke = isSel ? '#22c55e' : (hasEmail ? '#2563eb' : '#dc2626');
+        const fill = isSel ? '#86efac' : (hasEmail ? '#60a5fa' : '#f87171');
         const m = L.circleMarker([u.lat, u.lng], {
-          radius: 5,
+          radius: isSel ? 7 : 5,
           color: stroke,
           weight: 2,
           fillColor: fill,
@@ -470,6 +477,7 @@ const App: React.FC = () => {
         m.on('click', () => {
           m.openPopup();
           setQ(u.name);
+          if (row) setSelectedUniversity(row);
         });
         m.addTo(layer);
       }
@@ -505,7 +513,7 @@ const App: React.FC = () => {
   useEffect(() => {
     renderMarkers(pins);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [pins, selected?.urn, activeProject, universityPins]);
+  }, [pins, selected?.urn, activeProject, universityPins, universities, selectedUniversity?.university]);
 
   async function loadFullSchool(urn: string) {
     const j = await fetchJson('/api/schools/' + encodeURIComponent(urn));
@@ -806,8 +814,34 @@ const App: React.FC = () => {
             </div>
           </div>
 
+          {/* Drawer: university details */}
+          {activeProject === 'universities' && selectedUniversity ? (
+            <div className="mt-4 rounded-2xl border border-black/10 bg-white text-black overflow-hidden shadow-sm">
+              <div className="flex items-center justify-between px-3 py-2 border-b border-black/10 bg-white">
+                <div className="text-xs font-black tracking-wide text-black/80">University details</div>
+                <button
+                  onClick={() => setSelectedUniversity(null)}
+                  className="text-[11px] px-2 py-1 rounded-lg bg-black/5 border border-black/10 hover:bg-black/10 text-black"
+                >
+                  Close
+                </button>
+              </div>
+              <div className="p-3 text-xs text-black/80 grid gap-1">
+                <div className="text-base font-black text-black">{selectedUniversity.university}</div>
+                <div><span className="text-black/50">Email:</span> {selectedUniversity.email || '—'}</div>
+                <div><span className="text-black/50">Phone:</span> {selectedUniversity.phone_raw || '—'}</div>
+                <div>
+                  <span className="text-black/50">Contact:</span>{' '}
+                  {selectedUniversity.contact_url ? (
+                    <a className="text-blue-700 hover:underline" href={selectedUniversity.contact_url} target="_blank">{selectedUniversity.contact_url}</a>
+                  ) : '—'}
+                </div>
+              </div>
+            </div>
+          ) : null}
+
           {/* Drawer: school details (opens when a pin/school is selected) */}
-          {selected ? (
+          {activeProject === 'schools' && selected ? (
             <div
               className="mt-4 rounded-2xl border border-black/10 bg-white text-black overflow-hidden shadow-sm"
               onClick={() => setDrawerExpanded(true)}
@@ -853,11 +887,27 @@ const App: React.FC = () => {
           <div className="mt-4 grid gap-2">
             {activeProject === 'universities' ? (
               universities.slice(0, 80).map((u, idx) => (
-                <div key={`${u.university}-${idx}`} className="text-left p-3 rounded-2xl border transition bg-white/5 border-white/10">
+                <button
+                  key={`${u.university}-${idx}`}
+                  onClick={() => {
+                    setSelectedUniversity(u);
+                    const lat = Number(u.lat);
+                    const lng = Number(u.lng);
+                    if (Number.isFinite(lat) && Number.isFinite(lng)) {
+                      mapRef.current?.flyTo([lat, lng], Math.max(mapRef.current?.getZoom() || 6, 10), { duration: 0.6 });
+                    }
+                  }}
+                  className={
+                    "text-left p-3 rounded-2xl border transition " +
+                    (selectedUniversity?.university === u.university
+                      ? "bg-cyan-500/10 border-cyan-500/30"
+                      : "bg-white/5 border-white/10 hover:bg-white/10")
+                  }
+                >
                   <div className="text-sm font-bold text-slate-100 leading-tight">{u.university}</div>
                   <div className="text-xs text-slate-400">{u.email || '—'} {u.phone_raw ? `• ${u.phone_raw}` : ''}</div>
                   <div className="mt-1 text-[10px] text-slate-400 truncate">{u.contact_url || 'No URL'}</div>
-                </div>
+                </button>
               ))
             ) : (
               schools.slice(0, 60).map(s => (
