@@ -1,5 +1,9 @@
 # Become Inspired Workshop System (MVP)
 
+## Source of Truth
+- **This repository is the source of truth for KOSMOS research/data outputs and workshop datasets.**
+- Mission Control app/platform code lives in the separate repository: `simonbullows/Mission-control-pepper`.
+
 Internal webapp to coordinate school outreach + workshops.
 
 ## What it does (v0.1)
